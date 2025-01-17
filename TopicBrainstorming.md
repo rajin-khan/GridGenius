@@ -13,6 +13,11 @@ repeat the block below as required.
 
 ### **X. Topic Name**
 
+#### Initial draft links:
+- *https://example.com*
+- *https://example.com*
+- *https://example.com*
+
 #### Description
 - **Overview**: What is the topic about? What problem does it aim to solve?
 - **Potential Impact**: Why is this topic important or interesting?

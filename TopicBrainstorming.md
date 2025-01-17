@@ -21,7 +21,7 @@ repeat the block below as required.
 
 #### Description
 - **Overview**: Agentic AI is related to AI that can make its own decisions in order to achieve a specific goal, without constant human intervention. It solves problems where constant human intervention is inefficient, like, say navigation, or even becoming a personalized AI assistant.
-- **Potential Impact**: It gives us a glimpse into a future with AI we can 'depend' on. One where have AI that 'thinks for us'
+- **Potential Impact**: It gives us a glimpse into a future with AI we can 'depend' on. One where we have AI that 'thinks for us'.
 - **Novelty**: Only in the past 2 years has this topic been explored greatly. It serves as a great entry point where a lot of further research is possible. Furthermore, we're starting to see big shifts in Inference time computing combined with Agentic AI for newer LLMs.
 
 #### Related Research

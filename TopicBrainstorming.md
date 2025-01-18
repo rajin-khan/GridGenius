@@ -25,7 +25,7 @@
 | Agentic AI in Predictive AIOps: Enhancing IT Autonomy and Performance       | Shanmugasundaram Sivakumar | 2024  | [View Paper](https://www.researchgate.net/profile/Shanmugasundaram-Sivakumar/publication/386575975_Agentic_AI_in_Predictive_AIOps_Enhancing_IT_Autonomy_and_Performance/links/6757b15a34301c1fe9460f98/Agentic-AI-in-Predictive-AIOps-Enhancing-IT-Autonomy-and-Performance.pdf)| **Summary:** The research highlights how Agentic AI, integrated within Predictive AIOps, can revolutionize IT operations. By automating anomaly detection, resource optimization, and issue resolution, the system reduces downtime, enhances efficiency, and minimizes human intervention. The paper also discusses the challenges of implementing self-sufficient AI systems, emphasizing the importance of governance and data quality. **Novel Feature:** The autonomous decision-making capabilities of Agentic AI, supported by reinforcement learning, stand out. These enable systems to self-heal and adapt dynamically to IT infrastructure changes, marking a significant step toward fully autonomous IT environments.|
 | Agentic Relationship Dynamics in Human-AI Collaboration: A Study of Interactions with GPT-based gentic Information Systems Artifacts       | Björn Svensson, Christina Keller | 2024  | [View Paper](https://scholarspace.manoa.hawaii.edu/server/api/core/bitstreams/0db8344c-6e60-42c0-af45-744ec0b3a822/content)| **Summary:** Although conflicting with our vision, this paper explores the agentic relationship dynamics between humans and GPT-based AI systems, focusing on task delegation in programming contexts. It identifies key dynamics that influence collaboration, such as the importance of common understanding, cognitive load reduction, and human intervention to guide AI behavior. The findings emphasize the complementary nature of human-AI partnerships and offer practical insights into improving such collaborations. **Novel Feature:** The study introduces the concept of "breaking thought loops" in GPT-based systems, where human agents proactively guide AI tools to overcome repetitive or narrow decision-making. This highlights the need for human expertise to complement AI limitations in dynamic and complex scenarios.|
 
-### **Proposed Project: Agentic AI for City-Wide Energy Optimization**
+### **Proposed Project A: Agentic AI for City-Wide Energy Optimization**
 
 #### Datasets
 | Dataset Name | Source   | Year   | Link   | Description / Notes |
@@ -43,6 +43,43 @@
 - What are the anticipated challenges in researching or implementing this topic?
   - Agentic AI may be very difficult to implement in the given time frame (as we will need to implement reflection, planning, and learning).
   - It will be difficult to create individual agents, i.e, the Forecasting Agent (which will predict demand), the Recommendation Agent (which will suggest load management strategies), and a Reflection Agent (which will evaluate predictions and outcomes), and **then** implement communication between agents for decision-making; in the limited time of 10 weeks.
+
+### **Proposed Project B: Agentic AI for Navigation Assistance for Blind Individuals**
+
+#### **Datasets**
+
+TBF
+
+#### **Research Questions**
+- **What problem are we solving here?**
+    This project addresses the lack of accessible, real-time navigation assistance for blind individuals by developing a system that can:
+    - Detect scenes and obstacles.
+    - Generate human-readable descriptions of surroundings.
+    - Recommend actionable navigation instructions to safely guide the user.
+
+
+#### **Novelty**
+- **Proactive Guidance**: 
+  - Unlike existing systems that merely describe scenes, this project provides **context-aware navigation recommendations** tailored to blind users.
+- **Adaptive Learning**:
+  - Incorporates user feedback to refine recommendations over time, making the system smarter with each interaction.
+- **Real-Time Scene Understanding**:
+  - Combines scene detection, description, and path planning into a single pipeline, creating a unified solution for navigation challenges.
+
+#### **Challenges**
+- **What are the anticipated challenges in researching or implementing this topic?**
+  1. **Real-Time Performance**:
+     - Ensuring low-latency predictions for scene detection and description on portable devices.
+  2. **Agentic AI Implementation**:
+     - Creating individual agents:
+       - **Scene Detection Agent**: Identifies objects and obstacles in the user's surroundings.
+       - **Scene Description Agent**: Converts detected objects into natural language descriptions.
+       - **Recommendation Agent**: Provides actionable navigation advice based on the scene description.
+     - Implementing communication and coordination between these agents in a limited time frame.
+  3. **Safety Considerations**:
+     - Ensuring the system provides clear, actionable, and safe navigation instructions in dynamic environments.
+  4. **Device Constraints**:
+     - Deploying the system on edge devices (e.g., smartphones or wearable devices) with limited computational resources.
 
 ---
 

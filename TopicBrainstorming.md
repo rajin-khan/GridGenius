@@ -129,6 +129,46 @@ repeat the block below as required.
 
 #### *Topic found by: your_name*
 
+
+### **4. Time Series Forecasting**
+
+#### Description
+- **Overview**: The process of using time series data to predict future values.Basically, Make almost accurate predictions based on historical patterns.
+- **Example**:
+1. Predict future Inflation rate
+2. Predict GDP, Unemployment Rate
+
+   
+- **Novelty**: Currently Bangladesh is facing significant challanges in many sector specially in economy.So,We can make predictions about our countrie's future in various sector.
+
+#### Related Research
+| Title of Paper / Publication| Authors| Year  | Link | Notes / Key Insights|
+|-----------------------------|--------|-------|------|---------------------|
+| Example Paper Title 1       | Author Name(s) | 2024  | [View Paper](https://example.com)| Notes about the methodology or findings |
+| Example Paper Title 2       | Author Name(s) | 2025  | [View Paper](https://example.com)| Notes about challenges or gaps          |
+
+#### Datasets
+| Dataset Name | Source   | Year   | Link   | Description / Notes |
+|--------------|----------|--------|--------|---------------------|
+| Example Dataset Name 1    | Kaggle / UCI           | 2024   | [Dataset Link](https://example.com) | Brief summary of features, size, etc.    |
+| Example Dataset Name 2    | Private / Custom       | 2025   | [Dataset Link](https://example.com) | Notes on relevance to this topic         |
+
+#### Research Questions
+- What are the key questions this topic aims to answer?
+  - Question 1: 
+  - Question 2: 
+
+#### Challenges
+- What are the anticipated challenges in researching or implementing this topic?
+  - Challenge 1: It's difficult to find sufficient data in this field.
+  - Challenge 2: Real world problem . Like: Policy changes for a particular time, pandemic etc.
+
+
+#### *Topic found by: Md Aurongojeb Lishad*
+
+  ---
+
+
 ### **X. Topic Name**
 
 #### Initial draft links:

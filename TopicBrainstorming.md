@@ -30,7 +30,7 @@
 #### Datasets
 | Dataset Name | Source   | Year   | Link   | Description / Notes |
 |--------------|----------|--------|--------|---------------------|
-| Power Consumption of Tetouan City | UCI | 2023   | [Dataset Link](https://archive.ics.uci.edu/dataset/849/power+consumption+of+tetouan+city) | Contains time-series data of household electricity usage in kilowatt-hours, including global active power, voltage, and energy sub-metering, recorded at one-minute intervals over four years. |
+| Power Consumption of Tetouan City | UCI | 2023   | [Dataset Link](https://archive.ics.uci.edu/dataset/849/power+consumption+of+tetouan+city) | Contains time-series data of household electricity usage in kilowatt-hours, including global active power, voltage, and energy sub-metering, recorded at one-minute intervals over four years. (52K+ Instances, 6 Features) |
 
 #### **Research Questions:**
 - What problem are we solving here?

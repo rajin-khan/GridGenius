@@ -102,9 +102,8 @@ This project will be developed by:
 |---------------------------|-------------------------|--  |--------|------|
 | **Rajin Khan**            | North South University | 2212708042 | [![Rajin's GitHub](https://img.shields.io/badge/-rajin--khan-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rajin-khan) | ![Followers](https://img.shields.io/github/followers/rajin-khan?label=Follow&style=social) |
 | **Aurongojeb Lishad**    | North South University | 2212457042 | [![Aurongojeb's GitHub](https://img.shields.io/badge/-Lishad--02-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Lishad-02) | ![Followers](https://img.shields.io/github/followers/Kabbya04?label=Follow&style=social) |
-| **Pranoy Saha**    | North South University | - | - | - |
-| **Sadia Islam Mou**    | North South University | - | [![Sadia's GitHub](https://img.shields.io/badge/-Sadiaa55-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sadiaa55) | ![Followers](https://img.shields.io/github/followers/Sadiaa55?label=Follow&style=social) |
-
+| **Pranoy Saha**    | North South University | 2131183642 | [![Pranoy's GitHub](https://img.shields.io/badge/-Pranoy28-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Pranoy28) | ![Followers](https://img.shields.io/github/followers/Pranoy28?label=Follow&style=social) |
+| **Sadia Islam Mou**    | North South University | 2131724642 | [![Sadia's GitHub](https://img.shields.io/badge/-Sadiaa55-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sadiaa55) | ![Followers](https://img.shields.io/github/followers/Sadiaa55?label=Follow&style=social) |
 
 ---
 

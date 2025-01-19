@@ -81,6 +81,11 @@ TBF
   4. **Device Constraints**:
      - Deploying the system on edge devices (e.g., smartphones or wearable devices) with limited computational resources.
 
+## **Comments**
+Aurongojeb Lishad-
+
+This kind of topic needs deep learning and your proposed topic also requires reinforcement learning. LLMs require NLP and deep learning too. So, I think this would be a tough topic for first ML project & it's also challenging to finish this kind of project within three months. Let's find a **pure ML** project idea.
+
 ---
 
 #### *Topic found by: Adib Ar Rahman Khan*

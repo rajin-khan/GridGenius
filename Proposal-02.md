@@ -106,14 +106,14 @@ The following models will be implemented and evaluated:
 
 ## Challenges
 
-1. **Data Availability and Quality:**
+1. **Data Availability and Quality**
    
-2. **Feature Engineering:**
+2. **Feature Engineering**
    
-3. **Model Complexity:**
+3. **Model Complexit:**
    
-4. **Interpretability:**
+4. **Interpretability**
   
-6. **Validation and Generalization of Models:**
+6. **Validation and Generalization of Models**
   
 

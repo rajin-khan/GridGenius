@@ -1,51 +1,104 @@
 # Topic Proposal
 ---
 
-## 📝 **Topic Name**: 
-# GridGenius – AI-Powered Energy Optimization
+## 📝 **Topic Name**:
+# ⚡ GridGenius – AI-Powered Energy Optimization  
 **(Energy Demand Forecasting Using Machine Learning)**  
 _A data-driven approach to predict and optimize urban energy consumption._
 
 ---
 
-### **1. Description**
-_What is the topic about? What specific problem are you trying to address?_
+## **Description**
+This project aims to develop a machine learning model to accurately forecast energy demand in urban areas using historical power consumption data. The goal is to help energy providers optimize supply, reduce wastage, and lower operational costs.
 
-- **Overview**:  
-  This project aims to develop a machine learning model to accurately forecast energy demand in urban areas using historical power consumption data. The goal is to help energy providers optimize supply, reduce wastage, and lower operational costs.
+### **Key Challenges**
+1. **Handling high-dimensional time-series data** with seasonal trends.  
+2. **Ensuring model scalability** for large datasets.  
+3. **Balancing model complexity** and interpretability.
 
-- **Key Challenges**:  
-  - Handling high-dimensional time-series data with seasonal trends.  
-  - Ensuring model scalability for large datasets.  
-  - Balancing model complexity and interpretability.
-
-- **Potential Impact**:  
-  - Improve energy efficiency and reduce carbon footprint.  
-  - Assist city planners in developing data-driven policies.  
-  - Help utility companies optimize infrastructure planning.
+### **Potential Impact**
+- Improve energy efficiency and reduce carbon footprint.  
+- Assist city planners in developing data-driven policies.  
+- Help utility companies optimize infrastructure planning.
 
 ---
 
-### **2. Keywords**
-_energy forecasting, machine learning, time-series analysis, smart grids, demand prediction, energy optimization._
+## **Existing Papers**
+Below are some relevant research papers on energy demand forecasting using machine learning:
+
+### **1. "Energy Demand Forecasting Using Machine Learning Perspective Bangladesh"**  
+   - **Authors**: Avijit Paul Piyal, Khan Fahad Rahman, Siam Ahmed, Abu S. M. Mohsin  
+   - **Link**: [View Paper](https://www.researchgate.net/profile/Abu-Mohsin/publication/369888158_Energy_Demand_Forecasting_Using_Machine_Learning_Perspective_Bangladesh/links/663501f935243041535fa999/Energy-Demand-Forecasting-Using-Machine-Learning-Perspective-Bangladesh.pdf)  
+   - **Description**: Overview of various ML approaches applied to energy forecasting in Bangladesh.
+
+### **2. "Building Energy Use Prediction Using Time Series Analysis"**  
+   - **Authors**: ZHOU Ruijin, PAN Yiqun, HUANG Zhizhong, WANG Qiujian  
+   - **Link**: [View Paper](https://www.scribd.com/document/752443626/0005)  
+   - **Description**: Deep learning methods for forecasting energy consumption in buildings.
 
 ---
 
-### **3. References and Links**
-_Document useful resources related to the topic._
+## **Dataset Details**
+The project will utilize historical power consumption data from Tetouan City to train and validate machine learning models.
 
-#### **Research Papers**
-| Title                                             | Author(s)            | Link                                                |
-|--------------------------------------------------|----------------------|-----------------------------------------------------|
-| Energy Demand Forecasting Using Machine Learning Perspective Bangladesh    | Avijit Paul Piyal, Khan Fahad Rahman, Siam Ahmed, Khan Fahad Rahman, Abu S. M. Mohsin  | [View Paper](https://www.researchgate.net/profile/Abu-Mohsin/publication/369888158_Energy_Demand_Forecasting_Using_Machine_Learning_Perspective_Bangladesh/links/663501f935243041535fa999/Energy-Demand-Forecasting-Using-Machine-Learning-Perspective-Bangladesh.pdf) | Overview of various ML approaches   |
-| Building Energy Use Prediction Using Time Series Analysis        | ZHOU Ruijin, PAN Yiqun, HUANG Zhizhong, WANG Qiujian      | [View Paper](https://www.scribd.com/document/752443626/0005)       | Deep learning methods for forecasting |
-
-#### **Datasets**
+### **Primary Dataset:**
 | Name                     | Source (e.g., Kaggle, UCI, etc.) | Link                                                                 | Description / Notes                                       |
 |--------------------------|----------------------------------|----------------------------------------------------------------------|----------------------------------------------------------|
 | Power Consumption of Tetouan City | UCI | [Dataset Link](https://archive.ics.uci.edu/dataset/849/power+consumption+of+tetouan+city) | Hourly power usage data for different city zones          |
 
-#### **Other Resources**
+---
+
+## **Estimated Features in the Dataset**
+1. Energy consumption in different city zones.  
+2. Environmental parameters like temperature and humidity.  
+3. Time-based attributes (day, hour, season).
+
+---
+
+## **Models to Build**
+The following models will be implemented and evaluated for forecasting:
+
+### **1. Time Series Models**
+- ARIMA (AutoRegressive Integrated Moving Average)  
+- Prophet  
+- Seasonal Decomposition of Time Series (STL)
+
+### **2. Machine Learning Regression Models**
+- Linear Regression  
+- Random Forest Regressor  
+- Gradient Boosting Machines (GBM)  
+- XGBoost  
+- Support Vector Machines (SVM)
+
+### **3. Deep Learning Models**
+- Long Short-Term Memory (LSTM)  
+- Gated Recurrent Units (GRU)
+
+---
+
+## **Novelty of the Project**
+1. **Combining traditional ML models with deep learning** to enhance prediction accuracy.  
+2. **Use of external environmental data** to improve model performance.  
+3. **Scalability of the model** for real-world urban energy planning.
+
+---
+
+## **Challenges**
+1. **Data Preprocessing Complexity**  
+   - Dealing with missing values, noise, and anomalies in the dataset.  
+
+2. **Feature Engineering**  
+   - Identifying relevant external factors affecting energy consumption.  
+
+3. **Model Interpretability**  
+   - Ensuring that stakeholders can trust and understand the model's predictions.  
+
+4. **Real-Time Prediction Feasibility**  
+   - Optimizing models for deployment on edge devices for smart city applications.
+
+---
+
+## **Other Resources**
 | Resource Type          | Description                   | Link                                                                 |
 |-------------------------|-------------------------------|----------------------------------------------------------------------|
 | Blog / Tutorial         | Introduction to Time-Series Forecasting | [Resource Link](https://www.kaggle.com/code/iamleonie/intro-to-time-series-forecasting) |
@@ -53,57 +106,7 @@ _Document useful resources related to the topic._
 
 ---
 
-### **4. Research Notes**
-_Summarize insights or takeaways from your research._
-
-- **Important Concepts**:
-  - _Seasonality_: Understanding recurring patterns in energy consumption.
-  - _Feature Engineering_: Utilizing weather, holidays, and time-based features to improve model accuracy.
-
-- **Relevant Methods / Techniques**:
-  - ARIMA: Classical statistical model for time-series forecasting.
-  - LSTM/GRU: Deep learning models for sequential energy prediction.
-
----
-
-### **5. Dataset Analysis**
-_If you've shortlisted a dataset for the topic, provide details here._
-
-- **Dataset Name**: Power Consumption of Tetouan City  
-- **Source**: UCI Machine Learning Repository  
-- **Key Features**:  
-  - Energy consumption in different city zones.  
-  - Environmental parameters like temperature and humidity.  
-  - Time-based attributes (day, hour, season).  
-- **Challenges**:  
-  - Dealing with missing data and outliers.  
-  - Identifying long-term trends in power consumption.
-
----
-
-### **6. Ideas and Improvements**
-- **How can this topic be expanded or improved?**
-  - Idea 1: Combine the dataset with external factors like economic activity.  
-  - Idea 2: Build an interactive dashboard for real-time monitoring.  
-
-- **Unique Angle**:
-  - Using ensemble methods (e.g., combining ARIMA and deep learning models) to improve forecasting accuracy.
-
----
-
-### **7. Final Topic Evaluation**
-_Summarize your assessment of the topic._
-
-- **Feasibility**: 4/5  
-- **Novelty**: 3/5  
-- **Potential Impact**: 5/5  
-- **Overall Score**: 4/5  
-
----
-
-### **8. To-Do**
-_Checklist for further research or actions needed._
-
+## **To-Do**
 - [ ] Search for additional datasets.  
 - [ ] Identify more research papers.  
 - [ ] Experiment with baseline forecasting models.  
@@ -111,9 +114,7 @@ _Checklist for further research or actions needed._
 
 ---
 
-### **9. Additional Notes**
-_Any other thoughts, questions, or ideas?_
-
+## **Additional Notes**
 - Consider adding real-time data pipelines for continuous prediction.  
 - Evaluate the trade-off between accuracy and interpretability for stakeholders.
 

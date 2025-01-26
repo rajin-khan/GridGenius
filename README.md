@@ -1,101 +1,127 @@
-# Machine Learning Group Project Repository
+<div align="center">
 
-This repository contains all the materials and documentation for our group project in Machine Learning. The project involves selecting a topic, working with a dataset, implementing machine learning models, and deploying a final solution.
+![GridGenius Banner](./documentation/GridGenius%20cover.png)
+
+## GridGenius - AI-Powered Energy Optimization
+---
+
+### 🚀 **Project Overview**
+
+#### **Project Title:**
+**GridGenius – AI-Powered Energy Optimization**  
+*Energy Demand Forecasting Using Machine Learning*
+
+#### **Brief Summary:**
+- Develop a machine learning model for forecasting urban energy demand using custom-extracted data.
+- Optimize energy supply, minimize wastage, and enhance operational efficiency.
+- Deploy the forecasting model via a web interface with an integrated LLM for intelligent insights.
+
+#### **Problem Statement:**
+- Inefficient energy management leads to wastage and higher costs.
+- The inability to accurately predict demand causes supply-demand mismatches.
+- The need for a scalable and interpretable ML-based forecasting solution.
+
+#### **Expected Outcome:**
+- Accurate energy demand predictions to aid utility providers.
+- Reduction in operational costs and carbon footprint.
+- A web-based platform providing actionable insights with an LLM-powered interface.
 
 ---
 
-## 📌 Project Workflow
+### 📊 **Dataset Details**
 
-### **1. Topic Selection**
-- **Research Focus**:
-  - Review **recent research papers** (2024 or later) to identify gaps or areas for improvement.
-  - Use these resources for inspiration:
-    - **Sifat Momen Sir’s Papers**: [Google Scholar](https://scholar.google.com/citations?user=sGVZEaAAAAAJ&hl=en)
-    - **Leila Ismail’s Papers**: [Google Scholar](https://scholar.google.ae/citations?user=TY-2fcUAAAAJ&hl=en)
-    - International faculty profiles and references.
-  - Explore **Bangladesh-centric datasets and topics** via [RIC Database](https://ric.gov.bd).
-- **Goal**:
-  - Choose a meaningful and impactful topic with room for improvement or innovation.
-  - Ensure the topic aligns with recent trends and has sufficient research material.
+#### **Source:**
+- **Custom dataset extracted from:** [BPDB Daily Generation Archive](https://misc.bpdb.gov.bd/)
 
----
+#### **Estimated Features:**
+| Feature                   | Description                                       |
+|---------------------------|---------------------------------------------------|
+| Date                      | Daily record date                                 |
+| Day Probable Peak         | Predicted peak generation for the day             |
+| Evening Probable Peak     | Predicted peak generation for the evening         |
+| Actual Demand             | Real energy consumption for the day               |
+| Environmental Factors     | Temperature, Humidity, Weather Conditions         |
 
-### **2. Dataset Selection**
-- **Key Considerations**:
-  - **Novelty**: Datasets should be minimally explored with only a few recent publications (2024 or later).
-  - **Relevance**: Focus on datasets that align with the chosen topic and project goals.
-- **Dataset Sources**:
-  - [UCI Machine Learning Repository](https://archive.ics.uci.edu/): Look for unique datasets.
-  - Kaggle: Only use competition-level datasets or augment basic datasets with additional features or preprocessing.
-- **Process**:
-  - Cross-check dataset availability with publications on similar topics to ensure compatibility.
+#### **Data Collection Process:**
+1. Automate extraction of daily reports using web scraping.
+2. Preprocess data to remove inconsistencies.
+3. Store structured data for model training.
 
 ---
 
-### **3. Research**
-- Search for **publications** related to your chosen topic using tools like **Google Scholar**.
-- Identify and explore references and datasets cited in those papers.
-- Combine insights from multiple sources to refine the project proposal and methodology.
+### ⚙️ **Complete ML Pipeline**
+
+1. **Data Collection:** Web scraping and processing from BPDB.
+2. **Data Preprocessing:**
+   Handling missing values.
+   Feature engineering (time-based trends, weather impact).
+3. **Exploratory Data Analysis (EDA):**
+   Visualization of seasonal trends.
+   Correlation analysis.
+4. **Model Selection and Training:**
+   Evaluate traditional and advanced ML models.
+5. **Model Evaluation:**
+   Metrics: RMSE, MAPE, MAE.
+6. **Deployment:**
+   Web application for forecasting and visualization.
+   Integration with LLM for analytical insights.
 
 ---
 
-## 🛠️ Implementation Plan
+### 🔍 **Problem Type Definition**
 
-### **Steps to Complete the Project**:
-1. **Topic Research**:
-   - Identify a problem or gap in the current research.
-   - Choose a dataset that supports the topic.
-2. **Dataset Preparation**:
-   - Clean the data and perform feature engineering.
-   - Ensure the dataset is ready for model training.
-3. **Model Experimentation**:
-   - Implement multiple machine learning models and compare performance.
-   - Use appropriate evaluation metrics for the chosen task.
-4. **Model Selection and Optimization**:
-   - Select the model that performs best on the dataset.
-   - Fine-tune the model for better accuracy and efficiency.
-5. **Deployment**:
-   - Deploy the model on a web-based platform for accessibility.
-   - Provide a functional and user-friendly interface.
-6. **Documentation**:
-   - Prepare a project report following the **IEEE format**.
-   - Include methodology, results, and deployment details.
+**Category:** Time Series Forecasting  
+**Goal:** Predict future energy demand based on historical consumption and environmental factors.  
+**Evaluation Metrics:**
+- Root Mean Square Error (RMSE)
+- Mean Absolute Percentage Error (MAPE)
+- Mean Absolute Error (MAE)
 
 ---
 
-## 🔧 Tools and Resources
+### 🏗️ **High-Level Software Architecture**
 
-### **Technologies**:
-- **Programming Language**: Python
-- **Libraries**:
-  - Data Manipulation: Pandas, NumPy
-  - Modeling: Scikit-learn, TensorFlow, PyTorch
-  - Visualization: Matplotlib, Seaborn
-  - Deployment: Flask, Django
-- **Platforms**:
-  - Dataset Exploration: UCI ML Repository, Kaggle
-  - Model Deployment: Heroku, AWS, or similar services
-
-### **Research Tools**:
-- Google Scholar
-- References from relevant publications
+- **Data Collection Layer:** Scraper to extract reports from BPDB.
+- **Processing Layer:** Preprocessing, feature extraction.
+- **Model Layer:** ML models (LSTM, ARIMA, XGBoost, etc.).
+- **Web Interface Layer:** Flask/Django backend with a React frontend.
+- **LLM Integration:** Assist users with querying and insights.
 
 ---
 
-## 📋 Reporting
-The final report must adhere to the **IEEE format** and include:
-- Abstract
-- Introduction
-- Literature Review
-- Methodology
-- Results and Evaluation
-- Conclusion and Future Work
+### 🛠️ **Technology Stack**
+
+| Component                  | Technology Choices                           |
+|----------------------------|----------------------------------------------|
+| Data Collection            | Python (BeautifulSoup, Requests)             |
+| Data Processing            | Pandas, NumPy                                |
+| Model Training             | Scikit-learn, TensorFlow, XGBoost            |
+| Web Framework              | Flask / Django                               |
+| Frontend                   | React.js                                     |
+| Database                   | PostgreSQL / SQLite                          |
+| Deployment                 | AWS/GCP/Azure, Docker, CI/CD pipelines       |
 
 ---
 
-This repository will serve as a central hub for all project-related materials, including code, datasets, and documentation.
+### 🌟 **Proposed Novelty**
 
-## **👥 The Team:**
+1. **Real-Time Prediction & Visualization:** Interactive web dashboard with live updates.
+2. **LLM-Powered Insights:** Users can interact with an AI assistant to query predictions and trends.
+3. **Scalability:** The model can be extended to other cities with minimal adaptation.
+
+---
+
+### 📚 **References**
+
+1. **"Energy Demand Forecasting Using Machine Learning Perspective Bangladesh"**  
+   - Avijit Paul Piyal et al., DOI: 10.1109/GlobConHT56829.2023.10087679
+
+2. **"Short-Term Electrical Load Prediction for Future Generation Using Hybrid Deep Learning Model"**  
+   - S. M. Anowarul Haque Sonet et al., DOI: 10.1109/ICAEEE54957.2022.9836359
+
+---
+
+### **👥 The Team:**
 This project will be developed by:
 
 | Name                      | Institution             | ID | GitHub | Followers |
@@ -108,3 +134,5 @@ This project will be developed by:
 ---
 
 Star the repo if you wanna support more projects like this!
+
+</div>

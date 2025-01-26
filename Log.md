@@ -30,9 +30,14 @@
 - **Team Member:** Lishad
 - **Changes Made:** Extracted weather data from (https://www.visualcrossing.com), clean it & merge it with main dataset.
 
+- **Date:** 26-01-25
+- **Team Member:** Adib
+- **Changes Made:** Design Main logo and begin work for visual identity
+
 - **Date:** 27-01-25
 - **Team Member:** Pranoy
 - **Changes Made:** Created the proposal & also searched data (earthquake)
+
 
 *Log created:*
 

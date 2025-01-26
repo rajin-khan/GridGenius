@@ -5,7 +5,7 @@ import pandas as pd
 
 # Directory containing PDF files
 input_directory = "summary_pdfs"
-output_csv = "extracted_energy_data.csv"
+output_csv = "energy_iter1.csv"
 
 # Function to extract relevant data from a PDF
 def extract_relevant_data(pdf_path):

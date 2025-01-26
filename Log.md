@@ -30,7 +30,9 @@
 - **Team Member:** Lishad
 - **Changes Made:** Extracted weather data from (https://www.visualcrossing.com), clean it & merge it with main dataset.
 
-
+- **Date:** 27-01-25
+- **Team Member:** Pranoy
+- **Changes Made:** Created the proposal & also searched data (earthquake)
 
 *Log created:*
 

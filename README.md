@@ -1,6 +1,6 @@
 <div align="center">
 
-![GridGenius Banner](./documentation/GridGenius%20logomark.png)
+![GridGenius Banner](./documentation/GridGenius.png)
 
 ## GridGenius - AI-Powered Energy Optimization
 ---

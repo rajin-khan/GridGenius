@@ -14,9 +14,23 @@
 - **Team Member:** Adib
 - **Changes Made:** Used a scraper to collect and download PDF links, and extract relevant information, initial dataset made and cleaned up.
 
+- **Date:** 24-01-25
+- **Team Member:** Lishad
+- **Changes Made:** Research on existing paper try to find out the additional features relation.
+
 - **Date:** 25-01-25
 - **Team Member:** Adib
 - **Changes Made:** Further research conducted, additional paper found on energy optimization in Bangladesh, found that they used the same info, and same features as the ones extracted.
+
+- **Date:** 25-01-25
+- **Team Member:** Lishad
+- **Changes Made:** Searched for weather data to incorporate into the dataset's features.
+
+- **Date:** 25-01-25
+- **Team Member:** Lishad
+- **Changes Made:** Extracted weather data from (https://www.visualcrossing.com), clean it & merge it with main dataset.
+
+
 
 *Log created:*
 

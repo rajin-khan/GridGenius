@@ -32,11 +32,15 @@
 
 - **Date:** 26-01-25
 - **Team Member:** Adib
-- **Changes Made:** Design Main logo and begin work for visual identity
+- **Changes Made:** Design Main logo and begin work for visual identity.
 
 - **Date:** 27-01-25
 - **Team Member:** Pranoy
-- **Changes Made:** Created the proposal & also searched data (earthquake)
+- **Changes Made:** Created the proposal & also searched data (earthquake).
+
+- **Date:** 27-01-25
+- **Team Member:** Adib
+- **Changes Made:** Began work on proposal presentation, after finalizing details with Lishad.
 
 
 *Log created:*

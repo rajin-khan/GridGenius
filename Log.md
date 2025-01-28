@@ -50,7 +50,9 @@
 - **Team Member:**Lishad
 - **Changes Made:** Done initial feature engineering: Add IsHoliday feature in the dataset. Extract holiday and weekend data from website and integrate it into the dataset 
 
-
+- **Date:** 28-01-25
+- **Team Member:** Pranoy
+- **Changes Made:** Worked on the timeline making for Gantt Chart
 
 *Log created:*
 

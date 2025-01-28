@@ -36,15 +36,15 @@
 
 - **Date:** 27-01-25
 - **Team Member:** Pranoy
-- **Changes Made:** Created the proposal & also searched data (earthquake).
-
-- **Date:** 27-01-25
-- **Team Member:** Adib
-- **Changes Made:** Began work on proposal presentation, after finalizing details with Lishad.
+- **Changes Made:** Created an alternate proposal & also searched data (earthquake).
 
 - **Date:** 27-01-25
 - **Team Member:**Lishad
 - **Changes Made:** Worked on the proposal: selected the models ,defined each features and the project pipeline.
+
+- **Date:** 27-01-25
+- **Team Member:** Adib
+- **Changes Made:** Begin work on proposal presentation, after finalizing details with Lishad.
 
 - **Date:** 28-01-25
 - **Team Member:**Lishad
@@ -53,6 +53,14 @@
 - **Date:** 28-01-25
 - **Team Member:** Pranoy
 - **Changes Made:** Worked on the Timeline making of Gantt Chart for the weekly progress Expected 
+
+- **Date:** 28-01-25
+- **Team Member:** Adib
+- **Changes Made:** Finish creating the design and graphics for proposal presentation.
+
+- **Date:** 29-01-25
+- **Team Member:** Adib
+- **Changes Made:** Finish animating and finalizing the proposal presentation.
 
 *Log created:*
 

@@ -42,6 +42,15 @@
 - **Team Member:** Adib
 - **Changes Made:** Began work on proposal presentation, after finalizing details with Lishad.
 
+- **Date:** 27-01-25
+- **Team Member:**Lishad
+- **Changes Made:** Worked on the proposal: selected the models ,defined each features and the project pipeline.
+
+- **Date:** 28-01-25
+- **Team Member:**Lishad
+- **Changes Made:** Done initial feature engineering: Add IsHoliday feature in the dataset. Extract holiday and weekend data from website and integrate it into the dataset 
+
+
 
 *Log created:*
 

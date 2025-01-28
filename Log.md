@@ -52,7 +52,7 @@
 
 - **Date:** 28-01-25
 - **Team Member:** Pranoy
-- **Changes Made:** Worked on the timeline making for Gantt Chart
+- **Changes Made:** Worked on the Timeline making of Gantt Chart for the weekly progress Expected 
 
 *Log created:*
 

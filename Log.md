@@ -39,7 +39,7 @@
 - **Changes Made:** Created an alternate proposal & also searched data (earthquake).
 
 - **Date:** 27-01-25
-- **Team Member:**Lishad
+- **Team Member:** Lishad
 - **Changes Made:** Worked on the proposal: selected the models ,defined each features and the project pipeline.
 
 - **Date:** 27-01-25
@@ -47,7 +47,7 @@
 - **Changes Made:** Begin work on proposal presentation, after finalizing details with Lishad.
 
 - **Date:** 28-01-25
-- **Team Member:**Lishad
+- **Team Member:** Lishad
 - **Changes Made:** Done initial feature engineering: Add IsHoliday feature in the dataset. Extract holiday and weekend data from website and integrate it into the dataset 
 
 - **Date:** 28-01-25
@@ -61,6 +61,10 @@
 - **Date:** 29-01-25
 - **Team Member:** Adib
 - **Changes Made:** Finish animating and finalizing the proposal presentation.
+
+- **Date:** 01-02-25
+- **Team Member:** Lishad
+- **Changes Made:** Modify Season Data
 
 *Log created:*
 

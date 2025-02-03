@@ -66,6 +66,11 @@
 - **Team Member:** Lishad
 - **Changes Made:** Modify Season Data
 
+- **Date:** 02-02-25
+- **Team Member:** Lishad
+- **Changes Made:** Handle missing ,duplicate values and done some visualization of each feature using histogram.
+
+
 *Log created:*
 
 - **Date:**

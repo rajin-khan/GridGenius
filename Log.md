@@ -70,6 +70,13 @@
 - **Team Member:** Lishad
 - **Changes Made:** Handle missing ,duplicate values and done some visualization of each feature using histogram.
 
+- **Date:** 03-02-25
+- **Team Member:** Adib
+- **Changes Made:** Rename a few features and modify dataset.
+
+- **Date:** 04-02-25
+- **Team Member:** Adib
+- **Changes Made:** Pick up on the EDA, modify, handle categorical and time series visualizations, along with a correlation matrix.
 
 *Log created:*
 

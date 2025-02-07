@@ -78,6 +78,11 @@
 - **Team Member:** Adib
 - **Changes Made:** Pick up on the EDA, modify, handle categorical and time series visualizations, along with a correlation matrix.
 
+
+- **Date:** 07-02-25
+- **Team Member:** Lishad
+- **Changes Made:** Done visualization and count of Outliers for each feature, find missing dates & Data distribution over time
+
 *Log created:*
 
 - **Date:**

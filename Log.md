@@ -83,6 +83,10 @@
 - **Team Member:** Lishad
 - **Changes Made:** Done visualization and count of Outliers for each feature, find missing dates & Data distribution over time
 
+- **Date:** 14-02-25
+- **Team Member:** Lishad
+- **Changes Made:** Complete Data Preprocessing: Outliers removal, Encoding, Features scaling
+
 *Log created:*
 
 - **Date:**

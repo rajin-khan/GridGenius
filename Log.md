@@ -87,6 +87,10 @@
 - **Team Member:** Lishad
 - **Changes Made:** Complete Data Preprocessing: Outliers removal, Encoding, Features scaling
 
+- **Date:** 17-02-25
+- **Team Member:** Adib
+- **Changes Made:** Find and read more papers on transformer models and their use in time series forecasting
+
 *Log created:*
 
 - **Date:**

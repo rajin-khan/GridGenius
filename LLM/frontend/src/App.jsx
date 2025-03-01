@@ -56,7 +56,7 @@ function App() {
       </div>
       
       <footer className="app-footer">
-        <p>© 2025 GridGenius | Sustainable Energy Analytics</p>
+        <p>© 2025 GridGenius | Adib Ar Rahman Khan</p>
       </footer>
     </div>
   );

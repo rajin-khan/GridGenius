@@ -91,6 +91,14 @@
 - **Team Member:** Adib
 - **Changes Made:** Find and read more papers on transformer models and their use in time series forecasting
 
+- **Date:** 02-03-25
+- **Team Member:** Adib
+- **Changes Made:** Add new papers to Papers folder created by Lishad
+
+- **Date:** 02-03-25
+- **Team Member:** Adib
+- **Changes Made:** Learn about custom LLM integration, methods to make it work, use LangChain to build a script and output analysis, build basic Frontend Demo to showcase current setup with Llama3.2
+
 *Log created:*
 
 - **Date:**

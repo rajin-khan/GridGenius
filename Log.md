@@ -99,6 +99,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Learn about custom LLM integration, methods to make it work, use LangChain to build a script and output analysis, build basic Frontend Demo to showcase current setup with Llama3.2
 
+- **Date:03-03-25**
+- **Team Member:** Pranoy
+- **Changes Made:** Uploaded files and Documents with links on the research papers on the consumption of electricity in the western and neighbouring countries
+
 *Log created:*
 
 - **Date:**

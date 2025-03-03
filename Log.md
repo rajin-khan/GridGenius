@@ -103,6 +103,10 @@
 - **Team Member:** Pranoy
 - **Changes Made:** Uploaded files and Documents with links on the research papers on the consumption of electricity in the western and neighbouring countries
 
+- **Date:** 03-03-25
+- **Team Member:** Adib
+- **Changes Made:** Create another Demo for showcasing custom LLM integration, begin work on multiple versions (with user feedback, and collective data) to feel which version works best
+
 *Log created:*
 
 - **Date:**

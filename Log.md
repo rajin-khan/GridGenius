@@ -107,6 +107,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Create another Demo for showcasing custom LLM integration, begin work on multiple versions (with user feedback, and collective data) to feel which version works best
 
+- **Date:** 04-03-25
+- **Team Member:** Adib
+- **Changes Made:** Start work on Final EDA, write clear report on GridGenius and its vision, with actionable plan.
+
 *Log created:*
 
 - **Date:**

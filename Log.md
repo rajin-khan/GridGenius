@@ -119,6 +119,9 @@
 - **Team Member:** Adib
 - **Changes Made:** Extract and clean up zone-wise Energy Generation data and store in csv.
 
+- **Date:** 06-03-25
+- **Team Member:** Adib
+- **Changes Made:** Add zone wise visualizations to EDA notebook.
 *Log created:*
 
 - **Date:**

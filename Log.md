@@ -111,6 +111,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Start work on Final EDA, write clear report on GridGenius and its vision, with actionable plan.
 
+- **Date:** 05-03-25
+- **Team Member:** Adib
+- **Changes Made:** Finish final EDA with analysis.
+
 *Log created:*
 
 - **Date:**

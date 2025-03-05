@@ -115,6 +115,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Finish final EDA with analysis.
 
+- **Date:** 06-03-25
+- **Team Member:** Adib
+- **Changes Made:** Extract zone-wise Energy Generation data and store in csv.
+
 *Log created:*
 
 - **Date:**

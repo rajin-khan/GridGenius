@@ -117,7 +117,7 @@
 
 - **Date:** 06-03-25
 - **Team Member:** Adib
-- **Changes Made:** Extract zone-wise Energy Generation data and store in csv.
+- **Changes Made:** Extract and clean up zone-wise Energy Generation data and store in csv.
 
 *Log created:*
 

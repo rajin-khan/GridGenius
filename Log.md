@@ -123,6 +123,14 @@
 - **Team Member:** Adib
 - **Changes Made:** Add zone wise visualizations to EDA notebook.
 
+- **Date:** 08-03-25
+- **Team Member:** Adib
+- **Changes Made:** Gather References and create checklist for EDA presentation.
+
+- **Date:** 10-03-25
+- **Team Member:** Adib
+- **Changes Made:** Begin work for EDA presentation.
+
 *Log created:*
 
 - **Date:**

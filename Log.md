@@ -155,6 +155,9 @@
 - **Team Member:** Lishad
 - **Changes Made:** Complete initial 5 ML models for checking evaluation parameter 
 
+- **Date:** 11-03-25
+- **Team Member:** Adib
+- **Changes Made:** Finish designing EDA presentation.
 
 *Log created:*
 

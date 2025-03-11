@@ -151,6 +151,11 @@
 - **Team Member:** Adib
 - **Changes Made:** Rethink about LLM fine tuning. Look into using LoRA (Low Rank Adaptation), add relevant paper.
 
+- **Date:** 10-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Complete initial 5 ML models for checking evaluation parameter 
+
+
 *Log created:*
 
 - **Date:**

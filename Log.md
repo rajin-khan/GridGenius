@@ -123,9 +123,25 @@
 - **Team Member:** Adib
 - **Changes Made:** Add zone wise visualizations to EDA notebook.
 
+- **Date:** 07-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Again start preprocessing with different method on updated dataset
+
 - **Date:** 08-03-25
 - **Team Member:** Adib
 - **Changes Made:** Gather References and create checklist for EDA presentation.
+
+- **Date:** 08-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Complete Data Preprocessing: Outliers removal, Encoding, Features scaling. Make 4 dataset   combinations with different datapreprocessing technique 
+
+- **Date:** 09-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Start draft Model Training for evaluation matrix 
+
+- **Date:** 10-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Complete Random forest & Linear Regression for 4 dataset 
 
 - **Date:** 10-03-25
 - **Team Member:** Adib

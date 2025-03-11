@@ -131,6 +131,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Begin work for EDA presentation.
 
+- **Date:** 11-03-25
+- **Team Member:** Adib
+- **Changes Made:** Rethink about LLM fine tuning. Look into using LoRA (Low Rank Adaptation).
+
 *Log created:*
 
 - **Date:**

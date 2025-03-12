@@ -159,6 +159,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Finish designing EDA presentation.
 
+- **Date:** 12-03-25
+- **Team Member:** Adib
+- **Changes Made:** Finish creating and animating EDA presentation, restructure and organize repo.
+
 *Log created:*
 
 - **Date:**

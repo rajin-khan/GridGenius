@@ -163,6 +163,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Finish creating and animating EDA presentation, restructure and organize repo.
 
+- **Date:** 15-03-25
+- **Team Member:** Adib
+- **Changes Made:** Add 2 new papers on Energy Load Optimization in Bangladesh.
+
 *Log created:*
 
 - **Date:**

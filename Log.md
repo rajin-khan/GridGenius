@@ -167,6 +167,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Add 2 new papers on Energy Load Optimization in Bangladesh.
 
+- **Date:** 16-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Start working on LSTM and Transformer model
+
 *Log created:*
 
 - **Date:**

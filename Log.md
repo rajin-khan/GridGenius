@@ -171,6 +171,14 @@
 - **Team Member:** Lishad
 - **Changes Made:** Start working on LSTM and Transformer model
 
+- **Date:** 20-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Complete 1st basic Transformer model
+
+- **Date:** 20-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Start working to improve the models performance 
+
 *Log created:*
 
 - **Date:**

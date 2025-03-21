@@ -133,7 +133,7 @@
 
 - **Date:** 08-03-25
 - **Team Member:** Lishad
-- **Changes Made:** Complete Data Preprocessing: Outliers removal, Encoding, Features scaling. Make 4 dataset   combinations with different datapreprocessing technique 
+- **Changes Made:** Complete Data Preprocessing: Outliers removal, Encoding, Features scaling. Make 4 dataset combinations with different datapreprocessing techniques.
 
 - **Date:** 09-03-25
 - **Team Member:** Lishad
@@ -141,7 +141,7 @@
 
 - **Date:** 10-03-25
 - **Team Member:** Lishad
-- **Changes Made:** Complete Random forest & Linear Regression for 4 dataset 
+- **Changes Made:** Complete Random forest & Linear Regression for 4 datasets.
 
 - **Date:** 10-03-25
 - **Team Member:** Adib
@@ -153,7 +153,7 @@
 
 - **Date:** 10-03-25
 - **Team Member:** Lishad
-- **Changes Made:** Complete initial 5 ML models for checking evaluation parameter 
+- **Changes Made:** Complete initial 5 ML models for checking evaluation parameters.
 
 - **Date:** 11-03-25
 - **Team Member:** Adib
@@ -169,19 +169,31 @@
 
 - **Date:** 16-03-25
 - **Team Member:** Lishad
-- **Changes Made:** Start working on LSTM and Transformer model
+- **Changes Made:** Start working on LSTM and Transformer models.
+
+- **Date:** 18-03-25
+- **Team Member:** Adib
+- **Changes Made:** Research on LoRA fine tuning with mlx-lm, first attempt to fine tune.
 
 - **Date:** 20-03-25
 - **Team Member:** Lishad
-- **Changes Made:** Complete 1st basic Transformer model
+- **Changes Made:** Complete 1st basic Transformer model.
 
 - **Date:** 20-03-25
 - **Team Member:** Lishad
-- **Changes Made:** Start working to improve the models performance 
+- **Changes Made:** Start working to improve the model's performance.
+
+- **Date:** 20-03-25
+- **Team Member:** Adib
+- **Changes Made:** Learn about alternative methods to find tune with LoRA.
 
 - **Date:** 21-03-25
 - **Team Member:** Pranoy
 - **Changes Made:** Worked on Finding the summary, Novelties and short coming on the 4 related research papers.
+
+- **Date:** 21-03-25
+- **Team Member:** Adib
+- **Changes Made:** Finish creating and animating updated presentation slides with Literature Review and Novelties.
 
 *Log created:*
 

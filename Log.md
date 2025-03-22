@@ -195,6 +195,10 @@
 - **Team Member:** Adib
 - **Changes Made:** Finish creating and animating updated presentation slides with Literature Review and Novelties.
 
+- **Date:** 22-03-25
+- **Team Member:** Adib
+- **Changes Made:** Add the 'Attention is all you need' Paper.
+
 *Log created:*
 
 - **Date:**

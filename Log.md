@@ -199,6 +199,14 @@
 - **Team Member:** Adib
 - **Changes Made:** Add the 'Attention is all you need' Paper.
 
+- **Date:** 23-03-25
+- **Team Member:** Adib
+- **Changes Made:** Create temporary system-prompt induced model using llama3.2.
+
+- **Date:** 24-03-25
+- **Team Member:** Adib
+- **Changes Made:** Create and implement GridGenius Platform UI.
+
 *Log created:*
 
 - **Date:**

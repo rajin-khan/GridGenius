@@ -207,6 +207,14 @@
 - **Team Member:** Adib
 - **Changes Made:** Create and implement GridGenius Platform UI.
 
+- **Date:** 24-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Tuned transformer model with better result.
+
+- **Date:** 24-03-25
+- **Team Member:** Lishad
+- **Changes Made:** Start working on Arima & SArima model .
+
 *Log created:*
 
 - **Date:**

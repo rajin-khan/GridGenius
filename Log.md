@@ -51,6 +51,10 @@
 - **Changes Made:** Begin work on proposal presentation, after finalizing details with Lishad.
 
 - **Date:** 28-01-25
+- **Team Member:** Sadia
+- **Changes Made:** getting ideas and learning python.
+   
+- **Date:** 28-01-25
 - **Team Member:** Lishad
 - **Changes Made:** Done initial feature engineering: Add IsHoliday feature in the dataset. Extract holiday and weekend data from website and integrate it into the dataset 
 
@@ -69,6 +73,10 @@
 - **Date:** 01-02-25
 - **Team Member:** Lishad
 - **Changes Made:** Modify Season Data
+
+-  **Date:** 02-02-25
+- **Team Member:** Sadia
+- **Changes Made:** reading research papers related to seasonal energy demamnd for the project.
 
 - **Date:** 02-02-25
 - **Team Member:** Lishad
@@ -95,6 +103,18 @@
 - **Team Member:** Adib
 - **Changes Made:** Find and read more papers on transformer models and their use in time series forecasting
 
+- **Date:** 27-02-25
+- **Team Member:** Sadia
+- **Changes Made:** finding papers related to our topic.
+  
+- **Date:** 28-02-25
+- **Team Member:** Sadia
+- **Changes Made:** learning about LLM.
+
+- **Date:** 30-01-25
+- **Team Member:** Sadia
+- **Changes Made:** went through 4/5 papers from UK and Germany.
+  
 - **Date:** 02-03-25
 - **Team Member:** Adib
 - **Changes Made:** Add new papers to Papers folder created by Lishad

@@ -6,6 +6,10 @@
 - **Team Member:** Adib, Lishad, Pranoy, Sadia
 - **Changes Made:** Topics discussed with instructor, dataset searching emphasized.
 
+- **Date:** 30-01-25
+- **Team Member:** Sadia
+- **Changes Made:** working on finding dataset for the project.
+
 - **Date:** 23-01-25
 - **Team Member:** Adib
 - **Changes Made:** Searched and found pdfs for electricity generation on the BDBP website.
@@ -37,7 +41,7 @@
 - **Date:** 27-01-25
 - **Team Member:** Pranoy
 - **Changes Made:** Created an alternate proposal & also searched data (earthquake).
-
+ 
 - **Date:** 27-01-25
 - **Team Member:** Lishad
 - **Changes Made:** Worked on the proposal: selected the models ,defined each features and the project pipeline.
@@ -61,7 +65,7 @@
 - **Date:** 29-01-25
 - **Team Member:** Adib
 - **Changes Made:** Finish animating and finalizing the proposal presentation.
-
+- 
 - **Date:** 01-02-25
 - **Team Member:** Lishad
 - **Changes Made:** Modify Season Data

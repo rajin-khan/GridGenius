@@ -188,6 +188,14 @@
 - **Changes Made:** Learn about alternative methods to find tune with LoRA.
 
 - **Date:** 21-03-25
+- **Team Member:** Sadia
+- **Changes Made:** read all 4 related research papers.
+
+- **Date:** 21-03-25
+- **Team Member:** Sadia
+- **Changes Made:** Documented and worked on Finding the summary, Novelties and short coming on the 4 related research papers.
+
+- **Date:** 21-03-25
 - **Team Member:** Pranoy
 - **Changes Made:** Worked on Finding the summary, Novelties and short coming on the 4 related research papers.
 
@@ -215,6 +223,10 @@
 - **Team Member:** Lishad
 - **Changes Made:** Start working on Arima & SArima model .
 
+
+- **Date:** 09-04-25
+- **Team Member:** Sadia
+- **Changes Made:** researching on documentation of research paper.
 *Log created:*
 
 - **Date:**

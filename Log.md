@@ -251,6 +251,15 @@
 - **Date:** 09-04-25
 - **Team Member:** Sadia
 - **Changes Made:** researching on documentation of research paper.
+
+- **Date:** 11-04-25
+- **Team Member:** Lishad
+- **Changes Made:** Start report writing & Completed the introduction part
+
+- **Date:** 22-04-25
+- **Team Member:** Lishad
+- **Changes Made:** start working on backend part of website (prediction based on unseen random input) .
+
 *Log created:*
 
 - **Date:**

@@ -1,8 +1,8 @@
 // === Navbar Active Link ===
 document.addEventListener("DOMContentLoaded", () => {
-    const path = window.location.pathname.split("/").pop();
+    const path = window.location.pathname.split("/").pop() || "index.html"; // Default to index.html if path is empty
     const navLinks = document.querySelectorAll("nav a");
-  
+
     navLinks.forEach(link => {
       const href = link.getAttribute("href");
       if (href === path) {
@@ -11,112 +11,201 @@ document.addEventListener("DOMContentLoaded", () => {
         link.classList.remove("text-yellow-400");
       }
     });
+
+    // Initialize Lucide icons if they exist on the page
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    // Add click listener to send button if it exists
+    const sendButton = document.querySelector("button[data-lucide='send']");
+     if (sendButton && chatInput && chatLog) {
+        sendButton.addEventListener("click", handleSendMessage);
+     }
+});
+
+// === Home: Scroll to Ask Genius ===
+const scrollBtn = document.getElementById("explore-btn");
+if (scrollBtn) {
+  scrollBtn.addEventListener("click", () => {
+    window.location.href = "ask.html";
   });
-  
-  // === Home: Scroll to Ask Genius ===
-  const scrollBtn = document.getElementById("explore-btn");
-  if (scrollBtn) {
-    scrollBtn.addEventListener("click", () => {
-      window.location.href = "ask.html";
-    });
-  }
-  
-  // === Chat ===
-  const chatInput = document.getElementById("chat-input");
-  const chatLog = document.getElementById("chat-log");
-  
-  if (chatInput && chatLog) {
-    chatInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && chatInput.value.trim() !== "") {
+}
+
+// === Chat ===
+const chatInput = document.getElementById("chat-input");
+const chatLog = document.getElementById("chat-log");
+let chatHistory = []; // Keep track of the conversation
+
+// Function to handle sending message (used by Enter key and button click)
+function handleSendMessage() {
+    if (chatInput.value.trim() !== "") {
         const userMsg = chatInput.value.trim();
         appendMessage("You", userMsg, "user");
-  
-        showTypingIndicator();
-  
-        setTimeout(async () => {
-          await streamLLMResponse(userMsg);
-          removeTypingIndicator();
-        }, 800);
-  
-        chatInput.value = "";
-      }
-    });
-  }
-  
-  // === Append Message Bubble ===
-  function appendMessage(sender, msg, type, timestamp = true) {
-    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  
-    const bubble = document.createElement("div");
-    bubble.className = `
-      max-w-[75%] px-4 py-3 rounded-xl text-sm 
-      ${type === "user" ? "bg-white/10 self-end text-white" : "bg-yellow-400/10 self-start text-white"}
-      animate-fade-in shadow-sm`;
-  
-    bubble.innerHTML = `
-      <div class="text-xs mb-1 ${type === "user" ? "text-gray-400 text-right" : "text-yellow-400"} font-semibold">
-        ${sender}
-      </div>
-      <div>${msg}</div>
-      ${timestamp ? `<div class="text-[10px] text-gray-500 mt-1 ${type === "user" ? "text-right" : "text-left"}">${time}</div>` : ""}
-    `;
-  
-    const wrapper = document.createElement("div");
-    wrapper.className = `flex flex-col ${type === "user" ? "items-end" : "items-start"}`;
-    wrapper.appendChild(bubble);
-  
-    chatLog.appendChild(wrapper);
-    chatLog.scrollTop = chatLog.scrollHeight;
-  }
-  
-  // === Typing Indicator ===
-  function showTypingIndicator() {
-    const typingDiv = document.createElement("div");
-    typingDiv.id = "typing-indicator";
-    typingDiv.className = "text-yellow-400 text-sm italic mb-2 animate-pulse";
-    typingDiv.innerText = "GridGenius is thinking...";
-    chatLog.appendChild(typingDiv);
-    chatLog.scrollTop = chatLog.scrollHeight;
-  }
-  
-  function removeTypingIndicator() {
-    const typingDiv = document.getElementById("typing-indicator");
-    if (typingDiv) typingDiv.remove();
-  }
-  
-  // === Streaming LLM Response ===
-  let chatHistory = [];
+        chatHistory.push({ role: "user", content: userMsg });
 
-  async function streamLLMResponse(userInput) {
-    try {
-      chatHistory.push({ role: "user", content: userInput });
-  
-      // Limit chatHistory to last 10 exchanges (5 user + 5 assistant)
-      if (chatHistory.length > 10) {
-        chatHistory = chatHistory.slice(chatHistory.length - 10);
-      }
-  
-      const response = await fetch("http://localhost:8000/query/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_history: chatHistory })
-      });
-  
-      const data = await response.json();
-      const botMessage = data.answer || "⚡ No answer received.";
-  
-      chatHistory.push({ role: "assistant", content: botMessage });
-  
-      // Again keep max 10 messages after bot reply
-      if (chatHistory.length > 10) {
-        chatHistory = chatHistory.slice(chatHistory.length - 10);
-      }
-  
-      appendMessage("GridGenius", botMessage, "bot");
-  
-    } catch (err) {
-      console.error("Error fetching from RAG backend:", err);
-      appendMessage("GridGenius", "⚠️ GridGenius is offline or unavailable.", "bot");
+        // Limit chatHistory before sending
+        if (chatHistory.length > 10) {
+          chatHistory = chatHistory.slice(chatHistory.length - 10);
+        }
+
+        showTypingIndicator();
+
+        // Call the streaming function
+        streamLLMResponse(chatHistory)
+          .catch(err => {
+              console.error("Error during streaming:", err);
+              removeTypingIndicator();
+              appendMessage("GridGenius", "⚠️ Error receiving response.", "bot");
+          });
+
+        chatInput.value = "";
     }
-  }
-  
+}
+
+if (chatInput && chatLog) {
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { // Allow Shift+Enter for newlines if needed later
+      e.preventDefault(); // Prevent default newline insertion
+      handleSendMessage();
+    }
+  });
+}
+
+
+// === Append Message Bubble ===
+function appendMessage(sender, msg, type, timestamp = true) {
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const bubble = document.createElement("div");
+  bubble.className = `
+    max-w-[75%] px-4 py-3 rounded-xl text-sm
+    ${type === "user" ? "bg-white/10 self-end text-white" : "bg-yellow-400/10 self-start text-white"}
+    animate-fade-in shadow-sm message-bubble`; // Add message-bubble class
+
+  // Use marked.parse for bot messages to render markdown
+  const contentHTML = (type === "bot") ? marked.parse(msg) : escapeHTML(msg); // Escape user HTML
+
+  bubble.innerHTML = `
+    <div class="text-xs mb-1 ${type === "user" ? "text-gray-400 text-right" : "text-yellow-400"} font-semibold">
+      ${sender}
+    </div>
+    <div class="message-content prose prose-invert prose-sm max-w-none">${contentHTML}</div>
+    ${timestamp ? `<div class="timestamp text-[10px] text-gray-500 mt-1 ${type === "user" ? "text-right" : "text-left"}">${time}</div>` : ""}
+  `;
+
+  const wrapper = document.createElement("div");
+  wrapper.className = `flex flex-col ${type === "user" ? "items-end" : "items-start"}`;
+  wrapper.appendChild(bubble);
+
+  chatLog.appendChild(wrapper);
+  chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
+
+  return bubble; // Return the created bubble element
+}
+
+// Helper to escape HTML
+function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+
+// === Typing Indicator ===
+function showTypingIndicator() {
+  // Remove existing indicator first if any
+  removeTypingIndicator();
+  const typingDiv = document.createElement("div");
+  typingDiv.id = "typing-indicator";
+  // Use bot styling for consistency
+  typingDiv.className = `flex flex-col items-start`;
+  typingDiv.innerHTML = `
+      <div class="max-w-[75%] px-4 py-3 rounded-xl text-sm bg-yellow-400/10 self-start text-white animate-pulse shadow-sm">
+          <div class="text-xs mb-1 text-yellow-400 font-semibold">GridGenius</div>
+          <div>Thinking...</div>
+      </div>
+  `;
+  chatLog.appendChild(typingDiv);
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  const typingDiv = document.getElementById("typing-indicator");
+  if (typingDiv) typingDiv.remove();
+}
+
+
+// === Streaming LLM Response ===
+async function streamLLMResponse(currentChatHistory) {
+    let botMessageBubble = null;
+    let botContentElement = null;
+    let accumulatedResponse = "";
+    const decoder = new TextDecoder();
+
+    try {
+        const response = await fetch("http://localhost:8000/query/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_history: currentChatHistory }) // Send current history
+        });
+
+        removeTypingIndicator(); // Remove indicator once stream starts
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`API Error (${response.status}): ${errorText}`);
+        }
+
+        const reader = response.body.getReader();
+
+        // Create the initial bubble (empty or with a placeholder)
+        // Create bubble without timestamp initially
+        botMessageBubble = appendMessage("GridGenius", "", "bot", false);
+        botContentElement = botMessageBubble.querySelector(".message-content");
+        if (!botContentElement) {
+            console.error("Could not find .message-content in bot bubble");
+            return; // Exit if structure is wrong
+        }
+        botContentElement.innerHTML = ''; // Start empty
+
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) {
+                // Add timestamp once message is complete
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const timestampDiv = document.createElement('div');
+                timestampDiv.className = "timestamp text-[10px] text-gray-500 mt-1 text-left";
+                timestampDiv.textContent = time;
+                botMessageBubble.appendChild(timestampDiv); // Append timestamp at the end
+
+                // Add final response to client-side history AFTER stream is done
+                chatHistory.push({ role: "assistant", content: accumulatedResponse });
+                // Limit history again after bot reply
+                 if (chatHistory.length > 10) {
+                    chatHistory = chatHistory.slice(chatHistory.length - 10);
+                 }
+                break; // Exit the loop
+            }
+
+            const chunk = decoder.decode(value, { stream: true });
+            accumulatedResponse += chunk;
+
+            // Render markdown progressively
+            botContentElement.innerHTML = marked.parse(accumulatedResponse);
+
+            chatLog.scrollTop = chatLog.scrollHeight; // Keep scrolling to bottom
+        }
+
+    } catch (err) {
+        console.error("Error fetching or streaming from RAG backend:", err);
+        removeTypingIndicator(); // Ensure indicator is removed on error
+        // If a bubble was partially created, indicate error there or add a new one
+        if (botContentElement) {
+             botContentElement.innerHTML += "<br>⚠️ Error receiving full response.";
+        } else {
+             appendMessage("GridGenius", `⚠️ Streaming Error: ${err.message}`, "bot");
+        }
+        // Don't add potentially broken response to history
+    }
+}

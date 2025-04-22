@@ -7,7 +7,7 @@
   <title>Ask GridGenius</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script>window.onload = () => lucide.createIcons();</script>
+  <!-- Defer Lucide initialization until DOM is loaded -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="script.js"></script>
@@ -21,47 +21,96 @@
       animation: fade-in 0.3s ease-out;
     }
 
-    .prose :where(code) {
-      background-color: #1f2937;
+    /* Tailwind prose plugin overrides for code blocks */
+    .prose :where(code):not(:where([class~="not-prose"] *)) {
+      background-color: #1f2937; /* bg-gray-800 */
       padding: 0.2em 0.4em;
       border-radius: 0.25rem;
+      font-weight: normal; /* Reset potential bolding */
+      color: #d1d5db; /* text-gray-300 */
+    }
+     /* Ensure code within pre has no extra background */
+    .prose :where(pre) :where(code):not(:where([class~="not-prose"] *)) {
+        background-color: transparent;
+        padding: 0;
+        border-radius: 0;
     }
 
-    .prose :where(pre) {
-      background-color: #1f2937;
+
+    .prose :where(pre):not(:where([class~="not-prose"] *)) {
+      background-color: #111827; /* bg-gray-900 slightly darker */
+      border: 1px solid #374151; /* border-gray-700 */
+      color: #d1d5db; /* text-gray-300 */
       padding: 1em;
-      border-radius: 0.5rem;
+      border-radius: 0.5rem; /* rounded-lg */
       overflow-x: auto;
+      font-size: 0.875em; /* Slightly smaller font size */
     }
+
+     /* Custom scrollbar for chat log (optional enhancement) */
+    #chat-log::-webkit-scrollbar {
+        width: 8px;
+    }
+    #chat-log::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05); /* bg-white/5 */
+        border-radius: 10px;
+    }
+    #chat-log::-webkit-scrollbar-thumb {
+        background-color: rgba(251, 191, 36, 0.5); /* bg-yellow-400/50 */
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.05); /* bg-white/5 */
+    }
+     #chat-log {
+         scrollbar-width: thin;
+         scrollbar-color: rgba(251, 191, 36, 0.5) rgba(255, 255, 255, 0.05);
+         scroll-behavior: smooth; /* Add smooth scrolling */
+     }
   </style>
 </head>
-<body class="bg-black text-white font-[Inter]">
+<body class="bg-black text-white font-[Inter] flex flex-col min-h-screen">
 
-  <!-- Navbar -->
+  <!-- Navbar - Remains fixed -->
   <nav class="bg-black/80 border-b border-white/10 backdrop-blur fixed w-full z-10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold">GridGenius</h1>
       <ul class="flex gap-6 text-sm font-medium text-white/80">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="ask.html">Ask Genius</a></li>
-        <li><a href="insights.html">Insights</a></li>
-        <li><a href="visuals.html">Visuals</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a></li>
+        <li><a href="ask.html" class="hover:text-yellow-400 transition-colors">Ask Genius</a></li>
+        <li><a href="insights.html" class="hover:text-yellow-400 transition-colors">Insights</a></li>
+        <li><a href="visuals.html" class="hover:text-yellow-400 transition-colors">Visuals</a></li>
+        <li><a href="about.html" class="hover:text-yellow-400 transition-colors">About</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Chat -->
-  <main class="pt-24 px-8 lg:px-20 min-h-screen flex flex-col justify-between pb-10">
-    <div>
-      <h2 class="text-3xl font-semibold text-white mb-6">Ask GridGenius</h2>
-      <div id="chat-log" class="bg-white/5 rounded-2xl p-6 space-y-4 max-h-[60vh] overflow-y-auto flex flex-col">
-        <!-- Chat messages will be appended here -->
+  <!-- Chat Area - Uses flex-grow to take remaining space -->
+  <main class="flex-grow flex flex-col pt-24 pb-10 px-4 sm:px-6 lg:px-8">
+     <!-- Centering container -->
+    <div class="max-w-4xl w-full mx-auto flex flex-col flex-grow">
+
+      <h2 class="text-3xl font-semibold text-white mb-6 text-center sm:text-left">Ask GridGenius</h2>
+
+      <!-- Chat Log Container - This grows -->
+      <div id="chat-log-container" class="flex-grow overflow-hidden mb-4">
+        <div id="chat-log" class="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4 h-full overflow-y-auto flex flex-col">
+          <!-- Initial Welcome Message (optional, can be added via JS) -->
+           <div class="self-center text-center text-gray-500 text-sm p-4">
+                Welcome to GridGenius! Ask me anything about the project. (sent 'start' to initiate)
+           </div>
+          <!-- Chat messages will be appended here -->
+        </div>
       </div>
-    </div>
-    <div class="mt-6 flex items-center gap-4">
-      <input id="chat-input" type="text" placeholder="Ask something..." class="flex-1 bg-white/10 text-white p-4 rounded-xl placeholder-gray-400 focus:outline-none" />
-      <button class="bg-yellow-400 text-black p-3 rounded-xl hover:scale-105 transition"><i data-lucide="send" class="w-5 h-5"></i></button>
+
+      <!-- Input Area Wrapper -->
+      <div class="mt-auto"> <!-- Ensures it stays at the bottom -->
+         <div class="flex items-center gap-3 bg-white/10 border border-white/10 p-3 rounded-xl focus-within:ring-2 focus-within:ring-yellow-400/50 transition-shadow duration-200">
+            <input id="chat-input" type="text" placeholder="Ask something about the GridGenius project..." class="flex-1 bg-transparent text-white p-1 placeholder-gray-400 focus:outline-none" />
+            <button aria-label="Send message" class="bg-yellow-400 text-black p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-black/50">
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+         </div>
+       </div>
+
     </div>
   </main>
 </body>

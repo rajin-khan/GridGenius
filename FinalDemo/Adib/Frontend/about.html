@@ -1,4 +1,3 @@
-<!-- about.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,35 +6,139 @@
   <title>GridGenius - About</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script>window.onload = () => lucide.createIcons();</script>
+  <!-- Defer Lucide initialization -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
   <script defer src="script.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
 </head>
 <body class="bg-black text-white font-[Inter]">
 
-  <nav class="bg-black/80 border-b border-white/10 backdrop-blur fixed w-full z-10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">GridGenius</h1>
-      <ul class="flex gap-6 text-sm font-medium text-white/80">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="ask.html">Ask Genius</a></li>
-        <li><a href="insights.html">Insights</a></li>
-        <li><a href="visuals.html">Visuals</a></li>
-        <li><a href="about.html">About</a></li>
-      </ul>
-    </div>
-  </nav>
+    <!-- Navbar -->
+    <nav class="bg-black/80 border-b border-white/10 backdrop-blur fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <h1 class="text-2xl font-bold">GridGenius</h1>
+          <ul class="flex gap-6 text-sm font-medium text-white/80">
+            <li><a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a></li>
+            <li><a href="ask.html" class="hover:text-yellow-400 transition-colors">Ask Genius</a></li>
+            <li><a href="predict.html" class="hover:text-yellow-400 transition-colors">Predict</a></li>
+            <li><a href="insights.html" class="hover:text-yellow-400 transition-colors">Insights</a></li>
+            <li><a href="about.html" class="hover:text-yellow-400 transition-colors">About</a></li>
+          </ul>
+        </div>
+    </nav>
 
-  <main class="pt-24 px-8 lg:px-20 min-h-screen flex flex-col gap-6 justify-center">
-    <h2 class="text-3xl font-semibold text-yellow-400">About GridGenius</h2>
-    <p class="text-gray-300 max-w-2xl">
-      GridGenius is a fine-tuned LLM assistant designed for optimizing national energy generation and usage. Trained on datasets including real-time consumption, climate, and regional patterns, it empowers operators, researchers, and policy makers with actionable forecasts and insights.
-    </p>
-    <ul class="list-disc text-gray-400 pl-6">
-      <li>Created by Adib and team</li>
-      <li>Combines time-series models with transformers</li>
-      <li>Focused on explainability + sustainability</li>
-    </ul>
+  <!-- Main Content Area -->
+  <main class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 min-h-screen">
+    <!-- Intro -->
+    <div class="max-w-4xl mx-auto text-center mb-16">
+        <h2 class="text-4xl font-bold text-yellow-400 mb-6">About GridGenius</h2>
+        <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            GridGenius is an AI-Powered Energy Optimization System developed to tackle the challenges of energy management in Bangladesh. By leveraging historical data and advanced machine learning, it aims to provide accurate energy demand forecasts and actionable insights for a more efficient and sustainable energy future.
+        </p>
+    </div>
+
+    <!-- Features Section -->
+    <section class="max-w-5xl mx-auto mb-16">
+        <h3 class="text-2xl font-semibold text-center text-white mb-10">Core Features & Goals</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white/5 p-6 rounded-xl text-center ring-1 ring-white/10 hover:ring-yellow-400/50 hover:bg-white/10 transition-all duration-200">
+                <div class="inline-flex items-center justify-center p-3 bg-yellow-400/10 rounded-full mb-4">
+                    <i data-lucide="line-chart" class="w-6 h-6 text-yellow-400"></i>
+                </div>
+                <h4 class="text-lg font-semibold mb-2">Accurate Forecasting</h4>
+                <p class="text-sm text-gray-400">Utilizes ML models (including Transformers) trained on years of daily data to predict energy demand.</p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-white/5 p-6 rounded-xl text-center ring-1 ring-white/10 hover:ring-yellow-400/50 hover:bg-white/10 transition-all duration-200">
+                 <div class="inline-flex items-center justify-center p-3 bg-yellow-400/10 rounded-full mb-4">
+                    <i data-lucide="brain-circuit" class="w-6 h-6 text-yellow-400"></i>
+                </div>
+                <h4 class="text-lg font-semibold mb-2">LLM-Powered Insights</h4>
+                <p class="text-sm text-gray-400">Integrates an LLM (via RAG) to explain data trends, model behavior, and project details conversationally.</p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-white/5 p-6 rounded-xl text-center ring-1 ring-white/10 hover:ring-yellow-400/50 hover:bg-white/10 transition-all duration-200">
+                 <div class="inline-flex items-center justify-center p-3 bg-yellow-400/10 rounded-full mb-4">
+                     <i data-lucide="leaf" class="w-6 h-6 text-yellow-400"></i>
+                </div>
+                <h4 class="text-lg font-semibold mb-2">Optimization & Sustainability</h4>
+                <p class="text-sm text-gray-400">Aims to reduce resource wastage and lower carbon footprint by enabling optimized energy generation based on predicted needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach & Technology -->
+    <section class="max-w-5xl mx-auto mb-16 text-center">
+        <h3 class="text-2xl font-semibold text-white mb-6">Our Approach</h3>
+        <div class="bg-white/5 p-8 rounded-xl inline-block ring-1 ring-white/10">
+            <p class="text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                GridGenius employs a <strong class="text-yellow-400/90">hybrid approach</strong>, combining traditional Machine Learning (like XGBoost, Random Forest), Deep Learning (Transformers), and Large Language Models (LLM via RAG). Our foundation is a <strong class="text-yellow-400/90">custom-built dataset</strong> meticulously scraped and cleaned from official BPDB reports spanning 2020-2024.
+            </p>
+            <div class="mt-4 text-sm text-gray-500">
+                Key Technologies: Python, Pandas, Scikit-Learn, XGBoost, FastAPI, ChromaDB, Groq, Tailwind CSS, Vanilla JS.
+            </div>
+        </div>
+    </section>
+
+     <!-- Team Section -->
+    <section class="max-w-6xl mx-auto mt-16">
+        <h3 class="text-2xl font-semibold text-center text-white mb-4">Meet the Team</h3>
+        <p class="text-center text-gray-400 text-sm mb-10">GridGenius is a research project by team 'Human Forgetting' at North South University.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Team Member Card 1 -->
+            <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-lg border border-white/10 text-center flex flex-col items-center transition duration-300 hover:border-yellow-400/50 hover:shadow-xl hover:shadow-yellow-400/10">
+                 <img src="assets/pfps/rajin-main.jpg" alt="Adib Ar Rahman Khan" class="w-20 h-20 rounded-full mb-4 border-2 border-yellow-400/50">
+                <p class="font-semibold text-lg mb-1">Adib Ar Rahman Khan</p>
+                <p class="text-xs text-gray-500 mb-4">North South University</p>
+                <div class="flex space-x-3 text-gray-400 mt-auto pt-3 border-t border-white/10 w-full justify-center">
+                    <a href="https://github.com/rajin-khan" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                    <a href="https://www.linkedin.com/in/rajin-khan/" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    <a href="https://www.rajinkhan.com/" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+
+            <!-- Team Member Card 2 -->
+             <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-lg border border-white/10 text-center flex flex-col items-center transition duration-300 hover:border-yellow-400/50 hover:shadow-xl hover:shadow-yellow-400/10">
+                <img src="assets/pfps/lishad-main.jpeg" alt="Aurongojeb Lishad" class="w-20 h-20 rounded-full mb-4 border-2 border-yellow-400/50">
+                <p class="font-semibold text-lg mb-1">Aurongojeb Lishad</p>
+                <p class="text-xs text-gray-500 mb-4">North South University</p>
+                <div class="flex space-x-3 text-gray-400 mt-auto pt-3 border-t border-white/10 w-full justify-center">
+                    <a href="https://github.com/Lishad-02" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                    <a href="https://www.linkedin.com/in/aurongojeb-lishad-347851282/" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    <a href="https://lishad-info.netlify.app/" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            
+            <!-- Team Member Card 4 -->
+             <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-lg border border-white/10 text-center flex flex-col items-center transition duration-300 hover:border-yellow-400/50 hover:shadow-xl hover:shadow-yellow-400/10">
+                <img src="assets/pfps/sadia-main.jpg" alt="Sadia Islam Mou" class="w-20 h-20 rounded-full mb-4 border-2 border-yellow-400/50">
+                <p class="font-semibold text-lg mb-1">Sadia Islam Mou</p>
+                <p class="text-xs text-gray-500 mb-4">North South University</p>
+                <div class="flex space-x-3 text-gray-400 mt-auto pt-3 border-t border-white/10 w-full justify-center">
+                    <a href="https://github.com/Sadiaa55" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                    <a href="https://www.linkedin.com/in/sadia-islam-mou-12a446285/" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    <a href="https://www.facebook.com/share/19Jj6RE413/?mibextid=wwXIfr" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+
+            <!-- Team Member Card 3 -->
+             <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-lg border border-white/10 text-center flex flex-col items-center transition duration-300 hover:border-yellow-400/50 hover:shadow-xl hover:shadow-yellow-400/10">
+                <img src="assets/pfps/pranoy-main.jpg" alt="Pranoy Saha" class="w-20 h-20 rounded-full mb-4 border-2 border-yellow-400/50">
+                <p class="font-semibold text-lg mb-1">Pranoy Saha</p>
+                <p class="text-xs text-gray-500 mb-4">North South University</p>
+                <div class="flex space-x-3 text-gray-400 mt-auto pt-3 border-t border-white/10 w-full justify-center">
+                    <a href="https://github.com/Pranoy28" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                    <a href="#" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    <a href="#" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
   </main>
 </body>
 </html>

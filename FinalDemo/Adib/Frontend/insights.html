@@ -1,47 +1,198 @@
-<!-- insights.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GridGenius - Insights</title>
+  <title>GridGenius - Data Insights</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script>window.onload = () => lucide.createIcons();</script>
+  <!-- Defer Lucide initialization -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
   <script defer src="script.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+
+    /* --- Enhanced Modal Styles --- */
+    #imageModal {
+      opacity: 0; visibility: hidden; transform: scale(0.95);
+      transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s, transform 0.3s ease-in-out;
+    }
+    #imageModal.modal-visible {
+      opacity: 1; visibility: visible; transform: scale(1);
+      transition: opacity 0.3s ease-in-out, visibility 0s linear 0s, transform 0.3s ease-in-out;
+    }
+    .modal-image-scroll-wrapper::-webkit-scrollbar { width: 8px; height: 8px; }
+    .modal-image-scroll-wrapper::-webkit-scrollbar-track { background: rgba(50, 50, 50, 0.5); border-radius: 10px; }
+    .modal-image-scroll-wrapper::-webkit-scrollbar-thumb {
+      background-color: rgba(251, 191, 36, 0.6); border-radius: 10px;
+      border: 2px solid transparent; background-clip: content-box;
+    }
+    .modal-image-scroll-wrapper {
+      scrollbar-width: thin; scrollbar-color: rgba(251, 191, 36, 0.6) rgba(50, 50, 50, 0.5);
+    }
+  </style>
 </head>
 <body class="bg-black text-white font-[Inter]">
 
+  <!-- Navbar -->
   <nav class="bg-black/80 border-b border-white/10 backdrop-blur fixed w-full z-10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold">GridGenius</h1>
       <ul class="flex gap-6 text-sm font-medium text-white/80">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="ask.html">Ask Genius</a></li>
-        <li><a href="insights.html">Insights</a></li>
-        <li><a href="visuals.html">Visuals</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a></li>
+        <li><a href="ask.html" class="hover:text-yellow-400 transition-colors">Ask Genius</a></li>
+        <li><a href="predict.html" class="hover:text-yellow-400 transition-colors">Predict</a></li>
+        <li><a href="insights.html" class="hover:text-yellow-400 transition-colors">Insights</a></li>
+        <li><a href="about.html" class="hover:text-yellow-400 transition-colors">About</a></li>
       </ul>
     </div>
   </nav>
 
-  <main class="pt-24 px-8 lg:px-20 min-h-screen flex flex-col gap-8 justify-center">
-    <h2 class="text-3xl font-semibold text-yellow-400">Live Insights</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <div class="bg-white/5 p-6 rounded-2xl shadow hover:shadow-xl transition">
-        <p class="text-sm text-gray-400">Current Load</p>
-        <h3 class="text-3xl font-bold">9.3 GW</h3>
+  <!-- Main Content Area -->
+  <main class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 min-h-screen"> <!-- Increased top padding -->
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Section Header: EDA -->
+      <div class="mb-12 text-center">
+          <h2 class="text-3xl font-semibold text-yellow-400 inline-flex items-center gap-3 mb-2">
+              <i data-lucide="search" class="w-7 h-7"></i>
+              <span>Exploratory Data Analysis</span>
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">Visual insights derived from the historical Bangladesh energy dataset (2020-2024).</p>
       </div>
-      <div class="bg-white/5 p-6 rounded-2xl shadow hover:shadow-xl transition">
-        <p class="text-sm text-gray-400">Forecast Accuracy</p>
-        <h3 class="text-3xl font-bold">98.4%</h3>
-      </div>
-      <div class="bg-white/5 p-6 rounded-2xl shadow hover:shadow-xl transition">
-        <p class="text-sm text-gray-400">Efficiency Boost</p>
-        <h3 class="text-3xl font-bold">+14.2%</h3>
-      </div>
+
+      <!-- EDA Insights Grid -->
+      <div id="insights-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
+        <!-- Card: Demand Distribution -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/energy_demand_distribution.png" alt="Distribution of Energy Demand Histogram" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Demand Distribution</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Shows a spread-out distribution, slightly right-skewed. Most frequent demand is around 12,000–14,000 MW.</p>
+          </div>
+        </div>
+        <!-- Card: Generation Distribution -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/energy_generation_distribution.png" alt="Distribution of Energy Generation Histogram" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Generation Distribution</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Clearly skewed right, indicating higher generation levels are more common. The most frequent value is near 15,000 MW.</p>
+          </div>
+        </div>
+        <!-- Card: Temperature Distribution -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/temperature_distribution.png" alt="Distribution of Temperature Histogram" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Temperature Distribution</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Most frequent temperature range observed is ~28°C to 31°C, typical for Bangladesh's climate.</p>
+          </div>
+        </div>
+        <!-- Card: Demand by Season -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/demand_by_season.png" alt="Box Plot of Demand by Season" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Seasonal Demand Impact</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Average energy demand is significantly lower in Low Temperature Seasons (~10k MW) compared to High Temperature Seasons (~13k MW).</p>
+          </div>
+        </div>
+        <!-- Card: Demand by Holidays -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/demand_by_holidays.png" alt="Box Plot of Demand on Holidays vs Non-Holidays" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Holiday Demand Impact</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Counter-intuitively, average demand is lower on holidays, likely due to reduced industrial activity and holiday timing during cooler seasons.</p>
+          </div>
+        </div>
+         <!-- Card: Generation by Zone (Pie) -->
+         <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+           <img src="assets/insights/generation_by_zone_pie.png" alt="Pie Chart of Total Energy Generation by Zone" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+           <div class="p-5 md:p-6 flex flex-col flex-grow">
+             <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Regional Generation Share</h3>
+             <p class="text-xs md:text-sm text-gray-400 flex-grow">Highlights major energy-generating zones like Cumilla, Khulna, Rajshahi. Dhaka shows relatively lower generation despite population density.</p>
+           </div>
+         </div>
+         <!-- Card: Demand/Temp Time Series -->
+         <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+           <img src="assets/insights/demand_temperature_ts.png" alt="Time Series of Energy Demand and Temperature" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+           <div class="p-5 md:p-6 flex flex-col flex-grow">
+             <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Demand & Temp Over Time</h3>
+             <p class="text-xs md:text-sm text-gray-400 flex-grow">Strong positive correlation shown over time. Both follow similar annual cycles, peaking in warmer months.</p>
+           </div>
+         </div>
+        <!-- Card: Demand/Gen Gap Time Series -->
+         <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+           <img src="assets/insights/demand_generation_ts.png" alt="Time Series of Demand-Generation Gap" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+           <div class="p-5 md:p-6 flex flex-col flex-grow">
+             <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Demand-Generation Gap Trend</h3>
+             <p class="text-xs md:text-sm text-gray-400 flex-grow">Gap narrowed post-2022, but frequent dips below zero indicate persistent optimization challenges and potential load shedding.</p>
+           </div>
+         </div>
+         <!-- Card: Heatmap -->
+         <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+           <img src="assets/insights/heatmap.png" alt="Correlation Heatmap of Dataset Features" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+           <div class="p-5 md:p-6 flex flex-col flex-grow">
+             <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Feature Correlation</h3>
+             <p class="text-xs md:text-sm text-gray-400 flex-grow">Visualizes correlations. Strong positive links: Temp/Demand (0.78), Temp/Generation (0.71). Negative link: Demand/Gap (-0.65).</p>
+           </div>
+         </div>
+         <!-- Add more cards as needed -->
+      </div> <!-- End EDA Grid -->
+
+      <hr class="border-white/10 my-16"> <!-- Separator -->
+
+      <!-- Section Header: Model Performance -->
+      <div class="mb-12 text-center">
+           <h2 class="text-3xl font-semibold text-yellow-400 inline-flex items-center gap-3 mb-2">
+               <i data-lucide="target" class="w-7 h-7"></i>
+               <span>Model Performance Snapshots</span>
+           </h2>
+           <p class="text-gray-400 max-w-2xl mx-auto">Visual comparison of actual vs. predicted energy demand for selected models.</p>
+       </div>
+
+      <!-- Model Results Grid -->
+      <div id="model-results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <!-- Card: Random Forest Results -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/random_forest_results.png" alt="Actual vs Predicted Demand (Random Forest)" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Random Forest Prediction</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Shows actual vs. predicted demand using the Random Forest model. Achieved high R2 (~0.90) and low errors in initial tests.</p>
+          </div>
+        </div>
+        <!-- Card: XGBoost Results -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/xgboost_results.png" alt="Actual vs Predicted Demand Over Time (XGBoost)" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">XGBoost Prediction</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Actual vs. predicted demand over time using XGBoost. Also performed strongly with R2 ~0.90 and low errors.</p>
+          </div>
+        </div>
+        <!-- Card: Linear Regression Results -->
+        <div class="insight-card bg-white/5 rounded-2xl shadow-lg overflow-hidden flex flex-col transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-yellow-400/20 ring-1 ring-white/10 hover:ring-yellow-400/50">
+          <img src="assets/insights/linear_regression_results.png" alt="Actual vs Predicted Demand (Linear Regression)" class="w-full h-52 md:h-56 object-cover bg-gray-800 cursor-pointer">
+          <div class="p-5 md:p-6 flex flex-col flex-grow">
+            <h3 class="text-lg md:text-xl font-semibold text-yellow-400 mb-2">Linear Regression Prediction</h3>
+            <p class="text-xs md:text-sm text-gray-400 flex-grow">Baseline comparison showing actual vs. predicted demand for Linear Regression. R2 score was lower (~0.85).</p>
+          </div>
+        </div>
+         <!-- Add more cards as needed -->
+      </div><!-- End Model Results Grid -->
+
     </div>
   </main>
+
+  <!-- Image Modal (Keep as is) -->
+  <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="modal-content bg-black border border-white/10 p-4 rounded-lg shadow-xl max-w-4xl w-full max-h-[85vh] relative flex flex-col">
+      <button id="modal-close-btn" aria-label="Close image viewer" class="absolute -top-3 -right-3 z-20 bg-yellow-400 text-black rounded-full p-1.5 hover:bg-yellow-300 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-black">
+        <i data-lucide="x" class="w-5 h-5 block"></i>
+      </button>
+      <div class="modal-image-scroll-wrapper flex-grow overflow-auto rounded">
+          <img id="modal-image" src="" alt="Enlarged Insight Visualization" class="block object-contain w-full h-full mx-auto" />
+      </div>
+    </div>
+  </div>
+  <!-- End Image Modal -->
+
 </body>
 </html>

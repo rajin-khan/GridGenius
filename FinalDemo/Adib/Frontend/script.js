@@ -24,6 +24,101 @@ document.addEventListener("DOMContentLoaded", () => {
      }
 });
 
+// === Image Modal Functionality ===
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modal-image');
+    const closeModalBtn = document.getElementById('modal-close-btn');
+    // Use a more specific class for clickable items if needed, otherwise query grids
+    const insightImages = document.querySelectorAll('#insights-grid img, #model-results-grid img');
+    const body = document.body;
+
+    if (modal && modalImage && closeModalBtn && insightImages.length > 0) {
+        console.log(`Found ${insightImages.length} insight images for modal.`);
+
+        const openModal = (imgSrc, imgAlt) => {
+            modalImage.src = imgSrc;
+            modalImage.alt = imgAlt || "Enlarged Insight Visualization";
+
+            // Remove hidden first (or ensure it's not display:none)
+            // We rely on the CSS for initial state (opacity-0, invisible, scale-95)
+            // The 'hidden' class might interfere, let's manage visibility via CSS classes instead
+            modal.style.display = 'flex'; // Ensure it's display:flex
+
+            // Force repaint/reflow before adding the visible class
+            void modal.offsetWidth;
+
+            // Add the class that triggers the transition
+            modal.classList.add('modal-visible');
+            body.style.overflow = 'hidden'; // Prevent background scrolling
+
+            // Initialize close button icon if needed
+            if (typeof lucide !== 'undefined') {
+                const closeIcon = closeModalBtn.querySelector('i[data-lucide="x"]');
+                if (closeIcon && !closeIcon.getAttribute('data-lucide-rendered')) {
+                    lucide.createIcons({ nodes: [closeIcon] });
+                    closeIcon.setAttribute('data-lucide-rendered', 'true');
+                }
+            }
+        };
+
+        const closeModal = () => {
+            // Remove the class that makes it visible
+            modal.classList.remove('modal-visible');
+            body.style.overflow = ''; // Restore background scrolling
+
+            // Wait for transition to finish before setting display: none
+            // The CSS transition handles the visibility delay
+             setTimeout(() => {
+                  // Only hide if the visible class is still removed (safety check)
+                  if (!modal.classList.contains('modal-visible')) {
+                       modal.style.display = 'none';
+                       modalImage.src = ""; // Clear src
+                       modalImage.alt = "";
+                  }
+             }, 300); // Match the CSS transition duration
+        };
+
+        // Add listeners to each insight image
+        insightImages.forEach(img => {
+            // img.classList.add('cursor-pointer'); // Already added in HTML
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                console.log(`Image clicked: ${img.src}`);
+                openModal(img.src, img.alt);
+            });
+        });
+
+        // Listener for the close button
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // Listener to close modal when clicking the background overlay
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Listener for the Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('modal-visible')) { // Check if modal is visible
+                closeModal();
+            }
+        });
+
+    } else if (document.getElementById('insights-grid')) {
+         console.warn("Modal elements or insight images not found. Modal functionality disabled.");
+    }
+
+    // Initialize other icons (navbar etc.)
+     if (typeof lucide !== 'undefined') {
+        console.log("Initializing Lucide icons globally...");
+        lucide.createIcons();
+     }
+
+}); // End DOMContentLoaded
+
 // === Home: Scroll to Ask Genius ===
 const scrollBtn = document.getElementById("explore-btn");
 if (scrollBtn) {

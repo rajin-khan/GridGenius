@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ask GridGenius</title>
+  <link rel="icon" type="image/png" href="assets/gglogo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Defer Lucide initialization until DOM is loaded -->
@@ -17,107 +18,52 @@
     }
     .animate-fade-in { animation: fade-in 0.3s ease-out; }
 
-    /* Prose overrides for code blocks */
-    .prose :where(code):not(:where([class~="not-prose"] *)) {
-      background-color: #1f2937; padding: 0.2em 0.4em; border-radius: 0.25rem;
-      font-weight: normal; color: #d1d5db;
-    }
-    .prose :where(pre) :where(code):not(:where([class~="not-prose"] *)) {
-      background-color: transparent; padding: 0; border-radius: 0;
-    }
-    .prose :where(pre):not(:where([class~="not-prose"] *)) {
-      background-color: #111827; border: 1px solid #374151; color: #d1d5db;
-      padding: 1em; border-radius: 0.5rem; overflow-x: auto; font-size: 0.875em;
-    }
+    /* --- Prose (Markdown) Styles - Unchanged --- */
+    .prose :where(code):not(:where([class~="not-prose"] *)) { background-color: #1f2937; padding: 0.2em 0.4em; border-radius: 0.25rem; font-weight: normal; color: #d1d5db; }
+    .prose :where(pre) :where(code):not(:where([class~="not-prose"] *)) { background-color: transparent; padding: 0; border-radius: 0; }
+    .prose :where(pre):not(:where([class~="not-prose"] *)) { background-color: #111827; border: 1px solid #374151; color: #d1d5db; padding: 1em; border-radius: 0.5rem; overflow-x: auto; font-size: 0.875em; }
+    .prose :where(table):not(:where([class~="not-prose"] *)) { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin-top: 1em; margin-bottom: 1em; box-shadow: 0 1px 3px rgba(255, 255, 255, 0.05); border: 1px solid #374151; border-radius: 0.375rem; }
+    .prose :where(table):not(:where([class~="not-prose"] *))::-webkit-scrollbar { height: 6px; }
+    .prose :where(table):not(:where([class~="not-prose"] *))::-webkit-scrollbar-track { background: rgba(30, 41, 59, 0.5); border-radius: 6px; }
+    .prose :where(table):not(:where([class~="not-prose"] *))::-webkit-scrollbar-thumb { background-color: rgba(251, 191, 36, 0.5); border-radius: 6px; }
+    .prose :where(table):not(:where([class~="not-prose"] *)) { scrollbar-width: thin; scrollbar-color: rgba(251, 191, 36, 0.5) rgba(30, 41, 59, 0.5); }
+    .prose :where(thead):not(:where([class~="not-prose"] *)) { background-color: rgba(255, 255, 255, 0.05); border-bottom: 1px solid #4b5563; }
+    .prose :where(th):not(:where([class~="not-prose"] *)) { color: #f3f4f6; font-weight: 600; padding: 0.5rem 0.75rem; text-align: left; white-space: nowrap; }
+    .prose :where(td):not(:where([class~="not-prose"] *)) { color: #d1d5db; padding: 0.5rem 0.75rem; border-top: 1px solid #374151; white-space: nowrap; font-size: 0.8rem; }
+    .prose :where(tbody tr:nth-child(even)):not(:where([class~="not-prose"] *)) { background-color: rgba(255, 255, 255, 0.02); }
+    /* --- End Prose Styles --- */
 
-     /* Inside the <style> block in ask.html */
-
-     /* --- Enhancements for Tables within Prose --- */
-     .prose :where(table):not(:where([class~="not-prose"] *)) {
-        display: block; /* Ensure table takes block layout */
-        max-width: 100%; /* Prevent table from exceeding container */
-        overflow-x: auto; /* Add horizontal scroll if needed */
-        border-collapse: collapse;
-        margin-top: 1em;
-        margin-bottom: 1em;
-        box-shadow: 0 1px 3px rgba(255, 255, 255, 0.05); /* Subtle shadow */
-        border: 1px solid #374151; /* border-gray-700 */
-        border-radius: 0.375rem; /* rounded-md */
-    }
-
-    /* Style the scrollbar for the table itself */
-    .prose :where(table):not(:where([class~="not-prose"] *))::-webkit-scrollbar {
-        height: 6px; /* Horizontal scrollbar height */
-    }
-    .prose :where(table):not(:where([class~="not-prose"] *))::-webkit-scrollbar-track {
-        background: rgba(30, 41, 59, 0.5); /* bg-slate-800/50 */
-        border-radius: 6px;
-    }
-    .prose :where(table):not(:where([class~="not-prose"] *))::-webkit-scrollbar-thumb {
-        background-color: rgba(251, 191, 36, 0.5); /* bg-yellow-400/50 */
-        border-radius: 6px;
-    }
-    .prose :where(table):not(:where([class~="not-prose"] *)) {
-         scrollbar-width: thin;
-         scrollbar-color: rgba(251, 191, 36, 0.5) rgba(30, 41, 59, 0.5);
-    }
-
-
-    .prose :where(thead):not(:where([class~="not-prose"] *)) {
-        background-color: rgba(255, 255, 255, 0.05); /* bg-white/5 */
-        border-bottom: 1px solid #4b5563; /* border-gray-600 */
-    }
-
-    .prose :where(th):not(:where([class~="not-prose"] *)) {
-      color: #f3f4f6; /* text-gray-100 */
-      font-weight: 600; /* font-semibold */
-      padding: 0.5rem 0.75rem; /* Adjust padding */
-      text-align: left;
-      white-space: nowrap; /* Prevent headers from wrapping */
-    }
-
-    .prose :where(td):not(:where([class~="not-prose"] *)) {
-      color: #d1d5db; /* text-gray-300 */
-      padding: 0.5rem 0.75rem; /* Match header padding */
-      border-top: 1px solid #374151; /* border-gray-700 */
-      white-space: nowrap; /* Prevent cell content wrapping initially */
-      font-size: 0.8rem; /* Slightly smaller font in cells */
-    }
-
-    .prose :where(tbody tr:nth-child(even)):not(:where([class~="not-prose"] *)) {
-      background-color: rgba(255, 255, 255, 0.02); /* Very subtle striping */
-    }
-
-    /* Custom scrollbar for chat log */
+    /* Custom scrollbar for chat log - Unchanged */
     #chat-log::-webkit-scrollbar { width: 8px; }
     #chat-log::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
-    #chat-log::-webkit-scrollbar-thumb {
-      background-color: rgba(251, 191, 36, 0.5); border-radius: 10px;
-      border: 2px solid rgba(255, 255, 255, 0.05);
-    }
-    #chat-log {
-      scrollbar-width: thin; scrollbar-color: rgba(251, 191, 36, 0.5) rgba(255, 255, 255, 0.05);
-      scroll-behavior: smooth;
-    }
+    #chat-log::-webkit-scrollbar-thumb { background-color: rgba(251, 191, 36, 0.5); border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.05); }
+    #chat-log { scrollbar-width: thin; scrollbar-color: rgba(251, 191, 36, 0.5) rgba(255, 255, 255, 0.05); scroll-behavior: smooth; }
 
-    /* Add focus ring to input wrapper */
+    /* Enhanced focus ring/glow for input wrapper */
     .input-wrapper:focus-within {
         outline: 2px solid transparent;
         outline-offset: 2px;
-        box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.5); /* Ring color */
+        /* Slightly stronger yellow glow */
+        box-shadow: 0 0 8px 1px rgba(251, 191, 36, 0.4);
+        border-color: rgba(251, 191, 36, 0.3); /* Optional: subtle border color change */
     }
+
+    /* Animated gradient for header text */
+    @keyframes text-gradient { to { background-position: 200% center; } }
+    .animate-text-gradient { background-size: 200% auto; animation: text-gradient 3s linear infinite; }
+
   </style>
 </head>
 <body class="bg-black text-white font-[Inter] flex flex-col min-h-screen">
 
-  <!-- Navbar -->
+  <!-- Navbar - Unchanged -->
   <nav class="bg-black/80 border-b border-white/10 backdrop-blur fixed w-full z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">GridGenius</h1>
+      <img src="assets/logo.png" alt="GridGenius Logo" class="h-6 w-auto">
       <ul class="flex gap-6 text-sm font-medium text-white/80">
         <li><a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a></li>
-        <li><a href="ask.html" class="hover:text-yellow-400 transition-colors">Ask Genius</a></li>
-        <li><a href="predict.html" class="hover:text-yellow-400 transition-colors">Predict</a></li>
+        <li><a href="ask.html" class="hover:text-yellow-400 transition-colors">GridGenius</a></li>
+        <li><a href="predict.html" class="hover:text-yellow-400 transition-colors">GridOracle</a></li>
         <li><a href="insights.html" class="hover:text-yellow-400 transition-colors">Insights</a></li>
         <li><a href="about.html" class="hover:text-yellow-400 transition-colors">About</a></li>
       </ul>
@@ -129,36 +75,37 @@
      <!-- Centering & Max-width Container -->
     <div class="max-w-4xl w-full mx-auto flex flex-col flex-grow">
 
-      <!-- Header -->
-      <header class="mb-6 text-center sm:text-left">
-          <h2 class="text-3xl font-semibold text-yellow-400 inline-flex items-center gap-2">
-              <i data-lucide="message-circle-question" class="w-7 h-7"></i>
+      <!-- Header - Revamped -->
+      <header class="mb-8 text-center sm:text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold inline-flex items-center gap-2 mb-2 animate-text-gradient bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-500 bg-clip-text text-transparent">
+              <i data-lucide="message-circle-question" class="w-8 h-8 text-yellow-400"></i>
               <span>Ask GridGenius</span>
           </h2>
-          <p class="text-gray-400 text-sm mt-1">Chat with the AI assistant about the project.</p>
+          <p class="text-gray-400 text-sm mt-1">Converse with the AI about the project's intricacies.</p>
       </header>
 
-      <!-- Chat Log Area -->
-      <div id="chat-log-container" class="flex-grow overflow-hidden mb-4 bg-black/5 border border-black/10 rounded-xl shadow-inner">
+      <!-- Chat Log Area - Revamped Container -->
+      <div id="chat-log-container" class="flex-grow overflow-hidden mb-5 bg-gradient-to-b from-gray-900/50 to-black/40 border border-white/10 rounded-xl shadow-xl transition duration-300 hover:shadow-yellow-400/10 hover:border-yellow-400/30">
         <div id="chat-log" class="p-4 sm:p-6 space-y-4 h-full overflow-y-auto flex flex-col">
-          <!-- Initial Welcome Message -->
-           <div class="welcome-message self-center text-center text-gray-500 text-s p-4 italic max-w-md mx-auto">
-                Welcome! I'm GridGenius, ready to answer your questions about the project's data, methods, or insights. Try asking "What is GridGenius?" or "Summarize the EDA findings".
+          <!-- Initial Welcome Message - Slightly restyled -->
+           <div class="welcome-message self-center text-center text-gray-500 text-xs p-4 italic max-w-md mx-auto border border-dashed border-gray-700/50 rounded-lg">
+                Welcome! I'm GridGenius. Try asking "What is GridGenius?" or "Summarize your Data Analysis findings".
            </div>
           <!-- Chat messages appended here -->
         </div>
       </div>
 
-      <!-- Input Area -->
+      <!-- Input Area - Revamped -->
       <div class="mt-auto">
-         <!-- Added input-wrapper class for focus styling -->
-         <div class="input-wrapper flex items-center gap-2 bg-gray-1000 border border-gray-700 p-2 rounded-xl transition duration-200">
-            <input id="chat-input" type="text" placeholder="Ask about the project..." class="flex-1 bg-transparent text-white px-2 py-1 placeholder-gray-500 focus:outline-none text-sm" />
-            <button aria-label="Send message" class="bg-yellow-400 text-black p-2 rounded-lg hover:bg-yellow-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                <i data-lucide="send-horizontal" class="w-5 h-5"></i>
-            </button>
-         </div>
-       </div>
+        <!-- 1. Changed background classes here -->
+        <div class="input-wrapper flex items-center gap-2 bg-black border border-gray-700 p-3 rounded-xl transition duration-300 shadow-md">
+           <!-- 2. Changed background class here to transparent -->
+           <input id="chat-input" type="text" placeholder="Engage with the Genius..." class="flex-1 bg-transparent text-white px-4 py-2 placeholder-gray-500 focus:outline-none text-sm rounded-md shadow-inner border border-transparent focus:border-yellow-400/30 transition duration-200" />
+           <button aria-label="Send message" class="bg-yellow-400 text-black p-2.5 rounded-lg hover:bg-yellow-300 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-900 transform hover:scale-110 hover:shadow-lg hover:shadow-yellow-400/30">
+               <i data-lucide="send-horizontal" class="w-5 h-5"></i>
+           </button>
+        </div>
+     </div>
 
     </div>
   </main>

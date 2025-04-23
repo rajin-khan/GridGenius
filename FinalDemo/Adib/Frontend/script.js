@@ -111,6 +111,172 @@ document.addEventListener("DOMContentLoaded", () => {
          console.warn("Modal elements or insight images not found. Modal functionality disabled.");
     }
 
+    // === NEW: Prediction Form Functionality ===
+    const predictionForm = document.getElementById('prediction-form');
+    const resultArea = document.getElementById('prediction-result-area');
+    const resultValueElement = document.getElementById('predicted-demand-value');
+    const resultStatusElement = document.getElementById('prediction-status');
+
+    if (predictionForm && resultArea && resultValueElement && resultStatusElement) {
+        predictionForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default HTML form submission
+
+            // Clear previous results and show loading state
+            resultValueElement.textContent = '-- MW';
+            resultStatusElement.textContent = 'Forecasting...';
+            resultArea.classList.remove('hidden'); // Show the area
+            resultArea.classList.remove('visible'); // Reset animation state if needed
+            // Force reflow before adding class for animation
+            void resultArea.offsetWidth;
+            resultArea.classList.add('visible');
+
+            // Get form data
+            const formData = new FormData(predictionForm);
+            const data = {};
+            let formIsValid = true;
+
+            // Convert FormData to JSON object and validate numbers
+            for (const [key, value] of formData.entries()) {
+                const numValue = (key === 'temp') ? parseFloat(value) : parseInt(value, 10);
+                if (isNaN(numValue)) {
+                    formIsValid = false;
+                    resultStatusElement.textContent = `Error: Invalid input for ${key}. Please enter a number.`;
+                    resultValueElement.textContent = 'Error';
+                    console.error(`Invalid number format for ${key}: ${value}`);
+                    break; // Stop processing if invalid
+                }
+                 // Basic range checks (optional but good)
+                 if (key === 'month' && (numValue < 1 || numValue > 12)) formIsValid = false;
+                 if (key === 'day' && (numValue < 1 || numValue > 31)) formIsValid = false;
+                 if ((key === 'season' || key === 'isholiday') && (numValue !== 0 && numValue !== 1)) formIsValid = false;
+                 if (!formIsValid) {
+                    resultStatusElement.textContent = `Error: Invalid value for ${key}. Check range/format.`;
+                    resultValueElement.textContent = 'Error';
+                     console.error(`Invalid value for ${key}: ${value}`);
+                    break;
+                 }
+
+                data[key] = numValue;
+            }
+
+            if (!formIsValid) {
+                return; // Stop if validation failed
+            }
+
+            console.log("Sending data to backend:", data);
+
+            try {
+                const response = await fetch('http://localhost:8000/predict/', { // Adjust URL if needed
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ detail: 'Unknown error structure' })); // Try to parse error
+                    console.error("API Error Response:", errorData);
+                    throw new Error(`API Error (${response.status}): ${errorData.detail || response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.predicted_demand !== undefined) {
+                    // Format the result (e.g., to 2 decimal places)
+                    const formattedDemand = parseFloat(result.predicted_demand).toFixed(2);
+                    resultValueElement.textContent = `${formattedDemand} MW`;
+                    resultStatusElement.textContent = 'Prediction successful.';
+                    console.log("Prediction successful:", result.predicted_demand);
+                } else {
+                     throw new Error('Invalid response format from server.');
+                }
+
+            } catch (error) {
+                console.error('Prediction failed:', error);
+                resultValueElement.textContent = 'Error';
+                resultStatusElement.textContent = `Prediction failed: ${error.message}`;
+                // Make sure result area is visible to show the error
+                resultArea.classList.remove('hidden');
+                resultArea.classList.add('visible');
+            }
+        });
+    }
+    // === END: Prediction Form Functionality ===
+
+    const infoModal = document.getElementById('infoModal');
+    const accuracyInfoBtn = document.getElementById('accuracy-info-btn');
+    const closeInfoBtn = document.getElementById('modal-close-btn-info'); // Use unique ID
+
+    // Helper function to open the info modal
+    const openInfoModal = () => {
+        if (!infoModal) return; // Safety check
+        console.log("Opening info modal...");
+        infoModal.style.display = 'flex'; // Make it flex container
+        // Force repaint/reflow before adding the visible class
+        void infoModal.offsetWidth;
+        infoModal.classList.add('modal-visible');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+        // Initialize close button icon if needed (should be handled by global init now)
+        // Ensure Lucide is called if icons aren't rendering
+        if (typeof lucide !== 'undefined') {
+            const closeIcon = closeInfoBtn?.querySelector('i[data-lucide="x"]');
+            if (closeIcon && !closeIcon.getAttribute('data-lucide-rendered')) {
+                lucide.createIcons({ nodes: [closeIcon] });
+                closeIcon.setAttribute('data-lucide-rendered', 'true'); // Mark as rendered
+            }
+        }
+    };
+
+    // Helper function to close the info modal
+    const closeInfoModal = () => {
+        if (!infoModal) return; // Safety check
+        console.log("Closing info modal...");
+        infoModal.classList.remove('modal-visible');
+        document.body.style.overflow = ''; // Restore background scrolling
+
+        // Wait for transition before setting display: none
+        setTimeout(() => {
+            // Only hide if the visible class is still removed
+            if (!infoModal.classList.contains('modal-visible')) {
+                infoModal.style.display = 'none';
+            }
+        }, 300); // Match the CSS transition duration
+    };
+
+    // Add event listeners if the elements exist
+    if (infoModal && accuracyInfoBtn && closeInfoBtn) {
+        // Listener for the trigger button in the result area
+        accuracyInfoBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent potential interference
+            openInfoModal();
+        });
+
+        // Listener for the modal's close button
+        closeInfoBtn.addEventListener('click', closeInfoModal);
+
+        // Listener to close modal when clicking the background overlay
+        infoModal.addEventListener('click', (e) => {
+            // Check if the click is directly on the modal overlay (not the content inside)
+            if (e.target === infoModal) {
+                closeInfoModal();
+            }
+        });
+
+        // Listener for the Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && infoModal.classList.contains('modal-visible')) {
+                closeInfoModal();
+            }
+        });
+    } else {
+         // Log warning if elements aren't found on this page load
+         if (!infoModal && document.getElementById('prediction-result-area')) console.warn("Info Modal container (#infoModal) not found.");
+         if (!accuracyInfoBtn && document.getElementById('prediction-result-area')) console.warn("Accuracy Info Button (#accuracy-info-btn) not found.");
+         if (!closeInfoBtn && document.getElementById('prediction-result-area')) console.warn("Info Modal Close Button (#modal-close-btn-info) not found.");
+    }
+
     // Initialize other icons (navbar etc.)
      if (typeof lucide !== 'undefined') {
         console.log("Initializing Lucide icons globally...");

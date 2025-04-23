@@ -31,7 +31,7 @@
 ### 📊 **Dataset Details**
 
 #### **Source:**
-- **Custom dataset extracted from:** [BPDB Daily Generation Archive](https://misc.bpdb.gov.bd/)
+- **Custom dataset extracted from:** [BPDB Website](https://bpdb.gov.bd/)
 
 #### **Estimated Features:**
 | Feature                   | Description                                       |

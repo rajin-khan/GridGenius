@@ -277,6 +277,91 @@ document.addEventListener("DOMContentLoaded", () => {
          if (!closeInfoBtn && document.getElementById('prediction-result-area')) console.warn("Info Modal Close Button (#modal-close-btn-info) not found.");
     }
 
+    // === NEW: Feature Modal Functionality ===
+    const featureCards = document.querySelectorAll('.feature-card');
+    const featureModals = document.querySelectorAll('.feature-modal');
+    const featureModalCloseBtns = document.querySelectorAll('.modal-close-feature');
+
+    const closeAllFeatureModals = () => {
+        featureModals.forEach(modal => {
+            if (modal.classList.contains('modal-visible')) {
+                modal.classList.remove('modal-visible');
+                // Wait for transition before hiding completely
+                setTimeout(() => {
+                    if (!modal.classList.contains('modal-visible')) { // Double check
+                       // We don't set display:none here, visibility handles it
+                    }
+                }, 300); // Match CSS transition duration
+            }
+        });
+        body.style.overflow = ''; // Restore scrolling
+    };
+
+    const openFeatureModal = (modalId) => {
+        closeAllFeatureModals(); // Close any other open modals first
+        const targetModal = document.querySelector(modalId);
+        if (targetModal) {
+            // targetModal.style.display = 'flex'; // Use CSS for initial display
+            // Force reflow
+            void targetModal.offsetWidth;
+            targetModal.classList.add('modal-visible');
+            body.style.overflow = 'hidden'; // Prevent background scrolling
+             // Ensure icons render if dynamic loading is tricky
+             if (typeof lucide !== 'undefined') {
+                  lucide.createIcons({ nodes: targetModal.querySelectorAll('[data-lucide]') });
+             }
+        } else {
+            console.error(`Modal with ID ${modalId} not found.`);
+        }
+    };
+
+    // Add listeners only if feature cards exist on the page
+    if (featureCards.length > 0) {
+        // Event listener for feature card clicks
+        featureCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const modalId = card.getAttribute('data-modal-target');
+                if (modalId) {
+                    openFeatureModal(modalId);
+                }
+            });
+        });
+
+        // Event listener for close buttons
+        featureModalCloseBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent closing parent modal if nested (not applicable here, but good practice)
+                closeAllFeatureModals();
+            });
+        });
+
+        // Event listener for clicking modal overlay
+        featureModals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                // If the click is directly on the modal overlay itself
+                if (e.target === modal) {
+                    closeAllFeatureModals();
+                }
+            });
+        });
+
+        // Event listener for Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Check if any feature modal is currently visible
+                const isModalVisible = Array.from(featureModals).some(m => m.classList.contains('modal-visible'));
+                if (isModalVisible) {
+                    closeAllFeatureModals();
+                }
+            }
+        });
+
+    } else {
+        // Optional: Log if no feature cards are found (e.g., on other pages)
+        // console.log("No feature cards found on this page.");
+    }
+    // === END: Feature Modal Functionality ===
+
     // Initialize other icons (navbar etc.)
      if (typeof lucide !== 'undefined') {
         console.log("Initializing Lucide icons globally...");

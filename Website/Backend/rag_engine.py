@@ -23,7 +23,7 @@ chroma_client = PersistentClient(path="./chroma_storage")
 collection = chroma_client.get_or_create_collection(name="rag_collection")
 
 # Embedder
-embedder = SentenceTransformer('all-MiniLM-L6-v2')
+embedder = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 
 # --- Prewarm the embedder ---
 # This ensures model and tokenizer are loaded BEFORE first real query

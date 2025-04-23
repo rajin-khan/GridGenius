@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predict Demand</title>
+  <link rel="icon" type="image/png" href="assets/gglogo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Defer Lucide initialization -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
+  <script defer src="script.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    /* Hide number input arrows */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield; /* Firefox */
+    }
+
+    /* Subtle animated background gradient for the body (optional) */
+    /* body {
+        background: linear-gradient(-45deg, #000000, #111827, #0a0a0a, #1f2937);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    } */
+
+    /* Add focus glow effect */
+    .input-glow:focus-within {
+         box-shadow: 0 0 15px rgba(251, 191, 36, 0.3); /* Subtle yellow glow */
+    }
+
+    /* Result Area Animation */
+    #prediction-result-area {
+        transition: all 0.4s ease-out; /* Smoother transition */
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    #prediction-result-area.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    /* --- NEW: Info Modal Styles (Smooth Fade) --- */
+    #infoModal {
+       opacity: 0; visibility: hidden;
+       /* Only transition opacity */
+       transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+       /* Removed transform: scale() */
+     }
+     #infoModal.modal-visible {
+       opacity: 1; visibility: visible;
+       /* Only transition opacity, adjust visibility delay */
+       transition: opacity 0.3s ease-in-out, visibility 0s linear 0s;
+       /* Removed transform: scale() */
+     }
+     /* Optional: Scrollbar styling (keep as is) */
+     .modal-content-scroll::-webkit-scrollbar { width: 6px; }
+     .modal-content-scroll::-webkit-scrollbar-track { background: rgba(50, 50, 50, 0.5); border-radius: 10px; }
+     .modal-content-scroll::-webkit-scrollbar-thumb { background-color: rgba(251, 191, 36, 0.6); border-radius: 10px; }
+     .modal-content-scroll { scrollbar-width: thin; scrollbar-color: rgba(251, 191, 36, 0.6) rgba(50, 50, 50, 0.5); }
+     /* --- End Info Modal Styles --- */
+
+  </style>
+</head>
+<body class="bg-black text-white font-[Inter] flex flex-col min-h-screen">
+
+  <!-- Navbar (Consistent with other pages) -->
+  <nav class="bg-black/80 border-b border-white/10 backdrop-blur fixed w-full z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <img src="assets/logo.png" alt="GridGenius Logo" class="h-6 w-auto">
+      <ul class="flex gap-6 text-sm font-medium text-white/80">
+        <li><a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a></li>
+        <li><a href="ask.html" class="hover:text-yellow-400 transition-colors">GridGenius</a></li>
+        <li><a href="predict.html" class="hover:text-yellow-400 transition-colors">GridOracle</a></li>
+        <li><a href="insights.html" class="hover:text-yellow-400 transition-colors">Insights</a></li>
+        <li><a href="about.html" class="hover:text-yellow-400 transition-colors">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow flex flex-col items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl w-full">
+
+      <!-- Header -->
+      <header class="mb-6 text-center sm:text-center">
+        <h2 class="text-3xl sm:text-5xl font-bold inline-flex items-center gap-2 mb-2 animate-text-gradient bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-500 bg-clip-text text-transparent">
+            <i data-lucide="brain-circuit" class="w-9 h-9 text-yellow-400"></i>
+            <span>The GridOracle</span>
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">Input parameters in the GridOracle tool to invoke the GridGenius forecast.</p>
+    </header>
+
+      <div class="text-center mt-2 mb-6">
+        <button id="accuracy-info-btn" aria-label="How to verify accuracy" class="inline-flex items-center gap-1.5 text-m text-yellow-400/80 hover:text-yellow-400 border border-yellow-400/30 hover:border-yellow-400/60 px-3 py-1 rounded-full transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:ring-offset-1 focus:ring-offset-black">
+              <i data-lucide="info" class="w-3 h-3"></i>
+              How do I know this is accurate?
+        </button>
+      </div>
+
+      <!-- Prediction Form Container -->
+      <div class="bg-gradient-to-br from-gray-900/70 via-black/50 to-gray-900/70 p-8 rounded-xl shadow-2xl ring-1 ring-white/10 w-full transition duration-300 hover:shadow-yellow-400/20 hover:ring-yellow-400/50">
+          <form id="prediction-form">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+
+                  <div class="input-wrapper">
+                      <label for="temp" class="flex items-center text-sm font-medium text-gray-300 mb-2">
+                          <i data-lucide="thermometer-snowflake" class="w-4 h-4 mr-2 text-yellow-400/80"></i>
+                          Temperature (°C)
+                      </label>
+                      <input type="number" id="temp" name="temp" step="0.1" placeholder="e.g., 28.5" required
+                             class="input-glow w-full bg-black border border-white/10 rounded-md px-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/80 focus:border-transparent transition duration-300 shadow-inner">
+                  </div>
+
+                  <div class="input-wrapper">
+                      <label for="year" class="flex items-center text-sm font-medium text-gray-300 mb-2">
+                          <i data-lucide="calendar-days" class="w-4 h-4 mr-2 text-yellow-400/80"></i>
+                          Year
+                      </label>
+                      <input type="number" id="year" name="year" placeholder="e.g., 2024" required
+                             class="input-glow w-full bg-black border border-white/10 rounded-md px-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/80 focus:border-transparent transition duration-300 shadow-inner">
+                  </div>
+
+                  <div class="input-wrapper">
+                      <label for="month" class="flex items-center text-sm font-medium text-gray-300 mb-2">
+                          <i data-lucide="calendar-range" class="w-4 h-4 mr-2 text-yellow-400/80"></i>
+                          Month
+                      </label>
+                      <input type="number" id="month" name="month" min="1" max="12" placeholder="1-12" required
+                             class="input-glow w-full bg-black border border-white/10 rounded-md px-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/80 focus:border-transparent transition duration-300 shadow-inner">
+                  </div>
+
+                  <div class="input-wrapper">
+                       <label for="day" class="flex items-center text-sm font-medium text-gray-300 mb-2">
+                            <i data-lucide="calendar-check-2" class="w-4 h-4 mr-2 text-yellow-400/80"></i>
+                           Day of Month
+                       </label>
+                       <input type="number" id="day" name="day" min="1" max="31" placeholder="1-31" required
+                              class="input-glow w-full bg-black border border-white/10 rounded-md px-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/80 focus:border-transparent transition duration-300 shadow-inner">
+                   </div>
+
+                  <div class="input-wrapper">
+                      <label for="season" class="flex items-center text-sm font-medium text-gray-300 mb-2">
+                          <i data-lucide="cloud-sun" class="w-4 h-4 mr-2 text-yellow-400/80"></i>
+                          Season Code
+                      </label>
+                      <input type="number" id="season" name="season" min="0" max="1" placeholder="0 (Low), 1 (High)" required
+                             class="input-glow w-full bg-black border border-white/10 rounded-md px-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/80 focus:border-transparent transition duration-300 shadow-inner">
+                  </div>
+
+                  <div class="input-wrapper">
+                       <label for="isholiday" class="flex items-center text-sm font-medium text-gray-300 mb-2">
+                           <i data-lucide="calendar-heart" class="w-4 h-4 mr-2 text-yellow-400/80"></i>
+                           Is Holiday Code
+                       </label>
+                       <input type="number" id="isholiday" name="isholiday" min="0" max="1" placeholder="0 (No), 1 (Yes)" required
+                              class="input-glow w-full bg-black border border-white/10 rounded-md px-3 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/80 focus:border-transparent transition duration-300 shadow-inner">
+                   </div>
+
+                  <!-- Submit Button -->
+                  <div class="md:col-span-2 mt-8 flex justify-center">
+                       <button type="submit"
+                               class="inline-flex items-center gap-2 bg-yellow-400 text-black text-lg px-10 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition duration-300 ease-in-out shadow-lg hover:shadow-xl hover:shadow-yellow-400/40 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-black">
+                           <i data-lucide="zap" class="w-5 h-5"></i>
+                           Forecast Now
+                       </button>
+                  </div>
+              </div>
+          </form>
+      </div><!-- End Form Container -->
+
+       <!-- Prediction Result Area (Added button and mx-auto) -->
+       <div id="prediction-result-area" class="mt-10 p-6 bg-gradient-to-br from-black/60 to-gray-900/70 rounded-lg text-center w-full max-w-md border border-yellow-400/30 shadow-lg shadow-yellow-400/10 hidden mx-auto">
+        <h3 class="text-xl font-semibold text-yellow-400 mb-3 flex items-center justify-center gap-2">
+            <i data-lucide="gauge-circle" class="w-5 h-5"></i>
+            Forecasted Demand
+        </h3>
+        <p id="predicted-demand-value" class="text-4xl font-bold text-white tracking-tight mb-2">-- MW</p>
+        <p id="prediction-status" class="text-xs text-gray-500 mt-1 italic mb-4"></p>
+    </div>
+
+  </div><!-- End Max Width Container -->
+</main>
+
+  <!-- NEW: Info Modal Structure (Spiced Up) -->
+  <div id="infoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
+
+    <div class="modal-content bg-gradient-to-br from-gray-900/80 via-black/90 to-gray-900/80 border border-white/10 p-2 rounded-xl shadow-2xl shadow-yellow-400/10 max-w-5xl w-full relative flex flex-col max-h-[90vh] overflow-hidden ring-1 ring-yellow-400/20">
+
+      <button id="modal-close-btn-info" aria-label="Close information modal" class="absolute top-3 right-3 z-20 bg-yellow-400 text-black rounded-full p-1.5 hover:bg-yellow-200 hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-black">
+        <i data-lucide="x" class="w-5 h-5 block"></i>
+      </button>
+
+      <div class="modal-content-scroll flex-grow overflow-y-auto p-8 md:p-10 flex flex-col md:flex-row gap-8">
+
+        <div class="w-full md:w-1/2 text-gray-300 text-sm leading-relaxed flex flex-col">
+            <h4 class="text-xl font-semibold text-yellow-400 mb-4 inline-flex items-center gap-2">
+               <i data-lucide="sparkles" class="w-5 h-5 opacity-80"></i>
+               <span class="animate-text-gradient bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-500 bg-clip-text text-transparent">
+                 Verifying Oracle Accuracy
+               </span>
+            </h4>
+            <p class="text-gray-400">
+                You can gain confidence in the Oracle's predictions by comparing its output against actual historical data recorded by the official source. Here's how:
+            </p>
+
+            <hr class="my-4 border-t border-yellow-400/20">
+
+            <p class="mb-3">
+                Gain confidence in the Oracle's predictions by comparing its output against actual historical data from the official source. Here's how:
+             </p>
+
+            <hr class="my-3 border-t border-yellow-400/10">
+
+             <p class="mb-2">
+                 1. Visit the <strong class="text-yellow-400/90 font-medium">BD Power Development Board's Daily Archive</strong>:
+                 <a href="https://misc.bpdb.gov.bd/daily-generation-archive" target="_blank" rel="noopener noreferrer"
+                    class="block mt-1 text-yellow-400/90 hover:text-yellow-300 transition-colors duration-200 underline decoration-dotted underline-offset-2 break-all text-xs font-mono bg-black/20 px-2 py-1 rounded border border-white/10 hover:border-yellow-400/50">
+                    <i data-lucide="external-link" class="inline-block w-3 h-3 mr-1 -mt-0.5"></i>misc.bpdb.gov.bd/daily-generation-archive
+                 </a>
+             </p>
+             <p class="mb-2">
+                 2. Download the daily PDF report for a specific past date (within 2020-2024).
+             </p>
+             <p class="mb-1">
+                 3. In the PDF's summary section, find the recorded:
+                 <ul class="list-disc list-inside ml-4 my-1 text-gray-300 space-y-0.5">
+                     <li><strong class="text-white font-medium">Probable Max Demand (MW)</strong></li>
+                     <li><strong class="text-white font-medium">Probable Max Temperature (°C)</strong></li>
+                 </ul>
+             </p>
+             <p class="mb-1">
+                 4. Gather these inputs for the Oracle from that date:
+                 <ul class="list-disc list-inside ml-4 my-1 text-gray-300 space-y-0.5">
+                     <li><strong class="text-white">Temperature</strong> (from PDF)</li>
+                     <li>Date: <strong class="text-white">Year, Month</strong> (1-12), <strong class="text-white">Day</strong> (1-31)</li>
+                     <li><strong class="text-white">Season Code</strong>: <code class="bg-gray-700/60 px-1 rounded text-xs">0</code> (Low Temp, ~Nov-Feb) or <code class="bg-gray-700/60 px-1 rounded text-xs">1</code> (High Temp, ~Mar-Oct)</li>
+                     <li><strong class="text-white">Holiday Code</strong>: <code class="bg-gray-700/60 px-1 rounded text-xs">0</code> (No) or <code class="bg-gray-700/60 px-1 rounded text-xs">1</code> (Yes)</li>
+                  </ul>
+             </p>
+              <p class="mb-3">
+                 5. Enter these 6 values into the Oracle and click "Forecast Now". Compare the result with the Demand value from the PDF – they should align closely!
+             </p>
+
+             <div class="mt-auto pt-2 text-xs text-gray-500 italic border-t border-white/10">
+                 <strong class="text-gray-400">Note:</strong> Predictions depend on all features and learned patterns; minor variations from single-day PDF values are expected. This check shows the general trend.
+             </div>
+         </div>
+          
+         <div class="w-full md:w-1/2 flex items-center justify-center bg-gradient-to-tr from-black/30 to-gray-800/20 rounded-lg overflow-hidden p-3 border-2 border-yellow-400/10 shadow-inner shadow-black/50">
+            <img id="modal-info-image" src="assets/infomodal.png" alt="Screenshot showing where to find demand and temperature in BPDB report" class="block object-contain max-w-full max-h-full rounded-md" />
+         </div>
+
+      </div>
+    </div>
+  </div>
+<!-- End Info Modal -->
+
+
+<!-- script.js will handle everything -->
+</body>
+</html>

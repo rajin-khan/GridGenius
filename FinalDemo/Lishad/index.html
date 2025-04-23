@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Demand Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-box">
+        <h1>Energy Demand Predictor</h1>
+        <form action="predict.php" method="POST">
+            <input type="number" name="temp" step="0.1" placeholder="Temperature (°C)" required>
+            <input type="number" name="year" placeholder="Year" required>
+            <input type="number" name="month" min="1" max="12" placeholder="Month" required>
+            <input type="number" name="season" min="0" max="1" placeholder="Season (0 or 1)" required>
+            <input type="number" name="isholiday" min="0" max="1" placeholder="Is Holiday (0 or 1)" required>
+            <input type="number" name="day" min="1" max="31" placeholder="Day of Month" required>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -9,5 +9,5 @@ beautifulsoup4
 groq
 python-dotenv
 python-multipart
-scikit-learn  # Add this (includes joblib)
-numpy         # Add this (likely needed by sklearn/model)
+scikit-learn
+numpy

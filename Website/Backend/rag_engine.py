@@ -23,13 +23,17 @@ chroma_client = PersistentClient(path="./chroma_storage")
 collection = chroma_client.get_or_create_collection(name="rag_collection")
 
 # Embedder
-embedder = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+embedder = SentenceTransformer('paraphrase-MiniLM-L3-v2') #or all-MiniLM-L6-v2
 
 # --- Prewarm the embedder ---
 # This ensures model and tokenizer are loaded BEFORE first real query
-print("Pre-warming embedder...")
-embedder.encode(["GridGenius startup warmup."])
-print("Embedder ready.")
+def get_embedder():
+    global _embedder
+    if _embedder is None:
+        print("Loading embedder...")
+        _embedder = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+        _embedder.encode(["GridGenius warmup."])  # Optional prewarm
+    return _embedder
 
 # --- Core Functions ---
 
@@ -48,7 +52,7 @@ def load_all_documents(folder_path="./documents"):
             doc_ids.append(f"doc_{i}")
 
     if documents:
-        embeddings = embedder.encode(documents).tolist()
+        embeddings = get_embedder().encode(documents).tolist()
         collection.add(documents=documents, embeddings=embeddings, ids=doc_ids)
     return len(documents)
 

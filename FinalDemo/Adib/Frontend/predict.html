@@ -92,18 +92,13 @@
     <div class="max-w-2xl w-full">
 
       <!-- Header -->
-      <header class="mb-4 text-center">
-          <h2 class="text-4xl font-bold text-yellow-400 inline-flex items-center gap-3 mb-3 animate-text-gradient bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-500 bg-clip-text text-transparent">
-              <i data-lucide="brain-circuit" class="w-8 h-8 text-yellow-400"></i>
-              <span>The GridOracle</span>
-          </h2>
-           <style> /* Gradient animation for title */
-                @keyframes text-gradient { to { background-position: 200% center; } }
-                .animate-text-gradient { background-size: 200% auto; animation: text-gradient 3s linear infinite; }
-           </style>
-          <p class="text-gray-400 text-m">Input parameters in the GridOracle tool to invoke the GridGenius forecast.</p>
-        
-      </header>
+      <header class="mb-6 text-center sm:text-center">
+        <h2 class="text-3xl sm:text-5xl font-bold inline-flex items-center gap-2 mb-2 animate-text-gradient bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-500 bg-clip-text text-transparent">
+            <i data-lucide="brain-circuit" class="w-9 h-9 text-yellow-400"></i>
+            <span>The GridOracle</span>
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">Input parameters in the GridOracle tool to invoke the GridGenius forecast.</p>
+    </header>
 
       <div class="text-center mt-2 mb-6">
         <button id="accuracy-info-btn" aria-label="How to verify accuracy" class="inline-flex items-center gap-1.5 text-m text-yellow-400/80 hover:text-yellow-400 border border-yellow-400/30 hover:border-yellow-400/60 px-3 py-1 rounded-full transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:ring-offset-1 focus:ring-offset-black">

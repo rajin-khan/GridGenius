@@ -23,18 +23,16 @@ chroma_client = PersistentClient(path="./chroma_storage")
 collection = chroma_client.get_or_create_collection(name="rag_collection")
 
 # Embedder
-embedder = SentenceTransformer('paraphrase-MiniLM-L3-v2') #or all-MiniLM-L6-v2
+_embedder = None
 
-# --- Prewarm the embedder ---
-# This ensures model and tokenizer are loaded BEFORE first real query
 def get_embedder():
     global _embedder
     if _embedder is None:
         print("Loading embedder...")
         _embedder = SentenceTransformer('paraphrase-MiniLM-L3-v2')
-        _embedder.encode(["GridGenius warmup."])  # Optional prewarm
+        _embedder.encode(["GridGenius warmup."])  # Prewarm
+        print("Embedder ready.")
     return _embedder
-
 # --- Core Functions ---
 
 def load_all_documents(folder_path="./documents"):
@@ -68,7 +66,7 @@ async def query_rag(chat_history: List[Dict[str, str]]) -> AsyncGenerator[str, N
     user_query = chat_history[-1]['content']  # Last user input
 
     try:
-        query_embedding = embedder.encode([user_query]).tolist()
+        query_embedding = get_embedder().encode([user_query]).tolist()
 
         results = collection.query(
             query_embeddings=query_embedding,

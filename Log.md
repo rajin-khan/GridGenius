@@ -291,9 +291,19 @@
 - **Team Member:** Adib
 - **Changes Made:** Create prediction page, connect with endpoint.
 
+- **Date:** 23-04-25
+- **Team Member:** Lishad
+- **Changes Made:** Complete the python  script for prediction and show original prediction on user end .
+
+- **Date:** 23-04-25
+- **Team Member:** Lishad
+- **Changes Made:** Make a new dataset with actual demand and Predicted demand on test data
+
+
 - **Date:** 23-03-25
 - **Team Member:** Adib
 - **Changes Made:** Begin work on hosting backend.
+
 
 - **Date:** 24-03-25
 - **Team Member:** Adib

@@ -87,6 +87,13 @@ async def upload_documents(files: List[UploadFile] = File(...)):
     else:
         return {"message": f"Successfully uploaded and loaded {num_loaded_total} documents into ChromaDB."}
 
+# === ADD THIS HEALTH CHECK ENDPOINT ===
+@router.get("/health")
+async def health_check():
+    """Simple health check endpoint."""
+    print("'/health' endpoint called successfully.") # Optional: Log when hit
+    return {"status": "ok", "message": "GridGenius backend is running"}
+# === END HEALTH CHECK ENDPOINT ===
 
 @router.post("/query/")
 async def query_document(request: QueryRequest):

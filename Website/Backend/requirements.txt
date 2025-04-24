@@ -1,14 +1,24 @@
 # Backend/requirements.txt
+
+# Core Web Framework & Server
 fastapi
-uvicorn
-sentence-transformers
-chromadb
-python-docx
-pdfplumber
-beautifulsoup4
-groq
+uvicorn[standard] # Use standard for better performance (includes httptools, uvloop)
+
+# RAG & LLM
+chromadb         # Vector DB
+groq             # LLM API Client
+requests         # For making HTTP calls to HF Inference API (NEW)
+# sentence-transformers # REMOVED - Using Inference API now
+
+# Prediction Model & Scaler
+scikit-learn     # Includes joblib for loading .pkl files
+numpy            # Required by scikit-learn
+
+# Document Processing (utils.py)
+python-docx      # For .docx files
+pdfplumber       # For .pdf files
+beautifulsoup4   # For .html files
+python-multipart # For FastAPI File Uploads (/upload/)
+
+# Environment Variables
 python-dotenv
-python-multipart
-scikit-learn
-numpy
-requests

@@ -247,7 +247,6 @@
 - **Team Member:** Lishad
 - **Changes Made:** Start working on Arima & SArima model .
 
-
 - **Date:** 09-04-25
 - **Team Member:** Sadia
 - **Changes Made:** researching on documentation of research paper.
@@ -256,9 +255,57 @@
 - **Team Member:** Lishad
 - **Changes Made:** Start report writing & Completed the introduction part
 
+- **Date:** 19-03-25
+- **Team Member:** Adib
+- **Changes Made:** Begin work on Fine Tuning LLM.
+
+- **Date:** 19-03-25
+- **Team Member:** Adib
+- **Changes Made:** Drop fine tuning, try system prompting.
+
+- **Date:** 20-03-25
+- **Team Member:** Adib
+- **Changes Made:** Finalize system prompt, begin learning RAG.
+
+- **Date:** 21-03-25
+- **Team Member:** Adib
+- **Changes Made:** Implement chatbot with system prompt + RAG.
+
+- **Date:** 22-03-25
+- **Team Member:** Adib
+- **Changes Made:** Work on frontend, give frontend overhaul.
+
 - **Date:** 22-04-25
 - **Team Member:** Lishad
 - **Changes Made:** start working on backend part of website (prediction based on unseen random input) .
+
+- **Date:** 22-03-25
+- **Team Member:** Adib
+- **Changes Made:** Setup backend and api endpoints for rag engine and LLM queries.
+
+- **Date:** 23-03-25
+- **Team Member:** Adib
+- **Changes Made:** Create API endpoint for prediction, use Lishad's model to make predictions.
+
+- **Date:** 23-03-25
+- **Team Member:** Adib
+- **Changes Made:** Create prediction page, connect with endpoint.
+
+- **Date:** 23-03-25
+- **Team Member:** Adib
+- **Changes Made:** Begin work on hosting backend.
+
+- **Date:** 24-03-25
+- **Team Member:** Adib
+- **Changes Made:** Host backend successfully on Railway.
+
+- **Date:** 24-03-25
+- **Team Member:** Adib
+- **Changes Made:** Host frontend successfully on Vercel.
+
+- **Date:** 24-03-25
+- **Team Member:** Adib
+- **Changes Made:** Finalize live website (grid-genius-project.vercel.app).
 
 *Log created:*
 

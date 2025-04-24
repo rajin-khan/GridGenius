@@ -227,7 +227,7 @@ async def query_rag(chat_history: List[Dict[str, str]]) -> AsyncGenerator[str, N
             "| Date       | Demand(MW) | Generation(MW) | Temp(C) | Year | Month | Season         | IsHoliday | DemandGenGap(MW) |\n"
             "|------------|------------|----------------|---------|------|-------|----------------|-----------|------------------|\n"
             "| 2022-01-15 | 9500.0     | 11956.0        | 18.9    | 2022 | 1     | Low Temp Season| 0         | 2456.0           |\n\n"
-            "This shows data for January 15th, 2022. You can view the entire dataset in the [GridGenius GitHub Repository](https://github.com/rajin-khan/GridGenius/tree/main/Collection/extracted)" # Added brief explanation after table example
+            "This shows data for January 15th, 2022. You can view the entire dataset in the GridGenius GitHub Repository: 'https://github.com/rajin-khan/GridGenius/tree/main/Collection/extracted'" # Added brief explanation after table example
         )
         messages = [
             {"role": "system", "content": system_prompt},

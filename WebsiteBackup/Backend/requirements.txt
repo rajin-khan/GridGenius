@@ -1,0 +1,13 @@
+# Backend/requirements.txt
+fastapi
+uvicorn
+sentence-transformers
+chromadb
+python-docx
+pdfplumber
+beautifulsoup4
+groq
+python-dotenv
+python-multipart
+scikit-learn
+numpy

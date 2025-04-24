@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Sending data to backend:", data);
 
             try {
-                const response = await fetch('http://localhost:8000/predict/', { // Adjust URL if needed
+                const response = await fetch('https://gridgenius-production.up.railway.app/predict/', { // Adjust URL if needed
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -490,7 +490,7 @@ async function streamLLMResponse(currentChatHistory) {
     const decoder = new TextDecoder();
 
     try {
-        const response = await fetch("http://localhost:8000/query/", {
+        const response = await fetch("https://gridgenius-production.up.railway.app/query/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ chat_history: currentChatHistory }) // Send current history

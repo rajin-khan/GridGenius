@@ -1,374 +1,402 @@
-// === Navbar Active Link ===
 document.addEventListener("DOMContentLoaded", () => {
-    const path = window.location.pathname.split("/").pop() || "index.html"; // Default to index.html if path is empty
-    const navLinks = document.querySelectorAll("nav a");
+    console.log("DOM fully loaded and parsed"); // Add this for debugging
 
-    navLinks.forEach(link => {
-      const href = link.getAttribute("href");
-      if (href === path) {
-        link.classList.add("text-yellow-400");
-      } else {
-        link.classList.remove("text-yellow-400");
-      }
-    });
-
-    // Initialize Lucide icons if they exist on the page
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-
-    // Add click listener to send button if it exists
-    const sendButton = document.querySelector("button[data-lucide='send']");
-     if (sendButton && chatInput && chatLog) {
-        sendButton.addEventListener("click", handleSendMessage);
-     }
-});
-
-// === Image Modal Functionality ===
-
-document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modal-image');
-    const closeModalBtn = document.getElementById('modal-close-btn');
-    // Use a more specific class for clickable items if needed, otherwise query grids
-    const insightImages = document.querySelectorAll('#insights-grid img, #model-results-grid img');
+    // === 1. Define Core Variables (if needed globally within listener) ===
     const body = document.body;
 
-    if (modal && modalImage && closeModalBtn && insightImages.length > 0) {
-        console.log(`Found ${insightImages.length} insight images for modal.`);
+    // === 2. Navbar Active Link ===
+    const path = window.location.pathname.split("/").pop() || "index.html";
+    const navLinks = document.querySelectorAll("nav a");
+    console.log(`Current path: ${path}`);
+    navLinks.forEach(link => {
+        const href = link.getAttribute("href");
+        if (href === path) {
+            link.classList.add("text-yellow-400");
+            console.log(`Activating link: ${href}`);
+        } else {
+            link.classList.remove("text-yellow-400");
+        }
+    });
 
-        const openModal = (imgSrc, imgAlt) => {
+    // === 3. Image Modal Functionality (Conditional) ===
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modal-image');
+    const imageModalCloseBtn = document.getElementById('modal-close-btn'); // Renamed to avoid conflict
+    const insightImages = document.querySelectorAll('#insights-grid img, #model-results-grid img');
+
+    // Only run modal logic if the necessary elements exist (likely on insights.html)
+    if (imageModal && modalImage && imageModalCloseBtn && insightImages.length > 0) {
+        console.log(`Image Modal Setup: Found ${insightImages.length} insight images.`);
+
+        const openImageModal = (imgSrc, imgAlt) => { // Renamed to be specific
             modalImage.src = imgSrc;
             modalImage.alt = imgAlt || "Enlarged Insight Visualization";
+            imageModal.style.display = 'flex';
+            void imageModal.offsetWidth; // Reflow
+            imageModal.classList.add('modal-visible');
+            body.style.overflow = 'hidden';
+        };
 
-            // Remove hidden first (or ensure it's not display:none)
-            // We rely on the CSS for initial state (opacity-0, invisible, scale-95)
-            // The 'hidden' class might interfere, let's manage visibility via CSS classes instead
-            modal.style.display = 'flex'; // Ensure it's display:flex
-
-            // Force repaint/reflow before adding the visible class
-            void modal.offsetWidth;
-
-            // Add the class that triggers the transition
-            modal.classList.add('modal-visible');
-            body.style.overflow = 'hidden'; // Prevent background scrolling
-
-            // Initialize close button icon if needed
-            if (typeof lucide !== 'undefined') {
-                const closeIcon = closeModalBtn.querySelector('i[data-lucide="x"]');
-                if (closeIcon && !closeIcon.getAttribute('data-lucide-rendered')) {
-                    lucide.createIcons({ nodes: [closeIcon] });
-                    closeIcon.setAttribute('data-lucide-rendered', 'true');
+        const closeImageModal = () => { // Renamed to be specific
+            imageModal.classList.remove('modal-visible');
+            body.style.overflow = '';
+            setTimeout(() => {
+                if (!imageModal.classList.contains('modal-visible')) {
+                    imageModal.style.display = 'none';
+                    modalImage.src = "";
+                    modalImage.alt = "";
                 }
-            }
+            }, 300);
         };
 
-        const closeModal = () => {
-            // Remove the class that makes it visible
-            modal.classList.remove('modal-visible');
-            body.style.overflow = ''; // Restore background scrolling
-
-            // Wait for transition to finish before setting display: none
-            // The CSS transition handles the visibility delay
-             setTimeout(() => {
-                  // Only hide if the visible class is still removed (safety check)
-                  if (!modal.classList.contains('modal-visible')) {
-                       modal.style.display = 'none';
-                       modalImage.src = ""; // Clear src
-                       modalImage.alt = "";
-                  }
-             }, 300); // Match the CSS transition duration
-        };
-
-        // Add listeners to each insight image
         insightImages.forEach(img => {
-            // img.classList.add('cursor-pointer'); // Already added in HTML
             img.addEventListener('click', (e) => {
                 e.stopPropagation();
                 console.log(`Image clicked: ${img.src}`);
-                openModal(img.src, img.alt);
+                openImageModal(img.src, img.alt);
             });
         });
 
-        // Listener for the close button
-        closeModalBtn.addEventListener('click', closeModal);
+        imageModalCloseBtn.addEventListener('click', closeImageModal);
 
-        // Listener to close modal when clicking the background overlay
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                closeImageModal();
             }
         });
-
-        // Listener for the Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('modal-visible')) { // Check if modal is visible
-                closeModal();
-            }
-        });
-
+        // We'll add the Escape key listener globally later
     } else if (document.getElementById('insights-grid')) {
-         console.warn("Modal elements or insight images not found. Modal functionality disabled.");
+        console.warn("Image Modal elements or insight images not found, but insights grid exists.");
     }
 
-    // === NEW: Prediction Form Functionality ===
+    // === 4. Prediction Form Functionality (Conditional) ===
     const predictionForm = document.getElementById('prediction-form');
     const resultArea = document.getElementById('prediction-result-area');
     const resultValueElement = document.getElementById('predicted-demand-value');
     const resultStatusElement = document.getElementById('prediction-status');
 
+    // Only run prediction logic if the form exists (likely on predict.html)
     if (predictionForm && resultArea && resultValueElement && resultStatusElement) {
+        console.log("Prediction Form Setup: Elements found.");
         predictionForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default HTML form submission
+             event.preventDefault();
+             console.log("Prediction form submitted.");
+             // Show loading state
+             resultValueElement.textContent = '-- MW';
+             resultStatusElement.textContent = 'Forecasting...';
+             resultArea.classList.remove('hidden');
+             resultArea.classList.remove('visible');
+             void resultArea.offsetWidth; // Reflow
+             resultArea.classList.add('visible');
 
-            // Clear previous results and show loading state
-            resultValueElement.textContent = '-- MW';
-            resultStatusElement.textContent = 'Forecasting...';
-            resultArea.classList.remove('hidden'); // Show the area
-            resultArea.classList.remove('visible'); // Reset animation state if needed
-            // Force reflow before adding class for animation
-            void resultArea.offsetWidth;
-            resultArea.classList.add('visible');
+             const formData = new FormData(predictionForm);
+             const data = {};
+             let formIsValid = true;
 
-            // Get form data
-            const formData = new FormData(predictionForm);
-            const data = {};
-            let formIsValid = true;
-
-            // Convert FormData to JSON object and validate numbers
-            for (const [key, value] of formData.entries()) {
+             // Basic validation and data preparation
+             for (const [key, value] of formData.entries()) {
                 const numValue = (key === 'temp') ? parseFloat(value) : parseInt(value, 10);
-                if (isNaN(numValue)) {
-                    formIsValid = false;
-                    resultStatusElement.textContent = `Error: Invalid input for ${key}. Please enter a number.`;
-                    resultValueElement.textContent = 'Error';
-                    console.error(`Invalid number format for ${key}: ${value}`);
-                    break; // Stop processing if invalid
-                }
-                 // Basic range checks (optional but good)
-                 if (key === 'month' && (numValue < 1 || numValue > 12)) formIsValid = false;
-                 if (key === 'day' && (numValue < 1 || numValue > 31)) formIsValid = false;
-                 if ((key === 'season' || key === 'isholiday') && (numValue !== 0 && numValue !== 1)) formIsValid = false;
-                 if (!formIsValid) {
-                    resultStatusElement.textContent = `Error: Invalid value for ${key}. Check range/format.`;
-                    resultValueElement.textContent = 'Error';
-                     console.error(`Invalid value for ${key}: ${value}`);
-                    break;
+                 if (isNaN(numValue) ||
+                    (key === 'month' && (numValue < 1 || numValue > 12)) ||
+                    (key === 'day' && (numValue < 1 || numValue > 31)) ||
+                    ((key === 'season' || key === 'isholiday') && (numValue !== 0 && numValue !== 1)) )
+                 {
+                     formIsValid = false;
+                     resultStatusElement.textContent = `Error: Invalid value for ${key}. Check range/format.`;
+                     resultValueElement.textContent = 'Error';
+                     console.error(`Invalid value/format for ${key}: ${value}`);
+                     break;
                  }
+                 data[key] = numValue;
+             }
 
-                data[key] = numValue;
-            }
+             if (!formIsValid) return;
 
-            if (!formIsValid) {
-                return; // Stop if validation failed
-            }
-
-            console.log("Sending data to backend:", data);
-
-            try {
-                const response = await fetch('https://gridgenius-production.up.railway.app/predict/', { // Adjust URL if needed
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ detail: 'Unknown error structure' })); // Try to parse error
-                    console.error("API Error Response:", errorData);
-                    throw new Error(`API Error (${response.status}): ${errorData.detail || response.statusText}`);
-                }
-
-                const result = await response.json();
-
-                if (result.predicted_demand !== undefined) {
-                    // Format the result (e.g., to 2 decimal places)
-                    const formattedDemand = parseFloat(result.predicted_demand).toFixed(2);
-                    resultValueElement.textContent = `${formattedDemand} MW`;
-                    resultStatusElement.textContent = 'Prediction successful.';
-                    console.log("Prediction successful:", result.predicted_demand);
-                } else {
-                     throw new Error('Invalid response format from server.');
-                }
-
-            } catch (error) {
-                console.error('Prediction failed:', error);
-                resultValueElement.textContent = 'Error';
-                resultStatusElement.textContent = `Prediction failed: ${error.message}`;
-                // Make sure result area is visible to show the error
-                resultArea.classList.remove('hidden');
-                resultArea.classList.add('visible');
-            }
+             console.log("Sending prediction data:", data);
+             try {
+                 const response = await fetch('https://gridgenius-production.up.railway.app/predict/', {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify(data),
+                 });
+                 if (!response.ok) {
+                     const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+                     throw new Error(`API Error (${response.status}): ${errorData.detail || response.statusText}`);
+                 }
+                 const result = await response.json();
+                 if (result.predicted_demand !== undefined) {
+                     const formattedDemand = parseFloat(result.predicted_demand).toFixed(2);
+                     resultValueElement.textContent = `${formattedDemand} MW`;
+                     resultStatusElement.textContent = 'Prediction successful.';
+                     console.log("Prediction result:", result.predicted_demand);
+                 } else {
+                     throw new Error('Invalid response format.');
+                 }
+             } catch (error) {
+                 console.error('Prediction failed:', error);
+                 resultValueElement.textContent = 'Error';
+                 resultStatusElement.textContent = `Prediction failed: ${error.message}`;
+                 resultArea.classList.remove('hidden'); // Ensure error is visible
+                 resultArea.classList.add('visible');
+             }
         });
     }
-    // === END: Prediction Form Functionality ===
 
+    // === 5. Info Modal (Accuracy) Functionality (Conditional) ===
     const infoModal = document.getElementById('infoModal');
     const accuracyInfoBtn = document.getElementById('accuracy-info-btn');
-    const closeInfoBtn = document.getElementById('modal-close-btn-info'); // Use unique ID
+    const closeInfoBtn = document.getElementById('modal-close-btn-info');
 
-    // Helper function to open the info modal
-    const openInfoModal = () => {
-        if (!infoModal) return; // Safety check
-        console.log("Opening info modal...");
-        infoModal.style.display = 'flex'; // Make it flex container
-        // Force repaint/reflow before adding the visible class
-        void infoModal.offsetWidth;
-        infoModal.classList.add('modal-visible');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-
-        // Initialize close button icon if needed (should be handled by global init now)
-        // Ensure Lucide is called if icons aren't rendering
-        if (typeof lucide !== 'undefined') {
-            const closeIcon = closeInfoBtn?.querySelector('i[data-lucide="x"]');
-            if (closeIcon && !closeIcon.getAttribute('data-lucide-rendered')) {
-                lucide.createIcons({ nodes: [closeIcon] });
-                closeIcon.setAttribute('data-lucide-rendered', 'true'); // Mark as rendered
-            }
-        }
-    };
-
-    // Helper function to close the info modal
-    const closeInfoModal = () => {
-        if (!infoModal) return; // Safety check
-        console.log("Closing info modal...");
-        infoModal.classList.remove('modal-visible');
-        document.body.style.overflow = ''; // Restore background scrolling
-
-        // Wait for transition before setting display: none
-        setTimeout(() => {
-            // Only hide if the visible class is still removed
-            if (!infoModal.classList.contains('modal-visible')) {
-                infoModal.style.display = 'none';
-            }
-        }, 300); // Match the CSS transition duration
-    };
-
-    // Add event listeners if the elements exist
+    // Only run info modal logic if elements exist (likely on predict.html)
     if (infoModal && accuracyInfoBtn && closeInfoBtn) {
-        // Listener for the trigger button in the result area
-        accuracyInfoBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent potential interference
-            openInfoModal();
-        });
+        console.log("Info Modal Setup: Elements found.");
+        const openInfoModal = () => {
+            infoModal.style.display = 'flex';
+            void infoModal.offsetWidth; // Reflow
+            infoModal.classList.add('modal-visible');
+            body.style.overflow = 'hidden';
+        };
+        const closeInfoModal = () => {
+            infoModal.classList.remove('modal-visible');
+            body.style.overflow = '';
+            setTimeout(() => {
+                if (!infoModal.classList.contains('modal-visible')) {
+                    infoModal.style.display = 'none';
+                }
+            }, 300);
+        };
 
-        // Listener for the modal's close button
+        accuracyInfoBtn.addEventListener('click', (e) => { e.stopPropagation(); openInfoModal(); });
         closeInfoBtn.addEventListener('click', closeInfoModal);
-
-        // Listener to close modal when clicking the background overlay
-        infoModal.addEventListener('click', (e) => {
-            // Check if the click is directly on the modal overlay (not the content inside)
-            if (e.target === infoModal) {
-                closeInfoModal();
-            }
-        });
-
-        // Listener for the Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && infoModal.classList.contains('modal-visible')) {
-                closeInfoModal();
-            }
-        });
-    } else {
-         // Log warning if elements aren't found on this page load
-         if (!infoModal && document.getElementById('prediction-result-area')) console.warn("Info Modal container (#infoModal) not found.");
-         if (!accuracyInfoBtn && document.getElementById('prediction-result-area')) console.warn("Accuracy Info Button (#accuracy-info-btn) not found.");
-         if (!closeInfoBtn && document.getElementById('prediction-result-area')) console.warn("Info Modal Close Button (#modal-close-btn-info) not found.");
+        infoModal.addEventListener('click', (e) => { if (e.target === infoModal) closeInfoModal(); });
+        // We'll add the Escape key listener globally later
     }
 
-    // === NEW: Feature Modal Functionality ===
+    // === 6. Feature Modal (Homepage) Functionality (Conditional) ===
     const featureCards = document.querySelectorAll('.feature-card');
     const featureModals = document.querySelectorAll('.feature-modal');
     const featureModalCloseBtns = document.querySelectorAll('.modal-close-feature');
 
-    const closeAllFeatureModals = () => {
-        featureModals.forEach(modal => {
-            if (modal.classList.contains('modal-visible')) {
+     // Only run feature modal logic if cards exist (likely on index.html)
+    if (featureCards.length > 0 && featureModals.length > 0) {
+        console.log(`Feature Modal Setup: Found ${featureCards.length} cards.`);
+        const closeAllFeatureModals = () => {
+            featureModals.forEach(modal => {
                 modal.classList.remove('modal-visible');
-                // Wait for transition before hiding completely
-                setTimeout(() => {
-                    if (!modal.classList.contains('modal-visible')) { // Double check
-                       // We don't set display:none here, visibility handles it
-                    }
-                }, 300); // Match CSS transition duration
-            }
-        });
-        body.style.overflow = ''; // Restore scrolling
-    };
-
-    const openFeatureModal = (modalId) => {
-        closeAllFeatureModals(); // Close any other open modals first
-        const targetModal = document.querySelector(modalId);
-        if (targetModal) {
-            // targetModal.style.display = 'flex'; // Use CSS for initial display
-            // Force reflow
-            void targetModal.offsetWidth;
-            targetModal.classList.add('modal-visible');
-            body.style.overflow = 'hidden'; // Prevent background scrolling
-             // Ensure icons render if dynamic loading is tricky
-             if (typeof lucide !== 'undefined') {
-                  lucide.createIcons({ nodes: targetModal.querySelectorAll('[data-lucide]') });
+            });
+             // Only restore scroll if no *other* modals are open
+             if (!document.querySelector('#infoModal.modal-visible, #imageModal.modal-visible')) {
+                  body.style.overflow = '';
              }
-        } else {
-            console.error(`Modal with ID ${modalId} not found.`);
-        }
-    };
+             // No need for timeout/display:none if using visibility+opacity
+        };
 
-    // Add listeners only if feature cards exist on the page
-    if (featureCards.length > 0) {
-        // Event listener for feature card clicks
+        const openFeatureModal = (modalId) => {
+            // Close other *feature* modals first
+            featureModals.forEach(m => m.classList.remove('modal-visible'));
+
+            const targetModal = document.querySelector(modalId);
+            if (targetModal) {
+                // targetModal.style.display = 'flex'; // Let CSS handle display via visibility
+                void targetModal.offsetWidth; // Reflow
+                targetModal.classList.add('modal-visible');
+                body.style.overflow = 'hidden';
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons({ nodes: targetModal.querySelectorAll('[data-lucide]') });
+                }
+            } else {
+                console.error(`Feature Modal with ID ${modalId} not found.`);
+            }
+        };
+
         featureCards.forEach(card => {
             card.addEventListener('click', () => {
                 const modalId = card.getAttribute('data-modal-target');
-                if (modalId) {
-                    openFeatureModal(modalId);
-                }
+                console.log(`Feature card clicked, target: ${modalId}`);
+                if (modalId) { openFeatureModal(modalId); }
             });
         });
 
-        // Event listener for close buttons
         featureModalCloseBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent closing parent modal if nested (not applicable here, but good practice)
-                closeAllFeatureModals();
-            });
+             btn.addEventListener('click', (e) => { e.stopPropagation(); closeAllFeatureModals(); });
         });
 
-        // Event listener for clicking modal overlay
         featureModals.forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                // If the click is directly on the modal overlay itself
-                if (e.target === modal) {
-                    closeAllFeatureModals();
-                }
-            });
+             modal.addEventListener('click', (e) => { if (e.target === modal) closeAllFeatureModals(); });
         });
+        // We'll add the Escape key listener globally later
+    }
 
-        // Event listener for Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                // Check if any feature modal is currently visible
-                const isModalVisible = Array.from(featureModals).some(m => m.classList.contains('modal-visible'));
-                if (isModalVisible) {
-                    closeAllFeatureModals();
-                }
+    // === 7. Chat Functionality (Conditional) ===
+    const chatInput = document.getElementById("chat-input");
+    const chatLog = document.getElementById("chat-log");
+    const chatSendButton = document.querySelector("button[aria-label='Send message']"); // CORRECT SELECTOR
+    let chatHistory = []; // Keep chat history scoped if only needed here
+
+    // Only run chat logic if elements exist (likely on ask.html)
+    if (chatInput && chatLog && chatSendButton) {
+        console.log("Chat Setup: Elements found.");
+
+        // --- Define Chat Helper Functions INSIDE the conditional block ---
+        const appendMessage = (sender, msg, type, timestamp = true) => {
+             // (Keep your existing appendMessage function code here)
+             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+             const bubble = document.createElement("div");
+             bubble.className = `max-w-[75%] px-4 py-3 rounded-xl text-sm ${type === "user" ? "bg-white/10 self-end text-white" : "bg-yellow-400/10 self-start text-white"} animate-fade-in shadow-sm message-bubble`;
+             const contentHTML = (type === "bot") ? marked.parse(msg) : escapeHTML(msg);
+             bubble.innerHTML = `<div class="text-xs mb-1 ${type === "user" ? "text-gray-400 text-right" : "text-yellow-400"} font-semibold">${sender}</div><div class="message-content prose prose-invert prose-sm max-w-none">${contentHTML}</div>${timestamp ? `<div class="timestamp text-[10px] text-gray-500 mt-1 ${type === "user" ? "text-right" : "text-left"}">${time}</div>` : ""}`;
+             const wrapper = document.createElement("div");
+             wrapper.className = `flex flex-col ${type === "user" ? "items-end" : "items-start"}`;
+             wrapper.appendChild(bubble);
+             chatLog.appendChild(wrapper);
+             // Auto-scroll
+             setTimeout(() => { // Slight delay allows content to render before scroll calc
+                chatLog.scrollTop = chatLog.scrollHeight;
+             }, 50);
+             return bubble;
+        };
+
+        const escapeHTML = (str) => {
+             const div = document.createElement('div');
+             div.textContent = str;
+             return div.innerHTML;
+        };
+
+        const showTypingIndicator = () => {
+             removeTypingIndicator();
+             const typingDiv = document.createElement("div");
+             typingDiv.id = "typing-indicator";
+             typingDiv.className = `flex flex-col items-start`;
+             typingDiv.innerHTML = `<div class="max-w-[75%] px-4 py-3 rounded-xl text-sm bg-yellow-400/10 self-start text-white animate-pulse shadow-sm"><div class="text-xs mb-1 text-yellow-400 font-semibold">GridGenius</div><div>Thinking...</div></div>`;
+             chatLog.appendChild(typingDiv);
+             chatLog.scrollTop = chatLog.scrollHeight;
+        };
+
+        const removeTypingIndicator = () => {
+             const typingDiv = document.getElementById("typing-indicator");
+             if (typingDiv) typingDiv.remove();
+        };
+
+        const streamLLMResponse = async (currentChatHistory) => {
+             // (Keep your existing streamLLMResponse function code here, using the appendMessage defined above)
+             // Make sure it uses the correct backend URL
+             let botMessageBubble = null;
+             let botContentElement = null;
+             let accumulatedResponse = "";
+             const decoder = new TextDecoder();
+             try {
+                 const response = await fetch("https://gridgenius-production.up.railway.app/query/", { // Make sure URL is correct
+                     method: "POST",
+                     headers: { "Content-Type": "application/json" },
+                     body: JSON.stringify({ chat_history: currentChatHistory })
+                 });
+                 removeTypingIndicator();
+                 if (!response.ok) {
+                     const errorText = await response.text();
+                     throw new Error(`API Error (${response.status}): ${errorText}`);
+                 }
+                 const reader = response.body.getReader();
+                 botMessageBubble = appendMessage("GridGenius", "", "bot", false);
+                 botContentElement = botMessageBubble.querySelector(".message-content");
+                 if (!botContentElement) throw new Error("Could not find .message-content in bot bubble");
+                 botContentElement.innerHTML = ''; // Start empty
+
+                 while (true) {
+                     const { value, done } = await reader.read();
+                     if (done) {
+                         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                         const timestampDiv = document.createElement('div');
+                         timestampDiv.className = "timestamp text-[10px] text-gray-500 mt-1 text-left";
+                         timestampDiv.textContent = time;
+                         botMessageBubble.appendChild(timestampDiv);
+                         chatHistory.push({ role: "assistant", content: accumulatedResponse }); // Update shared history
+                         if (chatHistory.length > 10) { // Limit history
+                             chatHistory = chatHistory.slice(-10);
+                         }
+                         break;
+                     }
+                     const chunk = decoder.decode(value, { stream: true });
+                     accumulatedResponse += chunk;
+                     botContentElement.innerHTML = marked.parse(accumulatedResponse);
+                     chatLog.scrollTop = chatLog.scrollHeight;
+                 }
+             } catch (err) {
+                 console.error("Error fetching/streaming:", err);
+                 removeTypingIndicator();
+                 if (botContentElement) { botContentElement.innerHTML += "<br>⚠️ Error receiving full response."; }
+                 else { appendMessage("GridGenius", `⚠️ Streaming Error: ${err.message}`, "bot"); }
+             }
+        };
+
+        const handleSendMessage = () => { // Define handler INSIDE conditional block
+             const userMsg = chatInput.value.trim();
+             if (userMsg !== "") {
+                 appendMessage("You", userMsg, "user");
+                 chatHistory.push({ role: "user", content: userMsg });
+                 if (chatHistory.length > 10) { // Limit history
+                     chatHistory = chatHistory.slice(-10);
+                 }
+                 showTypingIndicator();
+                 streamLLMResponse(chatHistory).catch(err => { // Pass current history
+                     console.error("Streaming error triggered:", err);
+                     removeTypingIndicator();
+                     appendMessage("GridGenius", "⚠️ Error receiving response.", "bot");
+                 });
+                 chatInput.value = "";
+             }
+        };
+        // --- End Chat Helper Functions ---
+
+        // Attach listeners using the locally defined handler
+        chatInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage(); // Call the handler
             }
         });
 
-    } else {
-        // Optional: Log if no feature cards are found (e.g., on other pages)
-        // console.log("No feature cards found on this page.");
-    }
-    // === END: Feature Modal Functionality ===
+        chatSendButton.addEventListener("click", handleSendMessage); // Call the handler
 
-    // Initialize other icons (navbar etc.)
-     if (typeof lucide !== 'undefined') {
+        console.log("Chat listeners attached.");
+
+    } else if (document.getElementById('chat-log-container')) {
+         console.warn("Chat input or button not found, but chat container exists.");
+    }
+
+    // === 8. Global Escape Key Listener for ALL Modals ===
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            console.log("Escape key pressed");
+             // Check and close relevant modals
+            if (imageModal && imageModal.classList.contains('modal-visible')) {
+                 console.log("Closing image modal via Escape");
+                 closeImageModal(); // Use specific close function if defined
+            } else if (infoModal && infoModal.classList.contains('modal-visible')) {
+                console.log("Closing info modal via Escape");
+                closeInfoModal(); // Use specific close function if defined
+            } else {
+                 // Check feature modals (need access to closeAllFeatureModals or re-select)
+                  const anyFeatureModalVisible = Array.from(featureModals).some(m => m.classList.contains('modal-visible'));
+                  if (anyFeatureModalVisible) {
+                       console.log("Closing feature modal via Escape");
+                       closeAllFeatureModals(); // Use the function defined in section 6
+                  }
+            }
+        }
+    });
+
+    // === 9. Global Lucide Initialization ===
+    // Call this once at the very end after all potential elements are checked/listeners attached
+    if (typeof lucide !== 'undefined') {
         console.log("Initializing Lucide icons globally...");
         lucide.createIcons();
-     }
+        // Mark icons as rendered after global init (optional, good practice)
+        document.querySelectorAll('[data-lucide]').forEach(iconEl => iconEl.setAttribute('data-lucide-rendered', 'true'));
+    } else {
+         console.error("Lucide library not loaded!");
+    }
 
-}); // End DOMContentLoaded
+}); // === END DOMContentLoaded ===
 
 // === Home: Scroll to Ask Genius ===
 const scrollBtn = document.getElementById("explore-btn");

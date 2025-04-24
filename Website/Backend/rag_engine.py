@@ -27,7 +27,7 @@ chroma_client = PersistentClient(path="./chroma_storage")
 collection = chroma_client.get_or_create_collection(name="rag_collection")
 
 # --- Hugging Face Inference API Configuration ---
-MODEL_ID = "sentence-transformers/all-mpnet-base-v2"
+MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
 HF_API_URL = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{MODEL_ID}"
 
 if not HF_API_TOKEN:

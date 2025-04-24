@@ -9,7 +9,7 @@
 [![Backend - Railway](https://img.shields.io/badge/Backend-Railway-blue?style=for-the-badge&logo=railway)](YOUR_RAILWAY_BACKEND_URL)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-### *Website: [Live Now](grid-genius-project.vercel.app)*
+### *Website: [Live Now](https://grid-genius-project.vercel.app/)*
 
 ---
 

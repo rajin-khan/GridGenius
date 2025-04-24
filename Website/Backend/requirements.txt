@@ -11,3 +11,4 @@ python-dotenv
 python-multipart
 scikit-learn
 numpy
+requests

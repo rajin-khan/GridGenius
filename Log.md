@@ -50,7 +50,7 @@ d# Project Progress Log
 
 - **Date:** 28-01-25
 - **Team Member:** Sadia
-- **Changes Made:** getting ideas and learning python.
+- **Changes Made:** getting ideas about transformer based models and learning python.
    
 - **Date:** 28-01-25
 - **Team Member:** Lishad
@@ -316,6 +316,14 @@ d# Project Progress Log
 - **Date:** 24-03-25
 - **Team Member:** Adib
 - **Changes Made:** Finalize live website (https://grid-genius-project.vercel.app).
+
+  **Date:** 10-04-25
+- **Team Member:** Sadia
+- **Changes Made:** Summerized all the papers and finished Literature Review part.
+  
+- **Date:** 23-04-25
+- **Team Member:** Sadia
+- **Changes Made:** Report Done in IEEE format.
 
 - **Date:** 24-03-25
 - **Team Member:** Pranoy

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GridGenius Development Dashboard</title>
+    <!-- 1. Include Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 2. Include Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 3. Include Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 4. Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
+    <style>
+        /* Base theme adjustments */
+        body { background-color: #000000; color: #d1d5db; /* gray-300 */ font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        /* Chart container height */
+        .chart-container { position: relative; height: 300px; width: 100%; }
+        .chart-container-tall { position: relative; height: 350px; width: 100%; }
+
+        /* Tab Styling */
+        .tab {
+            border: 1px solid transparent; border-bottom: none;
+            background-color: rgba(255, 255, 255, 0.03);
+            color: #9ca3af; /* gray-400 */
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+            margin-bottom: -1px;
+            padding-left: 1rem; padding-right: 1rem;
+            padding-top: 0.5rem; padding-bottom: 0.5rem;
+            cursor: pointer;
+            border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;
+            font-size: 0.875rem; font-weight: 500;
+            margin-right: 0.25rem;
+        }
+        .tab:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: #f3f4f6; /* gray-100 */
+        }
+        .tab.active {
+            background-color: rgba(251, 191, 36, 0.05); /* bg-yellow-400/5 */
+            color: #facc15; /* yellow-400 */
+            border-color: rgba(255, 255, 255, 0.1);
+            border-bottom-color: transparent;
+        }
+
+        /* Content Styling */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Chart.js Tooltip Styling Override */
+        .chartjs-tooltip {
+            background: rgba(10, 10, 10, 0.9) !important; color: #e5e7eb !important;
+            border-radius: 0.375rem !important; border: 1px solid rgba(251, 191, 36, 0.2) !important;
+            padding: 0.5rem 0.75rem !important; font-size: 0.75rem !important; font-family: 'Inter', sans-serif !important;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.1); opacity: 1 !important;
+            pointer-events: none !important; transition: opacity 0.15s ease !important;
+        }
+        .chartjs-tooltip-key {
+            display: inline-block !important; width: 10px !important; height: 10px !important;
+            margin-right: 6px !important; border-radius: 2px !important;
+        }
+
+         /* Card styling */
+         .insight-card {
+             background-color: rgba(0, 0, 0, 0.2); padding: 1rem;
+             border-radius: 0.5rem; border: 1px solid rgba(255, 255, 255, 0.1);
+         }
+         .insight-sub-card {
+             background-color: rgba(17, 24, 39, 0.6); padding: 0.75rem;
+             border-radius: 0.5rem; border: 1px solid rgba(255, 255, 255, 0.05);
+         }
+         /* Style for Contribution list items */
+         .contribution-list li { margin-bottom: 0.4rem; }
+
+    </style>
+</head>
+<body class="p-4 md:p-6 font-[Inter] bg-black">
+
+    <div class="max-w-7xl mx-auto flex flex-col space-y-6">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-4 border-b border-white/10 pb-4">
+            <h1 class="text-3xl font-bold text-yellow-400 inline-flex items-center gap-2">
+                 <i data-lucide="layout-dashboard"></i>
+                 <span>GridGenius Dev Dashboard</span>
+            </h1>
+            <div class="text-sm text-gray-500 mt-2 md:mt-0">
+                Timeline: Jan - Apr 2025
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div id="summary-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <!-- JS will generate cards -->
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap border-b border-white/10">
+            <button class="tab active" data-tab="overview">Overview</button>
+            <button class="tab" data-tab="team">Team</button>
+            <button class="tab" data-tab="timeline">Timeline</button>
+            <button class="tab" data-tab="category">Categories</button>
+            <button class="tab" data-tab="collaboration">Collaboration</button>
+            <button class="tab" data-tab="contributions">Contributions</button> <!-- New Tab Button -->
+        </div>
+
+        <!-- Tab Content Sections -->
+
+        <!-- Overview Tab -->
+        <div id="overview-content" class="tab-content active space-y-6 mt-6">
+            <h2 class="text-2xl font-semibold text-yellow-400 border-b border-white/10 pb-2 mb-4">Overview</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Team Contribution %</h3>
+                    <div class="chart-container"><canvas id="teamPieChart"></canvas></div>
+                </div>
+                <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Monthly Activity</h3>
+                    <div class="chart-container"><canvas id="monthlyLineChart"></canvas></div>
+                </div>
+            </div>
+            <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Project Completion Progress (%)</h3>
+                 <div class="chart-container"><canvas id="progressAreaChart"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Team Tab -->
+        <div id="team-content" class="tab-content space-y-6 mt-6">
+             <h2 class="text-2xl font-semibold text-yellow-400 border-b border-white/10 pb-2 mb-4">Team Activity</h2>
+             <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Contributions Overview</h3>
+                 <div class="flex flex-col md:flex-row gap-4">
+                    <div class="w-full md:w-1/2 chart-container"><canvas id="teamPieChart2"></canvas></div>
+                    <div class="w-full md:w-1/2 chart-container"><canvas id="teamBarChart"></canvas></div>
+                 </div>
+             </div>
+             <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Monthly Team Activity (Stacked)</h3>
+                <div class="chart-container-tall"><canvas id="monthlyStackedBarChart"></canvas></div>
+             </div>
+             <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                 <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Monthly Activity Trend (Lines)</h3>
+                 <div class="chart-container"><canvas id="monthlyTeamLineChart"></canvas></div>
+             </div>
+        </div>
+
+        <!-- Timeline Tab -->
+        <div id="timeline-content" class="tab-content space-y-6 mt-6">
+            <h2 class="text-2xl font-semibold text-yellow-400 border-b border-white/10 pb-2 mb-4">Project Timeline</h2>
+             <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                 <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Project Phases Timeline (Days)</h3>
+                 <div class="chart-container"><canvas id="timelineBarChart"></canvas></div>
+             </div>
+             <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                 <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Project Completion Progress (%)</h3>
+                 <div class="chart-container"><canvas id="progressAreaChart2"></canvas></div>
+             </div>
+        </div>
+
+        <!-- Category Tab -->
+        <div id="category-content" class="tab-content space-y-6 mt-6">
+            <h2 class="text-2xl font-semibold text-yellow-400 border-b border-white/10 pb-2 mb-4">Activity Categories</h2>
+             <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Distribution by Category</h3>
+                 <div class="flex flex-col md:flex-row gap-4">
+                    <div class="w-full md:w-1/2 chart-container"><canvas id="categoryPieChart"></canvas></div>
+                    <div class="w-full md:w-1/2 chart-container"><canvas id="categoryBarChart"></canvas></div>
+                 </div>
+             </div>
+             <div class="insight-card">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400/80">Key Insights</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                  <div class="insight-sub-card"><h4 class="text-yellow-400 font-medium mb-1">Data Focus</h4><p class="text-gray-400">Preprocessing (15) & collection (12) dominated early stages.</p></div>
+                  <div class="insight-sub-card"><h4 class="text-yellow-400 font-medium mb-1">Balanced Dev</h4><p class="text-gray-400">Model dev (14) & viz/EDA (10) received significant focus.</p></div>
+                  <div class="insight-sub-card"><h4 class="text-yellow-400 font-medium mb-1">Documentation</h4><p class="text-gray-400">Strong focus on documentation (11) throughout.</p></div>
+                </div>
+             </div>
+        </div>
+
+        <!-- Collaboration Tab -->
+        <div id="collaboration-content" class="tab-content space-y-6 mt-6">
+            <h2 class="text-2xl font-semibold text-yellow-400 border-b border-white/10 pb-2 mb-4">Collaboration</h2>
+             <div class="bg-white/5 p-4 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                 <h3 class="text-lg font-semibold mb-4 text-yellow-400/90">Collaboration Interactions (Bubble Size = Score)</h3>
+                 <div class="chart-container"><canvas id="collaborationScatterChart"></canvas></div>
+             </div>
+             <div class="insight-card">
+                <h3 class="text-lg font-semibold mb-4 text-yellow-400/80">Key Collaboration Insights</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  <div class="insight-sub-card"><h4 class="text-yellow-400 font-medium mb-1">Strongest Pairs</h4><p class="text-gray-400">Adib & Lishad (9 interactions) led core data/model tasks.</p></div>
+                  <div class="insight-sub-card"><h4 class="text-yellow-400 font-medium mb-1">Team Integration</h4><p class="text-gray-400">All member pairs showed good interaction (scores 3+).</p></div>
+                </div>
+             </div>
+        </div>
+
+        <!-- Contributions Tab - NEW -->
+        <div id="contributions-content" class="tab-content space-y-6 mt-6">
+            <h2 class="text-2xl font-semibold text-yellow-400 border-b border-white/10 pb-2 mb-4">Individual Contributions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Adib -->
+                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
+                        <i data-lucide="user-check"></i> <!-- Or 'user', 'code' etc. -->
+                        <span>Adib Ar Rahman Khan</span>
+                    </h3>
+                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
+                        <li>Initiated dataset collection and scraping from BPDB PDFs.</li>
+                        <li>Designed project logo and established brand visuals.</li>
+                        <li>Led creation of proposal, EDA, and literature review presentations (design + animation).</li>
+                        <li>Performed major EDA tasks: feature engineering, renaming, correlation matrices, visualizations, zone-wise analysis.</li>
+                        <li>Conducted in-depth research on transformers, LoRA, and LLM integration.</li>
+                        <li>Implemented and showcased LangChain-based chatbot (RAG with Groq + Llama3).</li>
+                        <li>Developed the frontend UI and prediction page.</li>
+                        <li>Integrated backend APIs for chatbot and ML model predictions.</li>
+                        <li>Deployed backend (Railway) and frontend (Vercel).</li>
+                        <li>Finalized and launched the live website: grid-genius-project.vercel.app</li>
+                        <li>Led documentation efforts for GridGenius's vision, platform design, and interactivity.</li>
+                        <li>Coordinated multi-version demos and structured the GitHub repo.</li>
+                    </ul>
+                </div>
+
+                <!-- Lishad -->
+                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                    <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
+                        <i data-lucide="user-check"></i>
+                        <span>Aurongojeb Lishad</span>
+                    </h3>
+                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
+                        <li>Carried out early research on features and integrated weather + seasonal data.</li>
+                        <li>Created and refined project pipeline and model selection.</li>
+                        <li>Performed full-cycle data preprocessing: outlier detection, encoding, scaling.</li>
+                        <li>Designed multiple dataset variants and led model experimentation (Random Forest, Linear Regression, Transformer, ARIMA/SARIMA).</li>
+                        <li>Implemented and tuned the Transformer model, later improved it for better performance.</li>
+                        <li>Worked on report writing, including the Introduction section.</li>
+                        <li>Built backend logic for model inference and dataset generation for predictions.</li>
+                        <li>Completed Python script for live predictions and paired actual vs predicted demand sets.</li>
+                    </ul>
+                </div>
+
+                <!-- Pranoy -->
+                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                     <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
+                        <i data-lucide="user-check"></i>
+                        <span>Pranoy Saha</span>
+                    </h3>
+                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
+                        <li>Proposed alternate ideas and explored datasets (e.g., earthquake).</li>
+                        <li>Constructed the Gantt chart for project tracking.</li>
+                        <li>Uploaded and curated research papers on energy use in neighboring countries.</li>
+                        <li>Participated in literature review: summarized novelties, shortcomings, and structure.</li>
+                        <li>Reviewed IEEE formatting guidelines and contributed to writing the research paper draft.</li>
+                    </ul>
+                </div>
+
+                 <!-- Sadia -->
+                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
+                     <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
+                        <i data-lucide="user-check"></i>
+                        <span>Sadia Islam Mou</span>
+                    </h3>
+                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
+                        <li>Assisted with dataset search and learned core tools (Python, NumPy, Pandas).</li>
+                        <li>Researched transformer-based models and seasonal energy demand forecasting.</li>
+                        <li>Contributed to the literature review: summarized papers from UK, Germany, and neighboring countries.</li>
+                        <li>Studied and documented use of LLMs, helped wireframe early HTML UI.</li>
+                        <li>Wrote major parts of the final report, including the literature review and IEEE formatting.</li>
+                        <li>Completed and submitted final report in IEEE format.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <div class="text-center text-xs text-gray-500 mt-6 pt-4 border-t border-white/10">
+            GridGenius Project Development Dashboard • Data visualized from Project Progress Log • April 2025
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DATA (Unchanged) ---
+        const teamMembers = ["Adib", "Lishad", "Pranoy", "Sadia"];
+        const months = ["Jan", "Feb", "Mar", "Apr"];
+        const activityByMember = [ { name: "Adib", count: 34 }, { name: "Lishad", count: 22 }, { name: "Pranoy", count: 6 }, { name: "Sadia", count: 14 }];
+        const activityByMonth = [ { name: "Jan", Adib: 6, Lishad: 6, Pranoy: 2, Sadia: 5, total: 19 }, { name: "Feb", Adib: 3, Lishad: 5, Pranoy: 0, Sadia: 3, total: 11 }, { name: "Mar", Adib: 20, Lishad: 7, Pranoy: 3, Sadia: 4, total: 34 }, { name: "Apr", Adib: 5, Lishad: 4, Pranoy: 1, Sadia: 2, total: 12 }];
+        const activityCategories = [ { name: "Data Collection", value: 12 }, { name: "Data Preprocessing", value: 15 }, { name: "Visualization/EDA", value: 10 }, { name: "Model Development", value: 14 }, { name: "Documentation", value: 11 }, { name: "Research", value: 9 }, { name: "Frontend/UI", value: 5 } ];
+        const timelineData = [ { phase: "Planning & Data Collection", start: 0, end: 30 }, { phase: "Data Preprocessing & EDA", start: 15, end: 45 }, { phase: "Model Development", start: 35, end: 70 }, { phase: "Frontend Implementation", start: 55, end: 83 }, { phase: "Documentation & Reporting", start: 50, end: 85 } ];
+        const collaborationData = [ { x: "Adib", y: "Lishad", z: 9 }, { x: "Adib", y: "Pranoy", z: 4 }, { x: "Adib", y: "Sadia", z: 6 }, { x: "Lishad", y: "Pranoy", z: 3 }, { x: "Lishad", y: "Sadia", z: 5 }, { x: "Pranoy", y: "Sadia", z: 4 } ];
+        const weeklyProgressData = [ { week: "Wk 1", completion: 5 }, { week: "Wk 2", completion: 12 }, { week: "Wk 3", completion: 20 }, { week: "Wk 4", completion: 28 }, { week: "Wk 5", completion: 35 }, { week: "Wk 6", completion: 45 }, { week: "Wk 7", completion: 55 }, { week: "Wk 8", completion: 65 }, { week: "Wk 9", completion: 75 }, { week: "Wk 10", completion: 85 }, { week: "Wk 11", completion: 92 }, { week: "Wk 12", completion: 100 } ];
+        const summaryMetrics = [ { name: "Total Activities", value: 76, icon: 'bar-chart-2' }, { name: "Project Duration", value: "3 months", icon: 'calendar' }, { name: "Team Members", value: 4, icon: 'users' }, { name: "Completion", value: "100%", icon: 'check-circle' }];
+
+        // --- 2. THEME & CONSTANTS (Unchanged) ---
+        const GG_PALETTE_PRIMARY = ['#facc15', '#fbbf24', '#f59e0b', '#d97706', '#fef3c7', '#fde68a'];
+        const GG_PALETTE_ACCENT = ['#34d399', '#60a5fa', '#a78bfa', '#f472b6', '#fb7185', '#818cf8'];
+        const GG_COLORS_ALL = [...GG_PALETTE_PRIMARY, ...GG_PALETTE_ACCENT];
+        const CHART_TEXT_COLOR = '#9ca3af';
+        const CHART_GRID_COLOR = 'rgba(255, 255, 255, 0.07)';
+        const CHART_TOOLTIP_BG = 'rgba(10, 10, 10, 0.85)';
+        const CHART_TOOLTIP_TEXT = '#e5e7eb';
+        const CHART_BORDER_COLOR_DARK = '#000000';
+
+        // --- 3. CHART INSTANCES STORE (Unchanged) ---
+        let activeCharts = {};
+
+        // --- 4. CHART CREATION HELPER FUNCTIONS (Unchanged) ---
+        const defaultTooltipOptions = { enabled: true, external: false, backgroundColor: CHART_TOOLTIP_BG, titleColor: CHART_TOOLTIP_TEXT, bodyColor: CHART_TOOLTIP_TEXT, borderColor: 'rgba(250, 204, 21, 0.2)', borderWidth: 1, padding: 8, cornerRadius: 4, usePointStyle: true, boxPadding: 4, callbacks: { label: function(context) { let label = context.dataset.label || ''; if (label) { label += ': '; } if (context.parsed.y !== null) { label += new Intl.NumberFormat('en-US').format(context.parsed.y); } else if (context.parsed.x !== null) { label += new Intl.NumberFormat('en-US').format(context.parsed.x); } return label; }, labelColor: function(context) { return { borderColor: context.dataset.borderColor || GG_PALETTE_PRIMARY[0], backgroundColor: context.dataset.backgroundColor || GG_PALETTE_PRIMARY[0], borderWidth: 0, borderRadius: 2, }; } } };
+        function createPieChart(canvasId, data, dataKey, nameKey, title) { const ctx = document.getElementById(canvasId)?.getContext('2d'); if (!ctx) return null; if (activeCharts[canvasId]) activeCharts[canvasId].destroy(); const chart = new Chart(ctx, { type: 'doughnut', data: { labels: data.map(d => d[nameKey]), datasets: [{ label: title, data: data.map(d => d[dataKey]), backgroundColor: GG_PALETTE_PRIMARY, borderColor: CHART_BORDER_COLOR_DARK, borderWidth: 2, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { color: CHART_TEXT_COLOR, boxWidth: 12, padding: 15, usePointStyle: true } }, tooltip: { ...defaultTooltipOptions, callbacks: { label: (c) => { const total = c.chart.getDatasetMeta(0).total; const percentage = total > 0 ? ((c.raw / total) * 100).toFixed(0) + '%' : '0%'; return `${c.label}: ${c.formattedValue} (${percentage})`; }, labelColor: function(context) { const dataset = context.chart.data.datasets[0]; return { borderColor: dataset.borderColor[context.dataIndex], backgroundColor: dataset.backgroundColor[context.dataIndex], borderWidth: 0, borderRadius: 2, }; } } } } } }); activeCharts[canvasId] = chart; return chart; }
+        function createVerticalBarChart(canvasId, data, xKey, yKey, title) { const ctx = document.getElementById(canvasId)?.getContext('2d'); if (!ctx) return null; if (activeCharts[canvasId]) activeCharts[canvasId].destroy(); const chart = new Chart(ctx, { type: 'bar', data: { labels: data.map(d => d[yKey]), datasets: [{ label: title, data: data.map(d => d[xKey]), backgroundColor: GG_PALETTE_PRIMARY.map(c => c + 'E6'), borderColor: GG_PALETTE_PRIMARY, borderWidth: 1, borderRadius: 4, borderSkipped: false, }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: CHART_TEXT_COLOR, precision: 0 }, grid: { color: CHART_GRID_COLOR, drawBorder: false } }, y: { ticks: { color: CHART_TEXT_COLOR }, grid: { display: false, drawBorder: false } } }, plugins: { legend: { display: false }, tooltip: { ...defaultTooltipOptions, callbacks: { label: function(context) { return `${context.label}: ${context.formattedValue}`; } } } } } }); activeCharts[canvasId] = chart; return chart; }
+        function createLineChart(canvasId, data, xKey, yKeys, colors, title) { const ctx = document.getElementById(canvasId)?.getContext('2d'); if (!ctx) return null; if (activeCharts[canvasId]) activeCharts[canvasId].destroy(); const chart = new Chart(ctx, { type: 'line', data: { labels: data.map(d => d[xKey]), datasets: yKeys.map((keyInfo, index) => ({ label: keyInfo.label, data: data.map(d => d[keyInfo.key]), borderColor: colors[index % colors.length], backgroundColor: colors[index % colors.length] + '1A', tension: 0.3, borderWidth: 2, pointRadius: 3, pointHoverRadius: 5, pointBackgroundColor: colors[index % colors.length] })) }, options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: { x: { ticks: { color: CHART_TEXT_COLOR }, grid: { color: CHART_GRID_COLOR, drawBorder: false } }, y: { ticks: { color: CHART_TEXT_COLOR, precision: 0 }, grid: { color: CHART_GRID_COLOR, drawBorder: false } } }, plugins: { legend: { position: 'top', labels: { color: CHART_TEXT_COLOR, usePointStyle: true, boxWidth: 8, padding: 20 } }, tooltip: { ...defaultTooltipOptions, mode: 'index', intersect: false } } } }); activeCharts[canvasId] = chart; return chart; }
+        function createAreaChart(canvasId, data, xKey, yKey, color, title) { const ctx = document.getElementById(canvasId)?.getContext('2d'); if (!ctx) return null; if (activeCharts[canvasId]) activeCharts[canvasId].destroy(); const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.clientHeight || 300); gradient.addColorStop(0, color + 'AA'); gradient.addColorStop(1, color + '0A'); const chart = new Chart(ctx, { type: 'line', data: { labels: data.map(d => d[xKey]), datasets: [{ label: title, data: data.map(d => d[yKey]), borderColor: color, backgroundColor: gradient, fill: true, tension: 0.3, borderWidth: 2, pointRadius: 0, pointHoverRadius: 0 }] }, options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: { x: { ticks: { color: CHART_TEXT_COLOR }, grid: { color: CHART_GRID_COLOR, drawBorder: false } }, y: { beginAtZero: true, max: 100, ticks: { color: CHART_TEXT_COLOR }, grid: { color: CHART_GRID_COLOR, drawBorder: false } } }, plugins: { legend: { display: false }, tooltip: { ...defaultTooltipOptions, mode: 'index', intersect: false } } } }); activeCharts[canvasId] = chart; return chart; }
+        function createStackedBarChart(canvasId, data, xKey, yKeys, colors, title) { const ctx = document.getElementById(canvasId)?.getContext('2d'); if (!ctx) return null; if (activeCharts[canvasId]) activeCharts[canvasId].destroy(); const chart = new Chart(ctx, { type: 'bar', data: { labels: data.map(d => d[xKey]), datasets: yKeys.map((keyInfo, index) => ({ label: keyInfo.label, data: data.map(d => d[keyInfo.key]), backgroundColor: colors[index % colors.length], borderWidth: 0, })) }, options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: { x: { stacked: true, ticks: { color: CHART_TEXT_COLOR }, grid: { color: CHART_GRID_COLOR, drawBorder: false } }, y: { stacked: true, ticks: { color: CHART_TEXT_COLOR, precision: 0 }, grid: { color: CHART_GRID_COLOR, drawBorder: false } } }, plugins: { legend: { position: 'top', labels: { color: CHART_TEXT_COLOR, usePointStyle: true, boxWidth: 8, padding: 20 } }, tooltip: { ...defaultTooltipOptions, mode: 'index', intersect: false } } } }); activeCharts[canvasId] = chart; return chart; }
+        function createFloatingBarChart(canvasId, data, categoryKey, valueKeyStart, valueKeyEnd, title) { const ctx = document.getElementById(canvasId)?.getContext('2d'); if (!ctx) return null; if (activeCharts[canvasId]) activeCharts[canvasId].destroy(); const chartData = data.map((d, index) => ({ y: d[categoryKey], x: [d[valueKeyStart], d[valueKeyEnd]], color: GG_PALETTE_PRIMARY[index % GG_PALETTE_PRIMARY.length] })); const chart = new Chart(ctx, { type: 'bar', data: { datasets: [{ label: title, data: chartData, backgroundColor: chartData.map(d => d.color + 'E6'), borderColor: chartData.map(d => d.color), borderWidth: 1, borderSkipped: false, borderRadius: 4 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { min: 0, ticks: { color: CHART_TEXT_COLOR }, grid: { color: CHART_GRID_COLOR, drawBorder: false } }, y: { ticks: { color: CHART_TEXT_COLOR }, grid: { display: false, drawBorder: false } } }, plugins: { legend: { display: false }, tooltip: { ...defaultTooltipOptions, callbacks: { label: function(context) { const raw = context.raw; if (raw && Array.isArray(raw.x)) { const start = raw.x[0]; const end = raw.x[1]; const categoryLabel = context.chart.scales.y.ticks[context.dataIndex]?.label || context.label; return `${categoryLabel}: Day ${start} to ${end}`; } return context.dataset.label || ''; }, title: function() { return null; } } } } } }); activeCharts[canvasId] = chart; return chart; }
+        function createScatterChart(canvasId, data, xKey, yKey, scoreKey, title) { const ctx = document.getElementById(canvasId)?.getContext('2d'); if (!ctx) return null; if (activeCharts[canvasId]) activeCharts[canvasId].destroy(); const scatterPoints = data.map((d, i) => ({ x: d[xKey], y: d[yKey], r: Math.max(d[scoreKey] * 2.5, 5), score: d[scoreKey], color: GG_COLORS_ALL[i % GG_COLORS_ALL.length] })); const chart = new Chart(ctx, { type: 'bubble', data: { datasets: [{ label: title, data: scatterPoints, backgroundColor: scatterPoints.map(p => p.color + 'AA'), borderColor: scatterPoints.map(p => p.color), borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'category', labels: teamMembers, position: 'bottom', ticks: { color: CHART_TEXT_COLOR }, grid: { color: CHART_GRID_COLOR, drawBorder: false } }, y: { type: 'category', labels: teamMembers, position: 'left', ticks: { color: CHART_TEXT_COLOR }, grid: { color: CHART_GRID_COLOR, drawBorder: false } } }, plugins: { legend: { display: false }, tooltip: { ...defaultTooltipOptions, callbacks: { label: function(context) { const point = context.raw; if (point) { return `${point.x} - ${point.y}: ${point.score} interactions`; } return ''; }, title: function() { return null; } } } } } }); activeCharts[canvasId] = chart; return chart; }
+
+        // --- 5. Render Initial Tab Charts Functions (Unchanged) ---
+        function renderOverviewCharts() { console.log("Rendering Overview charts"); createPieChart('teamPieChart', activityByMember, 'count', 'name', 'Contribution'); createLineChart('monthlyLineChart', activityByMonth, 'name', [{key: 'total', label: 'Total Activities'}], [GG_PALETTE_PRIMARY[0]], 'Monthly Activities'); createAreaChart('progressAreaChart', weeklyProgressData, 'week', 'completion', GG_PALETTE_PRIMARY[1], 'Project Completion %'); }
+        function renderTeamCharts() { console.log("Rendering Team charts"); createPieChart('teamPieChart2', activityByMember, 'count', 'name', 'Contribution'); createVerticalBarChart('teamBarChart', activityByMember, 'count', 'name', 'Activities'); createStackedBarChart('monthlyStackedBarChart', activityByMonth, 'name', teamMembers.map((tm) => ({key: tm, label: tm })), GG_COLORS_ALL, 'Monthly Activities'); createLineChart('monthlyTeamLineChart', activityByMonth, 'name', teamMembers.map((tm) => ({key: tm, label: tm })).concat({key: 'total', label: 'Total'}), GG_COLORS_ALL, 'Monthly Trend'); }
+        function renderTimelineCharts() { console.log("Rendering Timeline charts"); createFloatingBarChart('timelineBarChart', timelineData, 'phase', 'start', 'end', 'Project Phases'); createAreaChart('progressAreaChart2', weeklyProgressData, 'week', 'completion', GG_PALETTE_PRIMARY[1], 'Project Completion %'); }
+        function renderCategoryCharts() { console.log("Rendering Category charts"); createPieChart('categoryPieChart', activityCategories, 'value', 'name', 'Categories'); createVerticalBarChart('categoryBarChart', activityCategories, 'value', 'name', 'Activities by Category'); }
+        function renderCollaborationCharts() { console.log("Rendering Collaboration charts"); createScatterChart('collaborationScatterChart', collaborationData, 'x', 'y', 'z', 'Collaboration Score'); }
+        // New empty render function for contributions tab (content is static HTML)
+        function renderContributionsContent() { console.log("Displaying Contributions (Static Content)"); }
+
+        // --- 6. Tab Switching Logic (Updated) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            const summaryCardsContainer = document.getElementById('summary-cards');
+
+            // Generate Summary Cards
+             if (summaryCardsContainer) {
+                 summaryMetrics.forEach(metric => {
+                     const card = document.createElement('div');
+                     card.className = 'bg-white/5 p-3 rounded-xl shadow-lg border border-white/10 flex items-center';
+                     card.innerHTML = `
+                         <div class="inline-flex items-center justify-center p-2 bg-yellow-400/10 rounded-full mr-3">
+                             <i data-lucide="${metric.icon}" class="w-6 h-6 text-yellow-400"></i>
+                         </div>
+                         <div>
+                             <div class="text-xs text-gray-400">${metric.name}</div>
+                             <div class="text-lg font-bold text-white">${metric.value}</div>
+                         </div>`;
+                     summaryCardsContainer.appendChild(card);
+                 });
+             }
+
+             // Initialize Lucide Icons (crucial it's after HTML generation)
+             lucide.createIcons();
+
+            function switchTab(targetTabId) {
+                summaryCardsContainer.style.display = targetTabId === 'overview' ? 'grid' : 'none';
+                tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.tab === targetTabId));
+                contents.forEach(content => {
+                    content.classList.toggle('active', content.id === `${targetTabId}-content`);
+                    content.style.marginTop = content.classList.contains('active') ? '1.5rem' : '0';
+                });
+
+                Object.values(activeCharts).forEach(chart => chart?.destroy());
+                activeCharts = {};
+
+                console.log(`Switching to tab: ${targetTabId}`);
+                switch(targetTabId) {
+                    case 'overview': renderOverviewCharts(); break;
+                    case 'team': renderTeamCharts(); break;
+                    case 'timeline': renderTimelineCharts(); break;
+                    case 'category': renderCategoryCharts(); break;
+                    case 'collaboration': renderCollaborationCharts(); break;
+                    case 'contributions': renderContributionsContent(); break; // Handle new tab
+                    default: console.error("Unknown tab ID:", targetTabId);
+                }
+                // Re-initialize Lucide icons if needed after content changes,
+                // especially if new icons are added dynamically (not strictly necessary here as content is static)
+                // lucide.createIcons();
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+
+            switchTab('overview'); // Start on overview
+        });
+    </script>
+</body>
+</html>

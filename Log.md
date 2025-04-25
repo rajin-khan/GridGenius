@@ -313,6 +313,12 @@
 - **Team Member:** Adib
 - **Changes Made:** Finalize live website (https://grid-genius-project.vercel.app).
 
+- **Date:** 24-03-25
+- **Team Member:** Pranoy
+- **Changes Made:** Reviewed the IEEE paper formatting guidelines through a detailed instructional video and initiated the development of the research paper. 
+                    Successfully completed several key sections, and made significant progress toward structuring the overall document.
+
+
 *Log template:*
 
 - **Date:**

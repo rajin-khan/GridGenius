@@ -1,4 +1,4 @@
-# Project Progress Log
+d# Project Progress Log
 
 - **Date:** 23-01-25
 - **Team Member:** Adib, Lishad, Pranoy, Sadia
@@ -184,6 +184,10 @@
 - **Date:** 12-03-25
 - **Team Member:** Adib
 - **Changes Made:** Finish creating and animating EDA presentation, restructure and organize repo.
+
+- **Date:** 13-03-25
+- **Team Member:** Pranoy
+- **Changes Made:** Watched videos on theses courses : Python , Python NumPy , Python Pandas. 
 
 - **Date:** 15-03-25
 - **Team Member:** Adib

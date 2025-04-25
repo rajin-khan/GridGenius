@@ -50,7 +50,7 @@ d# Project Progress Log
 
 - **Date:** 28-01-25
 - **Team Member:** Sadia
-- **Changes Made:** getting ideas about transformer based models and learning python.
+- **Changes Made:** getting ideas about transformer based models and learning Python , Python NumPy , Python Pandas.
    
 - **Date:** 28-01-25
 - **Team Member:** Lishad
@@ -74,7 +74,7 @@ d# Project Progress Log
 
 -  **Date:** 02-02-25
 - **Team Member:** Sadia
-- **Changes Made:** reading research papers related to seasonal energy demamnd for the project.
+- **Changes Made:** reading research papers related to seasonal energy demamnd for the project finding the short comings.
 
 - **Date:** 02-02-25
 - **Team Member:** Lishad
@@ -103,7 +103,7 @@ d# Project Progress Log
 
 - **Date:** 27-02-25
 - **Team Member:** Sadia
-- **Changes Made:** finding papers related to our topic.
+- **Changes Made:** finding papers related to our Idea.
   
 - **Date:** 28-02-25
 - **Team Member:** Sadia
@@ -193,6 +193,10 @@ d# Project Progress Log
 - **Team Member:** Adib
 - **Changes Made:** Add 2 new papers on Energy Load Optimization in Bangladesh.
 
+ **Date:** 16-03-25
+- **Team Member:** Sadia
+- **Changes Made:** went through 4/5 papers from neighboring countries how and which transformer they use for time series forcasting.
+ 
 - **Date:** 16-03-25
 - **Team Member:** Lishad
 - **Changes Made:** Start working on LSTM and Transformer models.
@@ -229,6 +233,10 @@ d# Project Progress Log
 - **Team Member:** Adib
 - **Changes Made:** Finish creating and animating updated presentation slides with Literature Review and Novelties.
 
+- **Date:** 21-03-25
+- **Team Member:** Sadia
+- **Changes Made:** Helped to create basic html wireframe.
+- 
 - **Date:** 22-03-25
 - **Team Member:** Adib
 - **Changes Made:** Add the 'Attention is all you need' Paper.

@@ -69,16 +69,6 @@ This project was developed by the **'Human Forgetting'** Team at **North South U
 
 ---
 
-## 🙌 Acknowledgements
-
-- 📊 Data: Bangladesh Power Development Board  
-- 🤖 LLM: Groq API, Hugging Face Inference API  
-- 🧠 Vector Search: ChromaDB  
-- ⚙️ Backend: FastAPI  
-- 🎨 UI: Tailwind CSS  
-
----
-
 ⭐ If you found this project inspiring, star the repo and support more energy-conscious innovations!  
 
 </div>

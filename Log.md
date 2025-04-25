@@ -1,7 +1,5 @@
 # Project Progress Log
 
-*Progress till Log creation:*
-
 - **Date:** 23-01-25
 - **Team Member:** Adib, Lishad, Pranoy, Sadia
 - **Changes Made:** Topics discussed with instructor, dataset searching emphasized.
@@ -277,7 +275,7 @@
 
 - **Date:** 22-04-25
 - **Team Member:** Lishad
-- **Changes Made:** start working on backend part of website (prediction based on unseen random input) .
+- **Changes Made:** start working on prediction logic part of website (based on unseen random input) .
 
 - **Date:** 22-03-25
 - **Team Member:** Adib
@@ -299,11 +297,9 @@
 - **Team Member:** Lishad
 - **Changes Made:** Make a new dataset with actual demand and Predicted demand on test data
 
-
 - **Date:** 23-03-25
 - **Team Member:** Adib
 - **Changes Made:** Begin work on hosting backend.
-
 
 - **Date:** 24-03-25
 - **Team Member:** Adib
@@ -315,9 +311,9 @@
 
 - **Date:** 24-03-25
 - **Team Member:** Adib
-- **Changes Made:** Finalize live website (grid-genius-project.vercel.app).
+- **Changes Made:** Finalize live website (https://grid-genius-project.vercel.app).
 
-*Log created:*
+*Log template:*
 
 - **Date:**
 - **Team Member:**

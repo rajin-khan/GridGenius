@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GridGenius DevDash</title>
-    <link rel="icon" type="image/png" href="assets/gglogo.png">
+    <link rel="icon" type="image/png" href="assets/gglogo.png"> <!-- Ensure gglogo.png is in assets -->
     <!-- 1. Include Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 2. Include Chart.js via CDN -->
@@ -74,7 +74,11 @@
              border-radius: 0.5rem; border: 1px solid rgba(255, 255, 255, 0.05);
          }
          /* Style for Contribution list items */
-         .contribution-list li { margin-bottom: 0.4rem; }
+         .contribution-list li { margin-bottom: 0.4rem; position: relative; padding-left: 1.25rem; }
+         .contribution-list li::before {
+            content: '•'; position: absolute; left: 0; top: 0;
+            color: #facc15; font-weight: bold; font-size: 0.9rem;
+         }
 
     </style>
 </head>
@@ -104,7 +108,7 @@
             <button class="tab" data-tab="timeline">Timeline</button>
             <button class="tab" data-tab="category">Categories</button>
             <button class="tab" data-tab="collaboration">Collaboration</button>
-            <button class="tab" data-tab="contributions">Contributions</button> <!-- New Tab Button -->
+            <button class="tab" data-tab="contributions">Contributions</button>
         </div>
 
         <!-- Tab Content Sections -->
@@ -197,86 +201,133 @@
              </div>
         </div>
 
-        <!-- Contributions Tab - NEW -->
+        <!-- Contributions Tab -->
         <div id="contributions-content" class="tab-content space-y-6 mt-6">
             <h2 class="text-2xl font-semibold text-yellow-400 border-b border-white/10 pb-2 mb-4">Individual Contributions</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                <!-- Adib -->
-                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
-                    <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
-                        <i data-lucide="user-check"></i> <!-- Or 'user', 'code' etc. -->
-                        <span>Adib Ar Rahman Khan</span>
-                    </h3>
-                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
-                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
-                        <li>Initiated dataset collection and scraping from BPDB PDFs.</li>
-                        <li>Designed project logo and established brand visuals.</li>
-                        <li>Led creation of proposal, EDA, and literature review presentations (design + animation).</li>
-                        <li>Performed major EDA tasks: feature engineering, renaming, correlation matrices, visualizations, zone-wise analysis.</li>
-                        <li>Conducted in-depth research on transformers, LoRA, and LLM integration.</li>
-                        <li>Implemented and showcased custom chatbot integration (RAG with Groq + Llama3, NO use of frameworks like LangChain/CrewAI).</li>
-                        <li>Developed the frontend UI and prediction page.</li>
-                        <li>Integrated backend APIs for chatbot and ML model predictions.</li>
-                        <li>Deployed backend (Railway) and frontend (Vercel).</li>
-                        <li>Finalized and launched the live website: grid-genius-project.vercel.app</li>
-                        <li>Led documentation efforts for GridGenius's vision, platform design, and interactivity.</li>
-                        <li>Coordinated multi-version demos and structured the GitHub repo.</li>
-                    </ul>
+                <!-- Adib Card -->
+                <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/50 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10 flex flex-col">
+                    <!-- Header Section -->
+                    <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
+                        <div class="flex items-center gap-3">
+                            <img src="assets/pfps/rajin-main.jpg" alt="Adib Ar Rahman Khan" class="w-14 h-14 rounded-full border-2 border-yellow-400/50">
+                            <h3 class="text-lg font-semibold text-yellow-400/90">Adib Ar Rahman Khan</h3>
+                        </div>
+                        <div class="flex space-x-2 text-gray-400">
+                            <a href="https://github.com/rajin-khan" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                            <a href="https://www.linkedin.com/in/rajin-khan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                            <a href="https://www.rajinkhan.com/" target="_blank" rel="noopener noreferrer" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                    <!-- Content Section -->
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                        <ul class="text-gray-300 text-sm space-y-1 contribution-list">
+                             <li>Initiated dataset collection and scraping from BPDB PDFs.</li>
+                            <li>Designed project logo, concept, and established brand visuals and identity.</li>
+                            <li>Led creation of proposal, EDA, and literature review presentations (design + animation).</li>
+                            <li>Performed major EDA tasks: feature engineering, renaming, correlation matrices, visualizations, zone-wise analysis.</li>
+                            <li>Conducted in-depth research on Transformers, LoRA, RAG, and LLM integration.</li>
+                            <li>Implemented and showcased custom chatbot integration (novel RAG pipeline, NO use of frameworks like LangChain/CrewAI).</li>
+                            <li>Designed and Developed the entire websites, UI/UX flow, and final product planning.</li>
+                            <li>Integrated backend APIs for Chatbot and Model predictions.</li>
+                            <li>Deployed backend (Railway) and frontend (Vercel).</li>
+                            <li>Finalized and launched the live website: grid-genius-project.vercel.app</li>
+                            <li>Led documentation efforts for GridGenius's vision, platform design, and interactivity.</li>
+                            <li>Coordinated multi-version demos and structured the GitHub repo.</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Lishad -->
-                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
-                    <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
-                        <i data-lucide="user-check"></i>
-                        <span>Aurongojeb Lishad</span>
-                    </h3>
-                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
-                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
-                        <li>Carried out early research on features and integrated weather + seasonal data.</li>
-                        <li>Created and refined project pipeline and model selection.</li>
-                        <li>Performed full-cycle data preprocessing: outlier detection, encoding, scaling.</li>
-                        <li>Designed multiple dataset variants and led model experimentation (Random Forest, Linear Regression, Transformer, ARIMA/SARIMA).</li>
-                        <li>Implemented and tuned the Transformer model, later improved it for better performance.</li>
-                        <li>Worked on report writing, including the Introduction section.</li>
-                        <li>Built backend logic for model inference and dataset generation for predictions.</li>
-                        <li>Completed Python script for live predictions and paired actual vs predicted demand sets.</li>
-                    </ul>
+                <!-- Lishad Card -->
+                 <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/50 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10 flex flex-col">
+                    <!-- Header Section -->
+                    <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
+                        <div class="flex items-center gap-3">
+                            <img src="assets/pfps/lishad-main.jpeg" alt="Aurongojeb Lishad" class="w-14 h-14 rounded-full border-2 border-yellow-400/50">
+                            <h3 class="text-lg font-semibold text-yellow-400/90">Aurongojeb Lishad</h3>
+                        </div>
+                        <div class="flex space-x-2 text-gray-400">
+                             <a href="https://github.com/Lishad-02" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                            <a href="https://www.linkedin.com/in/aurongojeb-lishad-347851282/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                            <a href="https://lishad-info.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                    <!-- Content Section -->
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                        <ul class="text-gray-300 text-sm space-y-1 contribution-list">
+                            <li>Carried out early research on features and integrated weather + seasonal data.</li>
+                            <li>Created and refined project pipeline and model selection.</li>
+                            <li>Performed full-cycle data preprocessing: outlier detection, encoding, scaling.</li>
+                            <li>Designed multiple dataset variants and led model experimentation (Random Forest, Linear Regression, Transformer, ARIMA/SARIMA).</li>
+                            <li>Implemented and tuned the Transformer model, later improved it for better performance.</li>
+                            <li>Worked on report writing, including the Introduction section.</li>
+                            <li>Built backend logic for model inference and dataset generation for predictions.</li>
+                            <li>Completed Python script for live predictions and paired actual vs predicted demand sets.</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Pranoy -->
-                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
-                     <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
-                        <i data-lucide="user-check"></i>
-                        <span>Pranoy Saha</span>
-                    </h3>
-                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
-                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
-                        <li>Proposed alternate ideas and explored datasets (e.g., earthquake).</li>
-                        <li>Constructed the Gantt chart for project tracking.</li>
-                        <li>Uploaded and curated research papers on energy use in neighboring countries.</li>
-                        <li>Contributions in writing literature review: summarized novelties, shortcomings, and structure.</li>
-                        <li>Reviewed IEEE formatting guidelines and contributed to writing the research paper draft.</li>
-                        <li>Heavily involved in Documentation across the entire project pipeline.</li>
-                    </ul>
-                </div>
 
-                 <!-- Sadia -->
-                <div class="bg-white/5 p-6 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/30 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10">
-                     <h3 class="text-lg font-semibold mb-4 text-yellow-400/90 inline-flex items-center gap-2">
-                        <i data-lucide="user-check"></i>
-                        <span>Sadia Islam Mou</span>
-                    </h3>
-                    <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
-                    <ul class="list-disc list-inside text-gray-300 text-sm space-y-1 contribution-list">
-                        <li>Assisted with dataset search and learned core tools (Python, NumPy, Pandas).</li>
-                        <li>Researched transformer-based models and seasonal energy demand forecasting.</li>
-                        <li>Contributed to the literature review: summarized papers from UK, Germany, and neighboring countries.</li>
-                        <li>Studied and documented use of LLMs, helped wireframe early HTML UI.</li>
-                        <li>Wrote major parts of the final report, including the literature review and IEEE formatting.</li>
-                        <li>Completed and submitted final report in IEEE format.</li>
-                    </ul>
-                </div>
+                <!-- Pranoy Card -->
+                <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/50 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10 flex flex-col">
+                   <!-- Header Section -->
+                   <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
+                       <div class="flex items-center gap-3">
+                           <img src="assets/pfps/pranoy-main.jpg" alt="Pranoy Saha" class="w-14 h-14 rounded-full border-2 border-yellow-400/50">
+                           <h3 class="text-lg font-semibold text-yellow-400/90">Pranoy Saha</h3>
+                       </div>
+                       <div class="flex space-x-2 text-gray-400">
+                           <a href="https://github.com/Pranoy28" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                           <a href="https://www.linkedin.com/in/pranoy-saha-a5b8bab3/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                           <a href="https://www.facebook.com/profile.php?id=100004236678635" target="_blank" rel="noopener noreferrer" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                       </div>
+                   </div>
+                   <!-- Content Section -->
+                   <div>
+                       <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                       <ul class="text-gray-300 text-sm space-y-1 contribution-list">
+                           <li>Proposed alternate ideas and explored datasets (e.g., earthquake).</li>
+                           <li>Constructed the Gantt chart for project tracking.</li>
+                           <li>Uploaded and curated research papers on energy use in neighboring countries.</li>
+                           <li>Contributions in writing literature review: summarized novelties, shortcomings, and structure.</li>
+                           <li>Reviewed IEEE formatting guidelines and contributed to writing the research paper draft.</li>
+                           <li>Heavily involved in Documentation across the entire project pipeline.</li>
+                       </ul>
+                   </div>
+               </div>
+
+
+                 <!-- Sadia Card -->
+                <div class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-xl shadow-lg border border-white/10 hover:border-yellow-400/50 transition duration-300 hover:shadow-xl hover:shadow-yellow-400/10 flex flex-col">
+                   <!-- Header Section -->
+                   <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
+                       <div class="flex items-center gap-3">
+                           <img src="assets/pfps/sadia-main.jpg" alt="Sadia Islam Mou" class="w-14 h-14 rounded-full border-2 border-yellow-400/50">
+                           <h3 class="text-lg font-semibold text-yellow-400/90">Sadia Islam Mou</h3>
+                       </div>
+                       <div class="flex space-x-2 text-gray-400">
+                            <a href="https://github.com/Sadiaa55" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+                           <a href="https://www.linkedin.com/in/sadia-islam-mou-12a446285/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="hover:text-yellow-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                           <a href="https://www.facebook.com/share/19Jj6RE413/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Personal Website" class="hover:text-yellow-400 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+                       </div>
+                   </div>
+                   <!-- Content Section -->
+                   <div>
+                       <h4 class="text-sm font-medium text-gray-300 mb-2">Core Contributions:</h4>
+                       <ul class="text-gray-300 text-sm space-y-1 contribution-list">
+                           <li>Assisted with dataset search and learned core tools (Python, NumPy, Pandas).</li>
+                           <li>Researched transformer-based models and seasonal energy demand forecasting.</li>
+                           <li>Contributed to the literature review: summarized papers from UK, Germany, and neighboring countries.</li>
+                           <li>Studied and documented use of LLMs, helped wireframe early HTML UI.</li>
+                           <li>Wrote major parts of the final report, including the literature review and IEEE formatting.</li>
+                           <li>Completed and submitted final report in IEEE format.</li>
+                       </ul>
+                   </div>
+               </div>
+
 
             </div>
         </div>
@@ -289,6 +340,9 @@
     </div>
 
     <script>
+        // --- JAVASCRIPT REMAINS EXACTLY THE SAME ---
+        // --- NO CHANGES NEEDED IN SCRIPT SECTION ---
+
         // --- 1. DATA (Unchanged) ---
         const teamMembers = ["Adib", "Lishad", "Pranoy", "Sadia"];
         const months = ["Jan", "Feb", "Mar", "Apr"];
@@ -329,46 +383,27 @@
         function renderTimelineCharts() { console.log("Rendering Timeline charts"); createFloatingBarChart('timelineBarChart', timelineData, 'phase', 'start', 'end', 'Project Phases'); createAreaChart('progressAreaChart2', weeklyProgressData, 'week', 'completion', GG_PALETTE_PRIMARY[1], 'Project Completion %'); }
         function renderCategoryCharts() { console.log("Rendering Category charts"); createPieChart('categoryPieChart', activityCategories, 'value', 'name', 'Categories'); createVerticalBarChart('categoryBarChart', activityCategories, 'value', 'name', 'Activities by Category'); }
         function renderCollaborationCharts() { console.log("Rendering Collaboration charts"); createScatterChart('collaborationScatterChart', collaborationData, 'x', 'y', 'z', 'Collaboration Score'); }
-        // New empty render function for contributions tab (content is static HTML)
         function renderContributionsContent() { console.log("Displaying Contributions (Static Content)"); }
 
-        // --- 6. Tab Switching Logic (Updated) ---
+        // --- 6. Tab Switching Logic (Unchanged) ---
         document.addEventListener('DOMContentLoaded', () => {
             const tabs = document.querySelectorAll('.tab');
             const contents = document.querySelectorAll('.tab-content');
             const summaryCardsContainer = document.getElementById('summary-cards');
-
-            // Generate Summary Cards
              if (summaryCardsContainer) {
                  summaryMetrics.forEach(metric => {
                      const card = document.createElement('div');
                      card.className = 'bg-white/5 p-3 rounded-xl shadow-lg border border-white/10 flex items-center';
-                     card.innerHTML = `
-                         <div class="inline-flex items-center justify-center p-2 bg-yellow-400/10 rounded-full mr-3">
-                             <i data-lucide="${metric.icon}" class="w-6 h-6 text-yellow-400"></i>
-                         </div>
-                         <div>
-                             <div class="text-xs text-gray-400">${metric.name}</div>
-                             <div class="text-lg font-bold text-white">${metric.value}</div>
-                         </div>`;
+                     card.innerHTML = `<div class="inline-flex items-center justify-center p-2 bg-yellow-400/10 rounded-full mr-3"><i data-lucide="${metric.icon}" class="w-6 h-6 text-yellow-400"></i></div><div><div class="text-xs text-gray-400">${metric.name}</div><div class="text-lg font-bold text-white">${metric.value}</div></div>`;
                      summaryCardsContainer.appendChild(card);
                  });
              }
-
-             // Initialize Lucide Icons (crucial it's after HTML generation)
-             lucide.createIcons();
-
+             lucide.createIcons(); // Initialize all icons on load
             function switchTab(targetTabId) {
                 summaryCardsContainer.style.display = targetTabId === 'overview' ? 'grid' : 'none';
                 tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.tab === targetTabId));
-                contents.forEach(content => {
-                    content.classList.toggle('active', content.id === `${targetTabId}-content`);
-                    content.style.marginTop = content.classList.contains('active') ? '1.5rem' : '0';
-                });
-
-                Object.values(activeCharts).forEach(chart => chart?.destroy());
-                activeCharts = {};
-
+                contents.forEach(content => { content.classList.toggle('active', content.id === `${targetTabId}-content`); content.style.marginTop = content.classList.contains('active') ? '1.5rem' : '0'; });
+                Object.values(activeCharts).forEach(chart => chart?.destroy()); activeCharts = {};
                 console.log(`Switching to tab: ${targetTabId}`);
                 switch(targetTabId) {
                     case 'overview': renderOverviewCharts(); break;
@@ -376,19 +411,12 @@
                     case 'timeline': renderTimelineCharts(); break;
                     case 'category': renderCategoryCharts(); break;
                     case 'collaboration': renderCollaborationCharts(); break;
-                    case 'contributions': renderContributionsContent(); break; // Handle new tab
+                    case 'contributions': renderContributionsContent(); break;
                     default: console.error("Unknown tab ID:", targetTabId);
                 }
-                // Re-initialize Lucide icons if needed after content changes,
-                // especially if new icons are added dynamically (not strictly necessary here as content is static)
-                // lucide.createIcons();
             }
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-            });
-
-            switchTab('overview'); // Start on overview
+            tabs.forEach(tab => { tab.addEventListener('click', () => switchTab(tab.dataset.tab)); });
+            switchTab('overview');
         });
     </script>
 </body>

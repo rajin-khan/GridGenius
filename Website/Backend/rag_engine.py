@@ -4,204 +4,169 @@ import os
 import glob
 import time
 from dotenv import load_dotenv
-import requests # Use requests for HTTP calls
+import google.generativeai as genai # Use Google AI
 from chromadb import PersistentClient
 from groq import Groq
 from utils import extract_text_from_file
 from typing import List, Dict, AsyncGenerator, Optional
-import asyncio # Import asyncio
+import asyncio
+
+# --- REMOVED Langchain Text Splitter ---
+# from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # --- Initialization ---
-
-# os.environ["TOKENIZERS_PARALLELISM"] = "false" # Not needed for API
-
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-HF_API_TOKEN = os.getenv("HF_API_TOKEN") # Load HF Token from .env
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Groq Client
 groq_client = Groq(api_key=GROQ_API_KEY)
 
 # Chroma Client
 chroma_client = PersistentClient(path="./chroma_storage")
-collection = chroma_client.get_or_create_collection(name="rag_collection")
+# IMPORTANT: Delete ./chroma_storage before first run!
+# Collection name reflects the embedding model used
+collection = chroma_client.get_or_create_collection(name="rag_collection_gemini_004_full")
 
-# --- Hugging Face Inference API Configuration ---
-MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
-HF_API_URL = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{MODEL_ID}"
-
-if not HF_API_TOKEN:
-    print("WARNING: HF_API_TOKEN environment variable not set. Embedding API calls will fail.")
-    HF_HEADERS = {}
+# --- Google AI Client Configuration ---
+if GOOGLE_API_KEY:
+    try:
+        genai.configure(api_key=GOOGLE_API_KEY)
+        GEMINI_EMBEDDING_MODEL = "models/text-embedding-004" # 768 dimensions
+        print(f"Google AI Client configured for model {GEMINI_EMBEDDING_MODEL}")
+    except Exception as e:
+        print(f"ERROR configuring Google AI Client: {e}")
+        GEMINI_EMBEDDING_MODEL = None
 else:
-    HF_HEADERS = {"Authorization": f"Bearer {HF_API_TOKEN}"}
-# --- End HF Config ---
+    GEMINI_EMBEDDING_MODEL = None
+    print("WARNING: GOOGLE_API_KEY not set. Google AI Embedding calls will fail.")
 
-# --- REMOVED Local Embedder ---
-# _embedder = None
-# def get_embedder(): ...
-# --- End Removed ---
+# --- REMOVED Text Splitter Initialization ---
+# text_splitter = RecursiveCharacterTextSplitter(...)
 
-
-# --- New Function: Get Embedding from API ---
-def get_embedding_from_api(text: str, retries=3, delay=2) -> Optional[List[float]]:
-    """Calls the Hugging Face Inference API to get embeddings."""
-    if not HF_HEADERS.get("Authorization"):
-        print("Error: HF_API_TOKEN is not configured.")
-        return None
-    if not text or not text.strip():
-        print("Warning: Attempted to embed empty text.")
-        return None # Avoid API call for empty strings
-
-    payload = {"inputs": text, "options": {"wait_for_model": True}}
-
+# --- Get Embedding function (Keep as is) ---
+def get_embedding_from_google(
+    text: str,
+    task_type: str = "RETRIEVAL_DOCUMENT",
+    retries=3, delay=2
+) -> Optional[List[float]]:
+    # (Keep the previous version of this function)
+    if not GEMINI_EMBEDDING_MODEL: print("Error: Google AI not configured."); return None
+    if not text or not text.strip(): print("Warning: Empty text."); text = "."
     for attempt in range(retries):
         try:
-            response = requests.post(HF_API_URL, headers=HF_HEADERS, json=payload, timeout=30) # Increased timeout slightly
-            response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+            result = genai.embed_content(model=GEMINI_EMBEDDING_MODEL, content=text, task_type=task_type)
+            if 'embedding' in result and isinstance(result['embedding'], list): return result['embedding']
+            else: print(f"Warn: Unexpected Google format: {result}"); return None
+        except Exception as e:
+            print(f"Error Google Embed API (Att {attempt + 1}/{retries}): {e}"); import traceback; traceback.print_exc()
+            if attempt < retries - 1: time.sleep(delay)
+            else: print("Max retries Google"); return None
+    return None
 
-            result = response.json()
-
-            # --- Response Parsing (Adjust if necessary based on model/pipeline) ---
-            # For feature-extraction with sentence-transformers, usually nests embedding
-            if isinstance(result, list) and result:
-                if isinstance(result[0], list) and isinstance(result[0][0], float):
-                    # Common case: [[embedding_vector]]
-                    return result[0]
-                elif isinstance(result[0], float):
-                     # Case: [embedding_vector] (less common for this pipeline)
-                     return result
-            # Handle potential dictionary response for some models/errors
-            elif isinstance(result, dict) and 'error' in result:
-                 print(f"Error from HF API: {result['error']}")
-                 # Optionally check for specific error types if needed
-                 if attempt < retries - 1:
-                      print(f"Retrying in {delay}s...")
-                      time.sleep(delay)
-                      continue # Go to next retry attempt
-                 else:
-                      return None # Max retries for API error
-            
-            print(f"Warning: Unexpected embedding format received: {type(result)}. Full response: {result}")
-            return None # Return None if format is not recognized
-
-        except requests.exceptions.Timeout:
-            print(f"Error: Timeout calling HF Inference API (Attempt {attempt + 1}/{retries})")
-            if attempt < retries - 1:
-                print(f"Retrying in {delay}s...")
-                time.sleep(delay)
-            else:
-                print("Max retries reached for timeout.")
-                return None
-        except requests.exceptions.RequestException as e:
-            print(f"Error calling HF Inference API (Attempt {attempt + 1}/{retries}): {e}")
-            if attempt < retries - 1:
-                print(f"Retrying in {delay}s...")
-                time.sleep(delay)
-            else:
-                print("Max retries reached for connection error.")
-                return None
-        except Exception as e: # Catch other potential errors like JSON decoding
-            print(f"Unexpected error processing API response (Attempt {attempt + 1}/{retries}): {e}")
-            try:
-                print(f"Raw Response Text: {response.text}") # Log raw text on error
-            except NameError: pass # response might not be defined
-            if attempt < retries - 1:
-                 print(f"Retrying in {delay}s...")
-                 time.sleep(delay)
-            else:
-                 print("Max retries reached for unexpected error.")
-                 return None
-
-    return None # Should not be reached if loop finishes, but safety return
-# --- End New Function ---
-
-
-# --- Core Functions (Modified) ---
+# --- Core Functions (Modified to load FULL documents) ---
 
 def load_all_documents(folder_path="./documents"):
     """
-    Loads documents, generates embeddings via API, and adds to ChromaDB.
+    Loads FULL documents, generates embeddings via Google API for each document,
+    and adds them to ChromaDB. NO CHUNKING.
     """
-    print("Starting document loading process...")
-    file_paths = glob.glob(os.path.join(folder_path, "*")) # Use os.path.join
+    print("Starting FULL document loading process (Google Embeddings)...")
+    file_paths = glob.glob(os.path.join(folder_path, "*"))
     print(f"Found {len(file_paths)} files in '{folder_path}'.")
     documents = []
     doc_ids = []
-    embeddings_list = [] # Store embeddings here
+    embeddings_list = [] # Store successful embeddings here
 
-    if not file_paths:
-        print("No documents found in the specified folder.")
-        return 0
+    if not file_paths: print("No documents found."); return 0
 
     for i, file_path in enumerate(file_paths):
-        print(f"Processing file {i+1}/{len(file_paths)}: {os.path.basename(file_path)}")
-        text = extract_text_from_file(file_path)
-        if text:
-            print(f"  Getting embedding for doc_{i}...")
-            embedding = get_embedding_from_api(text) # <-- USE API FUNCTION
+        base_filename = os.path.basename(file_path)
+        print(f"Processing file {i+1}/{len(file_paths)}: {base_filename}")
+        full_text = extract_text_from_file(file_path)
+
+        if full_text and full_text.strip():
+            print(f"  Getting embedding for FULL document doc_{i}...")
+            # Embed the FULL text using RETRIEVAL_DOCUMENT task type
+            embedding = get_embedding_from_google(
+                text=full_text,
+                task_type="RETRIEVAL_DOCUMENT"
+            )
+
             if embedding:
-                documents.append(text)
-                doc_ids.append(f"doc_{i}")
-                embeddings_list.append(embedding) # Append the valid embedding
-                print(f"  Successfully embedded doc_{i}.")
+                documents.append(full_text) # Add full text
+                doc_ids.append(f"doc_{i}") # Use simple doc ID
+                embeddings_list.append(embedding) # Add the embedding
+                print(f"  Successfully embedded FULL doc_{i} (dim: {len(embedding)}).")
             else:
-                print(f"  Failed to get embedding for doc_{i}, skipping.")
+                print(f"    ERROR: Failed to get embedding for FULL doc {base_filename}. Skipping.")
+                # If a single doc fails, the lists might mismatch. Safest to skip adding this one.
         else:
-             print(f"  Skipping file {os.path.basename(file_path)} - no text extracted.")
+             print(f"  Skipping file {base_filename} - no text extracted or empty.")
 
 
-    if documents:
-        print(f"\nAdding {len(documents)} successfully embedded documents to ChromaDB...")
+    # Add successfully embedded documents to ChromaDB
+    if documents and embeddings_list and len(documents) == len(embeddings_list):
+        print(f"\nAdding {len(documents)} successfully embedded FULL documents to ChromaDB...")
         try:
-             # Check counts before adding (optional)
-             # count_before = collection.count()
-             collection.add(documents=documents, embeddings=embeddings_list, ids=doc_ids)
-             # count_after = collection.count()
-             # print(f"ChromaDB count changed from {count_before} to {count_after}")
+             collection.add(
+                 documents=documents,
+                 embeddings=embeddings_list,
+                 ids=doc_ids
+                 # No metadata needed for chunks anymore
+             )
              print("Documents added successfully.")
         except Exception as e:
              print(f"ERROR adding documents to ChromaDB: {e}")
-             # Potentially raise exception or handle recovery
-    else:
+             import traceback
+             traceback.print_exc()
+             return 0 # Indicate failure
+    elif not documents:
          print("\nNo documents were successfully embedded to add to ChromaDB.")
+         return 0
+    else:
+        print(f"\nERROR: Mismatch between documents ({len(documents)}) and embeddings ({len(embeddings_list)}). Not adding to DB.")
+        return 0
 
-    return len(documents) # Return count of successfully processed docs
+
+    return len(embeddings_list) # Return count of successfully embedded docs
+
 
 async def query_rag(chat_history: List[Dict[str, str]]) -> AsyncGenerator[str, None]:
     """
-    Uses API for query embedding, retrieves docs, streams response using Groq LLM.
+    Uses Google API for query embedding, retrieves FULL docs, streams response using Groq LLM.
     """
-    if not chat_history:
-        yield "Error: Chat history is empty."
-        return
+    if not chat_history: yield "Error: Chat history is empty."; return
 
     user_query = chat_history[-1]['content']
-    print(f"\nReceived query: {user_query[:100]}...") # Log start of query processing
+    print(f"\nReceived query: {user_query[:100]}...")
 
     try:
-        print("  Getting query embedding from API...")
-        query_embedding_list = get_embedding_from_api(user_query) # <-- USE API FUNCTION
+        print("  Getting query embedding via Google API...")
+        query_embedding_list = get_embedding_from_google(
+            text=user_query,
+            task_type="RETRIEVAL_QUERY" # Use query type
+        )
 
         if not query_embedding_list:
              print("  Failed to get query embedding.")
              yield "Error: Could not generate embedding for the query. Please try again."
              return
 
-        # ChromaDB expects embeddings as a list of lists for querying
         query_embedding_for_chroma = [query_embedding_list]
-        print("  Query embedding generated.")
+        print(f"  Query embedding generated (dim: {len(query_embedding_list)}).") # Should be 768
 
-        print("  Querying ChromaDB...")
+        print("  Querying ChromaDB for relevant FULL documents...")
         results = collection.query(
             query_embeddings=query_embedding_for_chroma,
-            n_results=1, # Still using n_results=1 as per your previous code
-            include=["documents"]
+            n_results=1, # Retrieve only 1 or 2 FULL documents to manage context size
+            include=["documents"] # Only need documents now
         )
         print("  ChromaDB query complete.")
 
+        # Combine the retrieved FULL document texts
         retrieved_docs = results.get('documents', [[]])[0]
-        combined_context = "\n\n".join(retrieved_docs) if retrieved_docs else "No relevant context found."
+        combined_context = "\n\n---\n\n".join(retrieved_docs) if retrieved_docs else "No relevant context found."
         print(f"  Retrieved {len(retrieved_docs)} documents for context.")
 
         # --- System Prompt and Message Building (Keep As Is) ---

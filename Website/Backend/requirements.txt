@@ -8,6 +8,7 @@ uvicorn[standard] # Use standard for better performance (includes httptools, uvl
 chromadb         # Vector DB
 groq             # LLM API Client
 requests         # For making HTTP calls to HF Inference API (NEW)
+google-generativeai
 # sentence-transformers # REMOVED - Using Inference API now
 
 # Prediction Model & Scaler

@@ -338,6 +338,29 @@ d# Project Progress Log
 - **Changes Made:** Reviewed the IEEE paper formatting guidelines through a detailed instructional video and initiated the development of the research paper. 
                     Successfully completed several key sections, and made significant progress toward structuring the overall document.
 
+- **Date:** 25-04-25
+- **Team Member:** Adib
+- **Changes Made:** Visualize and explain clearly complete system architecture to all team members.
+
+- **Date:** 25-04-25
+- **Team Member:** Adib
+- **Changes Made:** Create System Architecture Diagram (What Diagram).
+
+- **Date:** 25-04-25
+- **Team Member:** Adib
+- **Changes Made:** Begin work on designing Final Presentation and key visuals.
+
+- **Date:** 26-04-25
+- **Team Member:** Adib
+- **Changes Made:** Finish Final Presentation Animations, prepare key points and submit.
+
+- **Date:** 27-04-25
+- **Team Member:** Adib
+- **Changes Made:** Pick up Research Paper where Pranoy and Sadia left off, Add Title, Abstract.
+
+- **Date:** 28-04-25
+- **Team Member:** Adib
+- **Changes Made:** Refactor Introduction, Related Works.
 
 *Log template:*
 

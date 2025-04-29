@@ -380,7 +380,11 @@ d# Project Progress Log
 
 - **Date:** 29-04-25
 - **Team Member:** Adib
-- **Changes Made:** Improve Reference List with help from Pranoy, Lishad, and Sadia.
+- **Changes Made:** Improve Reference List, add Software citations.
+
+- **Date:** 29-04-25
+- **Team Member:** Adib
+- **Changes Made:** Finish all citations and references, complete paper.
 
 *Log template:*
 

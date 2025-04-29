@@ -236,6 +236,8 @@
                             <li>Finalized and launched the live website: grid-genius-project.vercel.app</li>
                             <li>Led documentation efforts for GridGenius's vision, platform design, and interactivity.</li>
                             <li>Coordinated multi-version demos and structured the GitHub repo.</li>
+                            <li>Wrote the Research Paper (Abstract, Methodology, Results, Conclusion, Colleected and References).</li>
+                            <li>Refactored Introduction, Literature Review.</li>
                         </ul>
                     </div>
                 </div>
@@ -266,6 +268,7 @@
                             <li>Worked on report writing, including the Introduction section.</li>
                             <li>Built backend logic for model inference and dataset generation for predictions.</li>
                             <li>Completed Python script for live predictions and paired actual vs predicted demand sets.</li>
+                            <li>Co-Wrote the Methodology for the Research Paper.</li>
                         </ul>
                     </div>
                 </div>
@@ -323,7 +326,7 @@
                            <li>Contributed to the literature review: summarized papers from UK, Germany, and neighboring countries.</li>
                            <li>Studied and documented use of LLMs, helped wireframe early HTML UI.</li>
                            <li>Wrote major parts of the final report, including the literature review and IEEE formatting.</li>
-                           <li>Completed and submitted final report in IEEE format.</li>
+                           <li>Provided final report in IEEE format.</li>
                        </ul>
                    </div>
                </div>
@@ -346,13 +349,38 @@
         // --- 1. DATA (Unchanged) ---
         const teamMembers = ["Adib", "Lishad", "Pranoy", "Sadia"];
         const months = ["Jan", "Feb", "Mar", "Apr"];
-        const activityByMember = [ { name: "Adib", count: 34 }, { name: "Lishad", count: 22 }, { name: "Pranoy", count: 6 }, { name: "Sadia", count: 14 }];
-        const activityByMonth = [ { name: "Jan", Adib: 6, Lishad: 6, Pranoy: 2, Sadia: 5, total: 19 }, { name: "Feb", Adib: 3, Lishad: 5, Pranoy: 0, Sadia: 3, total: 11 }, { name: "Mar", Adib: 20, Lishad: 7, Pranoy: 3, Sadia: 4, total: 34 }, { name: "Apr", Adib: 5, Lishad: 4, Pranoy: 1, Sadia: 2, total: 12 }];
-        const activityCategories = [ { name: "Data Collection", value: 12 }, { name: "Data Preprocessing", value: 15 }, { name: "Visualization/EDA", value: 10 }, { name: "Model Development", value: 14 }, { name: "Documentation", value: 11 }, { name: "Research", value: 9 }, { name: "Frontend/UI", value: 5 } ];
+        const activityByMember = [ { name: "Adib", count: 48 }, { name: "Lishad", count: 23 }, { name: "Pranoy", count: 7 }, { name: "Sadia", count: 19 }];
+        const activityByMonth = [
+            { name: "Jan", Adib: 7, Lishad: 5, Pranoy: 3, Sadia: 4, total: 19 },
+            { name: "Feb", Adib: 3, Lishad: 4, Pranoy: 0, Sadia: 3, total: 10 },
+            { name: "Mar", Adib: 26, Lishad: 10, Pranoy: 4, Sadia: 5, total: 45 },
+            { name: "Apr", Adib: 12, Lishad: 4, Pranoy: 0, Sadia: 7, total: 23 }
+        ];
+        const activityCategories = [
+            { name: "Data Collection", value: 5 },
+            { name: "Data Preprocessing", value: 12 },
+            { name: "Visualization/EDA", value: 11 },
+            { name: "Model Development", value: 18 },
+            { name: "Documentation", value: 24 },
+            { name: "Research", value: 18 },
+            { name: "Frontend/UI", value: 9 }
+        ];
         const timelineData = [ { phase: "Planning & Data Collection", start: 0, end: 30 }, { phase: "Data Preprocessing & EDA", start: 15, end: 45 }, { phase: "Model Development", start: 35, end: 70 }, { phase: "Frontend Implementation", start: 55, end: 83 }, { phase: "Documentation & Reporting", start: 50, end: 85 } ];
-        const collaborationData = [ { x: "Adib", y: "Lishad", z: 9 }, { x: "Adib", y: "Pranoy", z: 4 }, { x: "Adib", y: "Sadia", z: 6 }, { x: "Lishad", y: "Pranoy", z: 3 }, { x: "Lishad", y: "Sadia", z: 5 }, { x: "Pranoy", y: "Sadia", z: 4 } ];
+        const collaborationData = [
+            { x: "Adib", y: "Lishad", z: 9 },
+            { x: "Adib", y: "Pranoy", z: 6 },
+            { x: "Adib", y: "Sadia", z: 3 },
+            { x: "Lishad", y: "Pranoy", z: 4 },
+            { x: "Lishad", y: "Sadia", z: 5 },
+            { x: "Pranoy", y: "Sadia", z: 3 }
+        ];
         const weeklyProgressData = [ { week: "Wk 1", completion: 5 }, { week: "Wk 2", completion: 12 }, { week: "Wk 3", completion: 20 }, { week: "Wk 4", completion: 28 }, { week: "Wk 5", completion: 35 }, { week: "Wk 6", completion: 45 }, { week: "Wk 7", completion: 55 }, { week: "Wk 8", completion: 65 }, { week: "Wk 9", completion: 75 }, { week: "Wk 10", completion: 85 }, { week: "Wk 11", completion: 92 }, { week: "Wk 12", completion: 100 } ];
-        const summaryMetrics = [ { name: "Total Activities", value: 76, icon: 'bar-chart-2' }, { name: "Project Duration", value: "3 months", icon: 'calendar' }, { name: "Team Members", value: 4, icon: 'users' }, { name: "Completion", value: "100%", icon: 'check-circle' }];
+        const summaryMetrics = [
+            { name: "Total Activities", value: 97, icon: 'bar-chart-2' }, // Updated value
+            { name: "Project Duration", value: "3 months", icon: 'calendar' }, // Assumed same timeframe
+            { name: "Team Members", value: 4, icon: 'users' },
+            { name: "Completion", value: "100%", icon: 'check-circle' } // Assumed completion
+        ];
 
         // --- 2. THEME & CONSTANTS (Unchanged) ---
         const GG_PALETTE_PRIMARY = ['#facc15', '#fbbf24', '#f59e0b', '#d97706', '#fef3c7', '#fde68a'];

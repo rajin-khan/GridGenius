@@ -72,14 +72,19 @@
       <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed">
         Your AI-powered partner for smarter, cleaner, and optimized national energy management for Bangladesh.
       </p>
-      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-        <a href="ask.html" class="inline-block bg-yellow-400 text-black text-base px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition duration-200 shadow-lg hover:shadow-yellow-400/30 transform hover:scale-105">
-          <i data-lucide="message-circle-question" class="inline-block w-4 h-4 mr-2 -mt-1"></i> Ask GridGenius
-        </a>
+      <!-- === UPDATED BUTTON CONTAINER === -->
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16 flex-wrap">
         <a href="predict.html" class="inline-block bg-white/10 border border-white/20 text-white text-base px-8 py-3 rounded-lg font-semibold hover:bg-white/20 transition duration-200 transform hover:scale-105">
           <i data-lucide="brain-circuit" class="inline-block w-4 h-4 mr-2 -mt-1"></i> Use GridOracle
         </a>
+        <a href="ask.html" class="inline-block bg-yellow-400 text-black text-base px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition duration-200 shadow-lg hover:shadow-yellow-400/30 transform hover:scale-105">
+            <i data-lucide="message-circle-question" class="inline-block w-4 h-4 mr-2 -mt-1"></i> Ask GridGenius
+        </a>
+        <a href="https://grid-genius-paper.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-block bg-white/10 border border-white/20 text-white text-base px-8 py-3 rounded-lg font-semibold hover:bg-white/20 transition duration-200 transform hover:scale-105">
+          <i data-lucide="file-text" class="inline-block w-4 h-4 mr-2 -mt-1"></i> Read the Paper
+        </a>
       </div>
+      <!-- === END UPDATED BUTTON CONTAINER === -->
     </div>
 
     <!-- Feature Highlights Section - ADDED feature-card class and data-modal-target -->
@@ -182,6 +187,72 @@
    </div>
 
   <!-- END MODAL HTML STRUCTURES -->
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // --- Feature Modal Functionality ---
+    const featureCards = document.querySelectorAll('.feature-card');
+    const modals = document.querySelectorAll('.feature-modal');
+    const closeButtons = document.querySelectorAll('.modal-close-feature');
+    let currentlyOpenModal = null;
+
+    function openModal(modal) {
+      if (!modal) return;
+      if (currentlyOpenModal) closeModal(currentlyOpenModal); // Close any open modal first
+      modal.classList.add('modal-visible');
+      currentlyOpenModal = modal;
+      document.body.style.overflow = 'hidden'; // Prevent background scroll
+      // Optional: Focus management - focus first focusable element inside modal
+      const firstFocusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      firstFocusable?.focus();
+    }
+
+    function closeModal(modal) {
+      if (!modal) return;
+      modal.classList.remove('modal-visible');
+      currentlyOpenModal = null;
+      document.body.style.overflow = ''; // Restore scroll
+    }
+
+    // Add click listeners to feature cards
+    featureCards.forEach(card => {
+      const targetModalId = card.dataset.modalTarget;
+      const targetModal = document.querySelector(targetModalId);
+      if (targetModal) {
+        card.addEventListener('click', () => openModal(targetModal));
+      } else {
+        console.warn(`Modal with ID ${targetModalId} not found for card.`);
+      }
+    });
+
+    // Add click listeners to close buttons
+    closeButtons.forEach(button => {
+      const modal = button.closest('.feature-modal');
+      if (modal) {
+        button.addEventListener('click', () => closeModal(modal));
+      }
+    });
+
+    // Add click listener to modal backdrop (optional: close on backdrop click)
+    modals.forEach(modal => {
+      modal.addEventListener('click', (event) => {
+        // Only close if the click is directly on the modal backdrop itself
+        if (event.target === modal) {
+          closeModal(modal);
+        }
+      });
+    });
+
+    // Add keyboard listener (Escape key to close)
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && currentlyOpenModal) {
+        closeModal(currentlyOpenModal);
+      }
+    });
+
+  </script>
 
 </body>
 </html>

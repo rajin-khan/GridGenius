@@ -356,11 +356,31 @@ d# Project Progress Log
 
 - **Date:** 27-04-25
 - **Team Member:** Adib
-- **Changes Made:** Pick up Research Paper where Pranoy and Sadia left off, Add Title, Abstract.
+- **Changes Made:** Pick up Research Paper where Pranoy and Sadia left off, Begin work on Final Version of Paper.
+
+- **Date:** 27-04-25
+- **Team Member:** Adib
+- **Changes Made:** Write Title, Abstract for Final Version of Paper.
 
 - **Date:** 28-04-25
 - **Team Member:** Adib
-- **Changes Made:** Refactor Introduction, Related Works.
+- **Changes Made:** Refactor Introduction, Related Works, for Final Version of Paper.
+
+- **Date:** 29-04-25
+- **Team Member:** Adib
+- **Changes Made:** Write Methodology, Results and Experiments, for Final Version of Paper.
+
+- **Date:** 29-04-25
+- **Team Member:** Adib
+- **Changes Made:** Write Conclusion and Future Work for Final Version of Paper.
+
+- **Date:** 29-04-25
+- **Team Member:** Adib
+- **Changes Made:** Compile References and put together reference list for Final Paper.
+
+- **Date:** 29-04-25
+- **Team Member:** Adib
+- **Changes Made:** Improve Reference List with help from Pranoy, Lishad, and Sadia.
 
 *Log template:*
 

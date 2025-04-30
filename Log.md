@@ -386,6 +386,10 @@ d# Project Progress Log
 - **Team Member:** Adib
 - **Changes Made:** Finish all citations and references, complete paper.
 
+- **Date:** 30-04-25
+- **Team Member:** Adib
+- **Changes Made:** Create interactive research paper website.
+
 *Log template:*
 
 - **Date:**

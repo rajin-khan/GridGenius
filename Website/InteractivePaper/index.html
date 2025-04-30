@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GridGenius Paper</title>
+    <!-- Ensure this path is correct relative to your HTML file -->
     <link rel="icon" type="image/png" href="assets/gglogo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
@@ -112,7 +113,7 @@
         .author span { display: block; font-weight: 500; font-size: 1rem; }
         .affiliation { font-style: italic; color: var(--text-secondary); font-size: 0.9rem; display: block; margin-top: 5px; }
 
-        /* --- Download Button --- NEW --- */
+        /* --- Download Button --- */
         .download-button {
             display: inline-flex; /* Use flex to align icon and text */
             align-items: center;
@@ -131,11 +132,7 @@
             transition: var(--transition-med);
             cursor: pointer;
         }
-
-        .download-button i {
-            font-size: 1.1em; /* Make icon slightly larger */
-        }
-
+        .download-button i { font-size: 1.1em; /* Make icon slightly larger */ }
         .download-button:hover,
         .download-button:focus-visible { /* Combined hover/focus styles */
             background-color: var(--accent-yellow);
@@ -144,8 +141,6 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4), var(--shadow-glow);
             outline: none; /* Custom focus handled by box-shadow/transform */
         }
-        /* --- End Download Button --- */
-
 
         /* --- Main Content --- */
         main { padding: 5rem 0; }
@@ -154,7 +149,7 @@
         h2 i { margin-right: 18px; opacity: 0.8; vertical-align: middle; font-size: 0.85em; }
         h3 { font-size: 1.8rem; margin: 3rem 0 2rem; color: var(--text-primary); display: flex; align-items: center; gap: 14px; font-weight: 600; }
         h3 i { color: var(--accent-yellow-dark); opacity: 0.7; font-size: 1.6rem; }
-        p { margin-bottom: 1.5rem; color: var(--text-primary); font-size: 1.1rem; text-align: left; /* Changed from justify */ }
+        p { margin-bottom: 1.5rem; color: var(--text-primary); font-size: 1.1rem; text-align: left; /* Changed from justify for better mobile readability */ }
         strong { color: var(--accent-yellow-dark); font-weight: 600; }
         code { background-color: rgba(253, 224, 71, 0.1); color: var(--accent-yellow); padding: 0.3em 0.6em; border-radius: 6px; font-size: 0.9em; font-family: 'SF Mono', Consolas, monospace; border: 1px solid rgba(253, 224, 71, 0.15); }
         ul, ol { margin-left: 30px; margin-bottom: 1.5rem; color: var(--text-primary); font-size: 1.1rem; }
@@ -181,37 +176,42 @@
         figure img { max-width: 100%; height: auto; border-radius: 12px; background-color: #f5f5f5; padding: 8px; border: 1px solid var(--border-color); cursor: pointer; transition: var(--transition-med); display: block; margin: 0 auto; box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
         figure img:hover { transform: scale(1.05); box-shadow: 0 12px 25px rgba(0,0,0,0.5), var(--shadow-glow); border-color: var(--accent-yellow); }
         figcaption { margin-top: 1.3rem; font-size: 1rem; color: var(--text-secondary); font-style: italic; }
-        .table-container { overflow-x: auto; margin: 3rem 0; border: 1px solid var(--border-color); border-radius: 12px; background-color: var(--bg-card); box-shadow: inset 0 3px 6px rgba(0,0,0,0.4); }
-        table { width: 100%; border-collapse: collapse; }
+        .table-container { overflow-x: auto; margin: 3rem 0; border: 1px solid var(--border-color); border-radius: 12px; background-color: var(--bg-card); box-shadow: inset 0 3px 6px rgba(0,0,0,0.4); -webkit-overflow-scrolling: touch; /* Improve scrolling on iOS */ }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; /* Suggest a min-width to ensure readability before scrolling kicks in */ }
         th, td { padding: 1.1rem 1.4rem; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 1rem; vertical-align: middle; }
         th { background-color: rgba(253, 224, 71, 0.08); color: var(--accent-yellow); font-weight: 600; white-space: nowrap; }
         tr:last-child td { border-bottom: none; }
         tbody tr { transition: background-color 0.15s ease-in-out; }
         tbody tr:hover { background-color: rgba(255, 255, 255, 0.06); }
 
-        /* --- Tooltips --- (CSS only version enhanced) */
+        /* --- Tooltips --- */
         .tooltip-trigger {
             border-bottom: 1px dotted var(--accent-yellow);
             cursor: help;
-            position: relative; /* Already set */
+            position: relative; /* Needed for absolute positioning of tooltip */
         }
-        .tooltip { /* Style the nested span directly */
-            position: absolute; bottom: 135%; left: 50%; transform: translateX(-50%);
+        .tooltip {
+            position: absolute; bottom: 135%; left: 50%;
             background-color: #38383a; color: var(--text-primary);
             padding: 0.7rem 1.1rem; border-radius: 8px; font-size: 0.9rem;
-            white-space: nowrap; z-index: 101; /* Ensure above other elements */
+            white-space: nowrap; z-index: 101;
             opacity: 0; visibility: hidden; pointer-events: none;
             transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.6); /* Slightly stronger shadow */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            transform: translateX(-50%) translateY(8px); /* Start slightly lower */
             transform-origin: bottom center;
+            width: max-content; /* Ensure it doesn't wrap unnecessarily */
+            max-width: 250px; /* Prevent very wide tooltips */
         }
         .tooltip::after { /* Arrow */
             content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px;
             border-width: 6px; border-style: solid; border-color: #38383a transparent transparent transparent;
         }
-        .tooltip-trigger:hover .tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-8px); }
-        /* Optional: Show on focus via JS if needed */
-        /* .tooltip-trigger:focus .tooltip, .tooltip.focused { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-8px); } */
+        .tooltip-trigger:hover .tooltip,
+        .tooltip-trigger:focus .tooltip, /* Show on focus too */
+        .tooltip.visible-focus { /* Class added by JS for focus */
+            opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-8px); /* Move up slightly */
+        }
 
 
         /* --- Accordion --- */
@@ -224,20 +224,13 @@
             transition: box-shadow 0.3s ease, border-color 0.3s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
-
         .accordion-item:hover {
-            border-color: var(--accent-yellow);
+            border-color: rgba(253, 224, 71, 0.6); /* Slightly stronger hover border */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        /* Accordion Header & Button */
-        .accordion-header {
-            /* No background needed here if button fills it */
-            position: relative; /* Needed for potential ::before focus indicator */
-        }
-
-        .accordion-button { /* This is the new button element */
-            background-color: rgba(255, 255, 255, 0.04);
+        .accordion-header { position: relative; }
+        .accordion-button {
+            background-color: transparent; /* Let item background show */
             padding: 1.3rem 2rem;
             cursor: pointer;
             display: flex;
@@ -247,72 +240,35 @@
             user-select: none;
             width: 100%;
             text-align: left;
-            border: none; /* Remove default button border */
-            color: inherit; /* Inherit text color */
-            font: inherit; /* Inherit font styles */
-            border-radius: 0; /* Remove default button radius if needed */
+            border: none; color: inherit; font: inherit;
+            border-radius: 0;
         }
-
-        .accordion-button:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .accordion-button:focus { outline: none; } /* We use focus-visible */
-
-        .accordion-button h4 {
-            margin: 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            transition: color 0.3s ease;
-            pointer-events: none; /* Prevent h4 from intercepting clicks */
-        }
-
-        .accordion-button:hover h4 {
-            color: var(--accent-yellow);
-        }
-
-        .accordion-icon {
-            transition: transform 0.4s ease;
-            color: var(--accent-yellow);
-            font-size: 1.125rem;
-            opacity: 0.9;
-            margin-left: 1rem;
-            flex-shrink: 0;
-            pointer-events: none; /* Prevent icon from intercepting clicks */
-        }
-
-        /* Rotate icon when button's aria-expanded is true */
-        .accordion-button[aria-expanded="true"] .accordion-icon {
-            transform: rotate(180deg);
-        }
-
-        /* Content Panel */
+        .accordion-button:hover { background-color: rgba(255, 255, 255, 0.04); }
+        .accordion-button:focus { outline: none; } /* Use focus-visible */
+        .accordion-button h4 { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--text-primary); transition: color 0.3s ease; pointer-events: none; display: flex; align-items: center; gap: 10px; /* Gap between icon and text */ }
+        .accordion-button h4 small { font-size: 0.8em; font-weight: 400; color: var(--text-secondary); opacity: 0.8; } /* Style the small tag */
+        .accordion-button:hover h4 { color: var(--accent-yellow); }
+        .accordion-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); color: var(--accent-yellow); font-size: 1.125rem; opacity: 0.9; margin-left: 1rem; flex-shrink: 0; pointer-events: none; }
+        .accordion-button[aria-expanded="true"] .accordion-icon { transform: rotate(180deg); }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s cubic-bezier(0, 1, 0, 1),
                         padding 0.4s ease,
                         opacity 0.4s ease;
-            padding: 0 2rem;
-            opacity: 0;
+            padding: 0 2rem; opacity: 0;
             border-top: 1px solid transparent; /* Prepare for divider effect */
         }
-
-        /* Styles when content is active/expanded */
         .accordion-content.active {
-            max-height: 1000px; /* Large enough */
-            padding: 1.5rem 2rem 2rem;
-            opacity: 1;
+            max-height: 1500px; /* Generous max height */
+            padding: 1.5rem 2rem 2rem; opacity: 1;
             transition: max-height 1s ease-in-out,
                         padding 0.4s ease,
                         opacity 0.6s ease,
                         border-color 0.3s ease 0.2s; /* Delay border appearance */
-            /* Optional divider appears when active */
             border-top-color: rgba(253, 224, 71, 0.3);
         }
-
-        .accordion-content p { line-height: 1.6; margin-bottom: 1rem; }
+        .accordion-content p { line-height: 1.7; margin-bottom: 1rem; }
         .accordion-content p:last-child { margin-bottom: 0; }
 
 
@@ -320,46 +276,31 @@
         .counter-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.8rem; /* Slightly reduced gap */
-            margin: 3.5rem 0; /* Reduced top/bottom margin */
+            gap: 1.8rem; margin: 3.5rem 0;
         }
         .counter-card {
-            background: var(--bg-card-subtle-gradient);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            transition: var(--transition-med);
-            display: flex;
-            flex-direction: column; /* Stack elements vertically */
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
-            text-align: center; /* Ensure text itself is centered */
-            min-height: 160px; /* Set a minimum height */
-            padding: 1.5rem 1rem; /* Adjust padding */
+            background: var(--bg-card-subtle-gradient); border-radius: 12px;
+            border: 1px solid var(--border-color); transition: var(--transition-med);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; min-height: 160px; padding: 1.5rem 1rem;
         }
         .counter-card:hover {
-            transform: translateY(-6px); /* Slightly less lift */
-            box-shadow: var(--shadow-glow), 0 10px 20px rgba(0,0,0,0.45); /* Adjust shadow */
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-glow), 0 10px 20px rgba(0,0,0,0.45);
             border-color: var(--accent-yellow-dark);
         }
         .counter-value {
-            font-size: 2.8rem; /* Slightly smaller font */
-            font-weight: 700;
-            color: var(--accent-yellow);
-            margin-bottom: 0.5rem; /* Reduced margin */
-            line-height: 1.1; /* Adjust line height */
+            font-size: 2.8rem; font-weight: 700; color: var(--accent-yellow);
+            margin-bottom: 0.5rem; line-height: 1.1;
         }
-        .counter-title {
-            font-size: 0.95rem; /* Slightly smaller font */
-            color: var(--text-secondary);
-            margin-top: 0.2rem; /* Adjust spacing */
-        }
+        .counter-title { font-size: 0.95rem; color: var(--text-secondary); margin-top: 0.2rem; }
 
         /* --- Metrics & Charts --- */
         .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.3rem; margin: 2rem 0; }
         .metric-card { background-color: var(--bg-card); padding: 1.4rem; border-radius: 10px; text-align: center; border: 1px solid var(--border-color); }
         .metric-name { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.6rem; text-transform: uppercase; font-weight: 500; letter-spacing: 0.5px; }
         .metric-value { font-size: 2rem; font-weight: 700; color: var(--accent-yellow-dark); line-height: 1.1; }
-        .chart-container { position: relative; min-height: 320px; /* Ensure min height */ width: 100%; margin: 3rem 0; background-color: rgba(255, 255, 255, 0.02); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 3px 6px rgba(0,0,0,0.25); }
+        .chart-container { position: relative; min-height: 320px; width: 100%; margin: 3rem 0; background-color: rgba(255, 255, 255, 0.02); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: inset 0 3px 6px rgba(0,0,0,0.25); }
 
         /* --- References --- */
         #references ol { list-style: none; padding-left: 0; counter-reset: ref-counter; }
@@ -376,36 +317,28 @@
 
         /* --- Modal --- */
         .modal {
-            display: none; /* Initially hidden */
-            position: fixed; z-index: 1003; left: 0; top: 0; width: 100%; height: 100%;
+            display: none; position: fixed; z-index: 1003; left: 0; top: 0; width: 100%; height: 100%;
             overflow: auto; background-color: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             align-items: center; justify-content: center; padding: 25px;
-            opacity: 0; /* Start hidden for fade-in */
-            transition: opacity 0.3s ease-out;
+            opacity: 0; transition: opacity 0.3s ease-out;
         }
-        .modal.visible { /* Class added by JS to trigger fade-in */
-             opacity: 1;
+        .modal.visible { display: flex; opacity: 1; } /* Use flex here */
+        .modal-image-wrapper {
+             display: flex; justify-content: center; align-items: center;
+             width: 100%; height: 100%;
         }
-        .modal-image-wrapper { /* Added wrapper */
-             display: flex; /* Helps center image within wrapper */
-             justify-content: center;
-             align-items: center;
-             width: 100%;
-             height: 100%;
-        }
-        .modal-content { /* This is now the IMG */
+        .modal-content { /* This is the IMG */
             margin: auto; display: block;
-            max-width: 94%; max-height: 90vh; /* Ensure it fits viewport vertically */
+            max-width: 94%; max-height: 90vh;
             background-color: var(--bg-card); padding: 5px; /* Minimal padding around image */
             border-radius: 8px; border: 1px solid var(--border-color);
             animation: modalZoomIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            object-fit: contain; /* Ensure image aspect ratio is maintained */
+            object-fit: contain;
         }
         .modal-caption { margin: 20px auto 10px; display: block; max-width: 88%; text-align: center; color: #d0d0d0; font-size: 1.1rem; }
         .modal-close { position: absolute; top: 20px; right: 35px; color: #f5f5f5; font-size: 55px; font-weight: bold; transition: 0.3s; cursor: pointer; line-height: 0.7; text-shadow: 0 2px 4px rgba(0,0,0,0.6); background: none; border: none; padding: 0; }
         .modal-close:hover, .modal-close:focus { color: var(--accent-yellow); }
-        /* Separate zoom keyframes */
          @keyframes modalZoomIn {
              from { transform: scale(0.8) translateY(20px); opacity: 0; }
              to { transform: scale(1) translateY(0); opacity: 1; }
@@ -422,87 +355,104 @@
         /* --- Accessibility & Polish --- */
         @media (prefers-reduced-motion: reduce) {
           *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-            scroll-behavior: auto !important;
+            animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important; scroll-behavior: auto !important;
           }
-          /* Specifically target the shine animation */
           h1 { animation: none !important; }
-          /* Reduce counter speed drastically */
           .counter-value { transition: none !important; }
-          /* Disable chart animations */
           .chart-container canvas { animation: none !important; }
-          /* Disable scroll animations */
           [data-animate] { transition: none !important; transform: none !important; opacity: 1 !important; }
         }
 
          /* Improved Focus Styles */
          :focus-visible {
-             outline: 3px solid var(--focus-outline-color);
-             outline-offset: 2px;
-             border-radius: 4px;
-             box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3); /* Optional glow */
-             /* z-index: 10000; Ensure focus is visible above elements */
+             outline: 3px solid var(--focus-outline-color); outline-offset: 2px;
+             border-radius: 4px; box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3);
          }
-         /* Ensure specific elements get focus style if default is overridden */
          .nav-link a:focus-visible,
          .mobile-menu-button:focus-visible,
          .back-to-top:focus-visible,
-         .download-button:focus-visible, /* Added */
-         figure img:focus-visible, /* If you want images to be focusable (needs tabindex="0") */
-         .tooltip-trigger:focus-visible { /* Style trigger on focus */
-              outline: 2px dotted var(--accent-yellow);
-              outline-offset: 2px;
-              box-shadow: none; /* Override default focus if needed */
-              border-radius: 2px;
+         .download-button:focus-visible,
+         figure img:focus-visible,
+         .tooltip-trigger:focus-visible {
+              outline: 2px dotted var(--accent-yellow); outline-offset: 3px;
+              box-shadow: none; border-radius: 2px;
          }
-        .accordion-button:focus-visible { /* Custom focus style for accordion button */
-             outline: none; /* Remove default */
-             background-color: rgba(255, 255, 255, 0.1); /* Slight bg change */
-             box-shadow: inset 0 0 0 2px var(--focus-outline-color); /* Inset shadow looks nice on buttons */
+         /* Remove default outline specifically from figure img if using tabindex */
+         figure img:focus { outline: none; }
+         figure img:focus-visible { /* Already defined above, keeps the dotted yellow */ }
+
+        .accordion-button:focus-visible {
+             outline: none; background-color: rgba(255, 255, 255, 0.1);
+             box-shadow: inset 0 0 0 2px var(--focus-outline-color);
         }
         .modal-close:focus-visible {
-            outline: 3px solid var(--accent-yellow-dark);
-            outline-offset: 2px;
-            box-shadow: none;
-            border-radius: 50%; /* Match shape */
-            background-color: rgba(255, 255, 255, 0.1); /* Slight bg */
+            outline: 3px solid var(--accent-yellow-dark); outline-offset: 2px;
+            box-shadow: none; border-radius: 50%; background-color: rgba(255, 255, 255, 0.1);
          }
 
 
-        /* --- Mobile Responsive Refinements --- */
+        /* --- ================================= --- */
+        /* --- MOBILE RESPONSIVE REFINEMENTS --- */
+        /* --- ================================= --- */
+
+        /* --- Tablet Landscape / Small Laptops (992px) --- */
         @media (max-width: 992px) {
-            .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
-            h1 { font-size: 3rem; } h2 { font-size: 2.2rem; } h3 { font-size: 1.7rem; }
+            .grid-cols-3 { grid-template-columns: repeat(2, 1fr); } /* 3 columns -> 2 columns */
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.2rem; }
+            h3 { font-size: 1.7rem; }
         }
 
+        /* --- Tablet Portrait / Large Mobile (768px) --- */
         @media (max-width: 768px) {
-            body { font-size: 16px; line-height: 1.7; } /* Reset base size for mobile */
+            body { font-size: 16px; line-height: 1.7; } /* Reset base size */
             .container { padding: 0 20px; }
-            .nav-links { /* Mobile menu styles */
-               display: none; position: absolute; top: 100%; left: 0; width: 100%;
-               background-color: var(--bg-card); /* Use card bg for menu */
-               flex-direction: column; padding: 1rem 0; border-top: 1px solid var(--border-color);
+
+            /* --- Mobile Navigation --- */
+            .mobile-menu-button { display: block; } /* Show hamburger */
+            .nav-links {
+               display: none; /* Hidden by default */
+               position: absolute; top: 100%; /* Position below navbar */ left: 0; width: 100%;
+               background-color: var(--bg-card); /* Use card bg */
+               flex-direction: column; /* Stack vertically */
+               padding: 1rem 0; border-top: 1px solid var(--border-color);
                box-shadow: 0 10px 25px rgba(0,0,0,0.6); /* Stronger shadow */
-               max-height: 0; overflow-y: auto; /* Allow scroll */
-               transition: max-height 0.4s ease-out; gap: 0;
+               max-height: 0; overflow-y: auto; /* Allow scroll if needed */
+               transition: max-height 0.4s ease-out, opacity 0.3s ease-out; /* Add opacity transition */
+               gap: 0; /* Remove desktop gap */
+               opacity: 0; /* Start hidden for fade */
+               visibility: hidden;
             }
-            .nav-links.mobile-nav-open { max-height: calc(100vh - var(--nav-height)); } /* Full height minus nav */
+            .nav-links.mobile-nav-open {
+                display: flex; /* Use flex when open */
+                max-height: calc(100vh - var(--nav-height)); /* Full height minus nav */
+                opacity: 1;
+                visibility: visible;
+            }
             .nav-link { width: 100%; text-align: left; border-bottom: 1px solid var(--border-color); }
             .nav-link:last-child { border-bottom: none; }
-            .nav-link a { display: block; padding: 1rem 1.5rem; font-size: 1rem; color: var(--text-primary); border-bottom: none; }
-            .nav-link a:hover, .nav-link a.active { background-color: rgba(255, 255, 255, 0.05); color: var(--nav-link-hover); }
-            .mobile-menu-button { display: block; }
-            .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; }
+            .nav-link a {
+                display: block; /* Make link fill width */
+                padding: 1rem 1.5rem; /* Generous padding for touch */
+                font-size: 1rem; color: var(--text-primary);
+                border-bottom: none; /* Remove desktop border */
+            }
+            .nav-link a:hover, .nav-link a.active {
+                background-color: rgba(255, 255, 255, 0.05); color: var(--nav-link-hover);
+            }
+
+             /* --- Layout & Content Adjustments --- */
+            .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; } /* All grids stack to single column */
             header { padding: 5.5rem 0 4.5rem; }
             h1 { font-size: 2.8rem; }
             .authors { gap: 1rem 2rem; }
-            .download-button { margin-top: 2rem; margin-bottom: 1.5rem; font-size: 0.95rem; padding: 0.7rem 1.4rem; } /* Adjust button spacing/size */
+            .download-button { margin-top: 2rem; margin-bottom: 1.5rem; font-size: 0.95rem; padding: 0.7rem 1.4rem; } /* Adjust button */
             section { margin-bottom: 5rem; }
             .card { padding: 1.8rem 2rem; }
             .highlight-box { padding: 1.8rem; }
-            th, td { padding: 1rem 1.1rem; font-size: 0.95rem; }
+            th, td { padding: 1rem 1.1rem; font-size: 0.95rem; white-space: normal; /* Allow wrapping in table cells */ }
+            th { white-space: nowrap; /* Keep headers nowrap if needed, rely on scroll */ }
             .counter-grid { gap: 1.8rem; }
             .counter-value { font-size: 2.8rem; }
             .metrics-grid { gap: 1.1rem; }
@@ -512,28 +462,59 @@
             .back-to-top { width: 44px; height: 44px; font-size: 1.1rem; bottom: 25px; right: 25px; }
             .modal-content { max-width: 95%; padding: 15px; }
             .modal-close { top: 18px; right: 25px; font-size: 45px; }
-             /* Accordion Mobile */
+
+             /* --- Accordion Mobile --- */
              .accordion-button { padding: 1rem 1.5rem; }
              .accordion-button h4 { font-size: 1.125rem; }
+             .accordion-button h4 small { display: block; font-size: 0.75em; margin-top: 2px; } /* Stack the small text */
              .accordion-content.active { padding: 1.25rem 1.5rem 1.5rem; }
         }
 
+        /* --- Small Mobile (480px) --- */
         @media (max-width: 480px) {
-            html { scroll-padding-top: 60px; } /* Adjust for potentially smaller mobile nav */
-            .navbar { height: 60px; }
+            /* Adjust nav height and scroll padding if needed, otherwise keep 65px */
+            /* html { scroll-padding-top: 60px; } */
+            /* .navbar { height: 60px; } */
+
             body { font-size: 15.5px; }
-            h1 { font-size: 2.4rem; } h2 { font-size: 2rem; } h3 { font-size: 1.6rem; }
-            header p.subtitle { font-size: 1.15rem; }
-            .container { padding: 0 15px; }
-            .card { padding: 1.5rem 1.8rem; }
-            .download-button { width: 90%; /* Make button wider on small screens */ text-align: center; justify-content: center; }
-            .counter-grid { grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 3rem 0; }
-            .counter-value { font-size: 2.5rem; }
-            .counter-title { font-size: 0.95rem; }
-            .metrics-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-            .metric-value { font-size: 1.7rem; }
-            p, li { font-size: 1.05rem; }
-            th, td { padding: 0.8rem 1rem; }
+            .container { padding: 0 15px; } /* Less horizontal padding */
+
+            /* --- Typography --- */
+            h1 { font-size: 2.4rem; line-height: 1.3; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.6rem; }
+            header p.subtitle { font-size: 1.1rem; /* Slightly smaller */ }
+            p, li, figcaption { font-size: 1rem; /* Adjust base paragraph/list size */ }
+             ul, ol { margin-left: 20px; } /* Reduce list indent */
+
+            /* --- Layout & Elements --- */
+             .card { padding: 1.5rem 1.2rem; /* Reduce card padding further */ }
+             .download-button {
+                 width: 90%; /* Make button wider */
+                 margin-left: auto; margin-right: auto; /* Center block element */
+                 justify-content: center; /* Center flex content */
+                 display: flex; /* Ensure flex is still applied */
+                 padding: 0.75rem 1rem; /* Adjust padding slightly */
+                 font-size: 0.9rem;
+             }
+             .counter-grid {
+                 grid-template-columns: 1fr 1fr; /* Force 2 columns */
+                 gap: 1.2rem; margin: 3rem 0;
+             }
+             .counter-value { font-size: 2.5rem; }
+             .counter-title { font-size: 0.9rem; } /* Slightly smaller */
+             .metrics-grid {
+                 grid-template-columns: 1fr 1fr; /* Force 2 columns */
+                 gap: 1rem;
+             }
+             .metric-value { font-size: 1.7rem; }
+             th, td { padding: 0.8rem 0.9rem; font-size: 0.9rem; /* Smaller table text/padding */ }
+             figure { margin: 2rem 0; }
+             figcaption { font-size: 0.9rem; }
+             #references li { font-size: 0.9rem; line-height: 1.6; }
+
+             .interaction-guide { font-size: 0.85rem; gap: 8px 12px; }
+             .interaction-guide span { padding: 6px 10px; }
         }
 
     </style>
@@ -577,7 +558,7 @@
                  <div class="author"><span>Sadia Islam Mou</span><span class="affiliation">North South University</span></div>
             </div>
 
-            <!-- === DOWNLOAD BUTTON ADDED HERE === -->
+            <!-- === DOWNLOAD BUTTON === -->
             <a href="assets/GridGenius - AAR Khan, A Lishad, P Saha, SI Mou.pdf" class="download-button" target="_blank" rel="noopener noreferrer" data-animate>
                 <i class="fas fa-file-pdf" aria-hidden="true"></i>
                 <span>Download PDF</span>
@@ -586,10 +567,9 @@
 
             <div class="interaction-guide" data-animate>
                  <span><i class="fas fa-hand-pointer" aria-hidden="true"></i> Click Figures</span>
-                 <!-- **** IMPORTANT: Assign unique IDs to aria-describedby and the tooltip's id **** -->
-                 <span><i class="fas fa-info-circle" aria-hidden="true"></i> Hover <span class="tooltip-trigger" aria-describedby="tooltip-term-example"><u>Terms</u><span class="tooltip" role="tooltip" id="tooltip-term-example">Like this one!</span></span></span>
+                 <span><i class="fas fa-info-circle" aria-hidden="true"></i> Hover <span class="tooltip-trigger" aria-describedby="tooltip-term-example"><u>Terms</u><span class="tooltip" role="tooltip" id="tooltip-term-example">Like this one! Definitions appear on hover or focus.</span></span></span>
                  <span><i class="fas fa-chevron-down" aria-hidden="true"></i> Expand Sections</span>
-                 <span><i class="fas fa-mobile-alt" aria-hidden="true"></i> Responsive View</span>
+                 <span><i class="fas fa-laptop" aria-hidden="true"></i> Best on Desktop</span>
             </div>
         </div>
     </header>
@@ -600,7 +580,6 @@
         <section id="abstract">
              <h2 data-animate><i class="fas fa-file-alt" aria-hidden="true"></i>Abstract</h2>
              <div class="card abstract-card" data-animate>
-                <!-- **** IMPORTANT: Assign unique IDs to aria-describedby and the tooltip's id for EACH term **** -->
                 <p>Bangladesh faces critical challenges in balancing electricity generation with demand, leading to resource wastage, high costs, and load shedding. We present <strong>GridGenius</strong>, a novel, fully deployed <span class="tooltip-trigger" aria-describedby="tooltip-ai">AI<span class="tooltip" role="tooltip" id="tooltip-ai">Artificial Intelligence</span></span>-powered platform for accurate and explainable daily electricity demand forecasting.</p>
                 <p>The system uses a <strong>hybrid model</strong> integrating classical <span class="tooltip-trigger" aria-describedby="tooltip-ml">ML<span class="tooltip" role="tooltip" id="tooltip-ml">Machine Learning</span></span> (Random Forest, XGBoost) with a custom <strong>Transformer</strong> regressor, achieving <span class="tooltip-trigger" aria-describedby="tooltip-r2">R²<span class="tooltip" role="tooltip" id="tooltip-r2">Coefficient of Determination: How well predictions replicate real data points (0-1 scale).</span></span> scores up to <strong>0.89</strong>. A unique dataset from 1,800+ daily <span class="tooltip-trigger" aria-describedby="tooltip-bpdb-1">BPDB<span class="tooltip" role="tooltip" id="tooltip-bpdb-1">Bangladesh Power Development Board</span></span> reports (2020-2024) was created, enriched with holiday, temperature, and seasonal data.</p>
                 <p>GridGenius incorporates a <span class="tooltip-trigger" aria-describedby="tooltip-rag-1">RAG<span class="tooltip" role="tooltip" id="tooltip-rag-1">Retrieval-Augmented Generation: Enhances LLM answers with external knowledge.</span></span> pipeline with a <span class="tooltip-trigger" aria-describedby="tooltip-llm-1">LLM<span class="tooltip" role="tooltip" id="tooltip-llm-1">Large Language Model (e.g., Llama 3)</span></span> for transparency, allowing natural language queries about forecasts. Deployed as a web app, it offers a scalable, transparent solution for smarter grid management.</p>
@@ -612,12 +591,10 @@
         <!-- Introduction Section -->
         <section id="introduction">
             <h2 data-animate><i class="fas fa-lightbulb" aria-hidden="true"></i>Introduction</h2>
-            <!-- **** Add unique tooltip IDs **** -->
             <p data-animate>Bangladesh's energy sector is marked by a persistent struggle to align electricity generation with national demand. This imbalance results in frequent load shedding, inefficient resource use, and significant economic consequences. Despite generation capacity growth, the <span class="tooltip-trigger" aria-describedby="tooltip-bpdb-2">BPDB<span class="tooltip" role="tooltip" id="tooltip-bpdb-2">Bangladesh Power Development Board</span></span> [1] still grapples with demand-supply mismatches, especially during peak periods and seasonal transitions. A key bottleneck is the lack of dynamic, interpretable, and real-time forecasting systems [3] to guide grid optimization efforts.</p>
             <p data-animate>Traditional forecasting approaches, including statistical models (<span class="tooltip-trigger" aria-describedby="tooltip-arima">ARIMA<span class="tooltip" role="tooltip" id="tooltip-arima">Autoregressive Integrated Moving Average</span></span>) and basic <span class="tooltip-trigger" aria-describedby="tooltip-ml-2">ML<span class="tooltip" role="tooltip" id="tooltip-ml-2">Machine Learning</span></span> techniques, often fall short. They may struggle to generalize across time scales, ignore crucial external factors like holidays or weather patterns, and lack the scalability needed for daily operational deployment. This highlights the need for an intelligent, adaptable system providing accurate daily forecasts coupled with clear, understandable explanations.</p>
              <div class="card" data-animate>
                 <h3><i class="fas fa-star" aria-hidden="true"></i>Our Contribution: GridGenius</h3>
-                <!-- **** Add unique tooltip IDs **** -->
                 <p>GridGenius is designed to fill this gap by integrating novel, state-of-the-art AI techniques:</p>
                 <ul>
                     <li>A <strong>Hybrid Modeling Strategy:</strong> Combines established ML algorithms (Random Forest, XGBoost) with a custom Transformer architecture [2].</li>
@@ -632,7 +609,10 @@
                      <div class="counter-title">BPDB Reports Processed</div>
                  </div>
                  <div class="counter-card">
-                    <div class="chart-container" style="height: 150px;"> <canvas id="r2ScoreChart" role="img" aria-label="Doughnut chart showing R² Score Achieved: 89%"></canvas> </div>
+                    <!-- Adjusted height for chart container within counter card -->
+                    <div class="chart-container" style="height: 100px; min-height: 100px; width: 100%; margin: 0 auto 0.5rem; padding: 5px; box-shadow: none; background: none; border: none;">
+                         <canvas id="r2ScoreChart" role="img" aria-label="Doughnut chart showing R² Score Achieved: 89%"></canvas>
+                     </div>
                      <div class="counter-title">Peak R² Score Achieved</div>
                  </div>
                  <div class="counter-card">
@@ -652,12 +632,11 @@
              <div class="accordion-item" data-animate>
                  <div class="accordion-header" id="accordion-header-1">
                     <button class="accordion-button" aria-expanded="false" aria-controls="accordion-content-1">
-                        <h4><i class="fas fa-plus-square" aria-hidden="true" style="margin-right: 8px;"></i> Review of Existing Approaches <small>(Click to Expand)</small></h4>
+                        <h4><i class="fas fa-tasks" aria-hidden="true"></i>Review of Existing Approaches<small>(Click to Expand)</small></h4>
                         <i class="fas fa-chevron-down accordion-icon" aria-hidden="true"></i>
                     </button>
                  </div>
                  <div class="accordion-content" id="accordion-content-1" role="region" aria-labelledby="accordion-header-1">
-                    <!-- **** Add unique tooltip IDs **** -->
                     <ul>
                         <li><strong>Classical ML:</strong> Hossain [5] used XGBoost on partial <span class="tooltip-trigger" aria-describedby="tooltip-bpdb-3">BPDB<span class="tooltip" role="tooltip" id="tooltip-bpdb-3">Bangladesh Power Development Board</span></span> data, lacking features/explainability. Haque [7] applied LightGBM to limited apartment data. Wang [6] explored <span class="tooltip-trigger" aria-describedby="tooltip-cnn">CNN<span class="tooltip" role="tooltip" id="tooltip-cnn">Convolutional Neural Network</span></span>-<span class="tooltip-trigger" aria-describedby="tooltip-lstm">LSTM<span class="tooltip" role="tooltip" id="tooltip-lstm">Long Short-Term Memory network</span></span> but ignored external factors. Haque [8] used <span class="tooltip-trigger" aria-describedby="tooltip-knn">KNN<span class="tooltip" role="tooltip" id="tooltip-knn">K-Nearest Neighbors algorithm</span></span>, facing overfitting and lack of daily detail.</li>
                         <li><strong>Transformers:</strong> While powerful [2, 9] (e.g., Autoformer [10]), their application to operational energy forecasting with specific regional data is sparse.</li>
@@ -682,13 +661,12 @@
 
              <div class="highlight-box" data-animate>
                  <strong>Key Research Gaps Addressed by GridGenius:</strong>
-                 <!-- **** Add unique tooltip IDs **** -->
                   <ul>
-                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-label="Addressed:"></i> Created comprehensive, multi-year, daily <span class="tooltip-trigger" aria-describedby="tooltip-bpdb-4">BPDB<span class="tooltip" role="tooltip" id="tooltip-bpdb-4">Bangladesh Power Development Board</span></span> dataset.</li>
-                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-label="Addressed:"></i> Implemented robust feature engineering (holidays, temp, season, gap).</li>
-                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-label="Addressed:"></i> Developed and tested hybrid ML/Transformer models tailored for this task.</li>
-                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-label="Addressed:"></i> Integrated interactive <span class="tooltip-trigger" aria-describedby="tooltip-xai-3">XAI<span class="tooltip" role="tooltip" id="tooltip-xai-3">Explainable Artificial Intelligence</span></span> via <span class="tooltip-trigger" aria-describedby="tooltip-rag-4">RAG<span class="tooltip" role="tooltip" id="tooltip-rag-4">Retrieval-Augmented Generation</span></span> pipeline.</li>
-                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-label="Addressed:"></i> Deployed a full-stack, user-friendly system.</li>
+                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-hidden="true"></i> Created comprehensive, multi-year, daily <span class="tooltip-trigger" aria-describedby="tooltip-bpdb-4">BPDB<span class="tooltip" role="tooltip" id="tooltip-bpdb-4">Bangladesh Power Development Board</span></span> dataset.</li>
+                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-hidden="true"></i> Implemented robust feature engineering (holidays, temp, season, gap).</li>
+                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-hidden="true"></i> Developed and tested hybrid ML/Transformer models tailored for this task.</li>
+                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-hidden="true"></i> Integrated interactive <span class="tooltip-trigger" aria-describedby="tooltip-xai-3">XAI<span class="tooltip" role="tooltip" id="tooltip-xai-3">Explainable Artificial Intelligence</span></span> via <span class="tooltip-trigger" aria-describedby="tooltip-rag-4">RAG<span class="tooltip" role="tooltip" id="tooltip-rag-4">Retrieval-Augmented Generation</span></span> pipeline.</li>
+                      <li><i class="fas fa-check-circle" style="color: var(--accent-yellow-dark);" aria-hidden="true"></i> Deployed a full-stack, user-friendly system.</li>
                   </ul>
              </div>
         </section>
@@ -709,35 +687,30 @@
              </ol>
 
              <figure id="fig1" data-animate>
-                  <!-- Added tabindex="0" to make focusable -->
-                  <!-- Make sure asset path is correct -->
-                  <img src="assets/fig1_architecture.png" alt="Figure 1: GridGenius System Architecture Overview" onclick="openModal(this)" tabindex="0">
+                  <!-- Ensure path is correct -->
+                  <img src="assets/fig1_architecture.png" alt="Figure 1: GridGenius System Architecture Overview." onclick="openModal(this)" tabindex="0">
                   <figcaption>Figure 1: GridGenius System Architecture Overview. (Click to Enlarge)</figcaption>
               </figure>
 
               <div class="card" data-animate>
                 <h3><i class="fas fa-database" aria-hidden="true"></i>A. Dataset Collection & Description</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                  <p>Unique dataset scraped from <strong>1,800+ daily <span class="tooltip-trigger" aria-describedby="tooltip-bpdb-5">BPDB<span class="tooltip" role="tooltip" id="tooltip-bpdb-5">Bangladesh Power Development Board</span></span> reports</strong> (Jan 2020 - Mid 2024). Includes Max Demand (MW), Max Generation (MW), Date, enriched with Daily Avg Temp (°C) & National Holiday flag.</p>
              </div>
 
               <div class="card" data-animate>
                  <h3><i class="fas fa-chart-bar" aria-hidden="true"></i>B. Exploratory Data Analysis (EDA)</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                  <p><span class="tooltip-trigger" aria-describedby="tooltip-eda">EDA<span class="tooltip" role="tooltip" id="tooltip-eda">Exploratory Data Analysis</span></span> revealed key patterns:</p>
-                 <div class="grid-container grid-cols-2">
-                    <!-- Make sure asset paths are correct -->
-                    <!-- Added tabindex="0" -->
-                    <figure id="fig2"><img src="assets/fig2_temp_dist.png" alt="Figure 2: Temperature Distribution shows peak around 30°C" onclick="openModal(this)" tabindex="0"><figcaption>Fig 2: Temp. Peak ~30°C</figcaption></figure>
-                    <figure id="fig3"><img src="assets/fig3_demand_dist.png" alt="Figure 3: Demand Distribution shows a broad spread" onclick="openModal(this)" tabindex="0"><figcaption>Fig 3: Broad Demand Spread</figcaption></figure>
-                    <figure id="fig6"><img src="assets/fig6_temp_demand.png" alt="Figure 6: Scatter plot showing Demand tends to rise with Temperature" onclick="openModal(this)" tabindex="0"><figcaption>Fig 6: Demand Rises with Temp</figcaption></figure>
-                    <figure id="fig7"><img src="assets/fig7_holiday_demand.png" alt="Figure 7: Box plot showing lower Demand on Holidays compared to non-holidays" onclick="openModal(this)" tabindex="0"><figcaption>Fig 7: Lower Demand on Holidays</figcaption></figure>
+                 <div class="grid-container grid-cols-2"> <!-- This will become 1 column on mobile -->
+                    <!-- Ensure paths are correct -->
+                    <figure id="fig2"><img src="assets/fig2_temp_dist.png" alt="Figure 2: Temperature Distribution histogram showing a peak frequency around 30°C" onclick="openModal(this)" tabindex="0"><figcaption>Fig 2: Temp. Peak ~30°C</figcaption></figure>
+                    <figure id="fig3"><img src="assets/fig3_demand_dist.png" alt="Figure 3: Demand Distribution histogram showing a broad spread, slightly skewed right" onclick="openModal(this)" tabindex="0"><figcaption>Fig 3: Broad Demand Spread</figcaption></figure>
+                    <figure id="fig6"><img src="assets/fig6_temp_demand.png" alt="Figure 6: Scatter plot showing Demand (Y-axis) generally increasing with Temperature (X-axis), especially above 25°C" onclick="openModal(this)" tabindex="0"><figcaption>Fig 6: Demand Rises with Temp</figcaption></figure>
+                    <figure id="fig7"><img src="assets/fig7_holiday_demand.png" alt="Figure 7: Box plot comparing Demand on Holidays vs Non-Holidays, showing significantly lower median and range on holidays" onclick="openModal(this)" tabindex="0"><figcaption>Fig 7: Lower Demand on Holidays</figcaption></figure>
                 </div>
              </div>
 
              <div class="card" data-animate>
                  <h3><i class="fas fa-tools" aria-hidden="true"></i>C. Feature Engineering & Data Iterations</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                   <p>Features engineered: Demand-Gen Gap, Season Classification, Holiday Flag. Preprocessing: Outlier handling (<span class="tooltip-trigger" aria-describedby="tooltip-iqr-1">IQR<span class="tooltip" role="tooltip" id="tooltip-iqr-1">Interquartile Range</span></span>, Z-score), Scaling (MinMaxScaler, StandardScaler). Four dataset variants created for robustness testing.</p>
              </div>
 
@@ -748,7 +721,6 @@
 
               <div class="card" data-animate>
                  <h3><i class="fas fa-microchip" aria-hidden="true"></i>E. Primary Model: Transformer Regressor</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                  <p>Custom Transformer [2] with multi-head self-attention, feed-forward layers, positional encoding, dropout. Trained with Adam [12] optimizer & <span class="tooltip-trigger" aria-describedby="tooltip-mse-1">MSE<span class="tooltip" role="tooltip" id="tooltip-mse-1">Mean Squared Error</span></span> loss.</p>
                   <div class="table-container">
                       <table>
@@ -766,20 +738,17 @@
 
              <div class="card" data-animate>
                 <h3><i class="fas fa-comments" aria-hidden="true"></i>F. Explainability via RAG-LLM</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                  <p>Achieved using <span class="tooltip-trigger" aria-describedby="tooltip-rag-5">RAG<span class="tooltip" role="tooltip" id="tooltip-rag-5">Retrieval-Augmented Generation</span></span> [4]: <span class="tooltip-trigger" aria-describedby="tooltip-chromadb-1">ChromaDB<span class="tooltip" role="tooltip" id="tooltip-chromadb-1">Vector Database</span></span> [13] stores context (docs, stats) embedded via Google/HF models [26, 27]. Llama 3.1 [14] on <span class="tooltip-trigger" aria-describedby="tooltip-groq-1">Groq<span class="tooltip" role="tooltip" id="tooltip-groq-1">Fast LLM Inference API</span></span> [15] generates answers based on retrieved context, enabling natural language queries.</p>
              </div>
 
              <div class="card" data-animate>
                  <h3><i class="fas fa-server" aria-hidden="true"></i>G. Deployment Architecture</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                   <p>Modern stack: <span class="tooltip-trigger" aria-describedby="tooltip-fastapi-1">FastAPI<span class="tooltip" role="tooltip" id="tooltip-fastapi-1">Python Backend Framework</span></span> [16] backend on <span class="tooltip-trigger" aria-describedby="tooltip-railway">Railway<span class="tooltip" role="tooltip" id="tooltip-railway">Cloud Platform</span></span> [28], Responsive frontend on <span class="tooltip-trigger" aria-describedby="tooltip-vercel">Vercel<span class="tooltip" role="tooltip" id="tooltip-vercel">Cloud Platform</span></span> [17], persistent <span class="tooltip-trigger" aria-describedby="tooltip-chromadb-2">ChromaDB<span class="tooltip" role="tooltip" id="tooltip-chromadb-2">Vector Database</span></span> [13], <span class="tooltip-trigger" aria-describedby="tooltip-groq-2">Groq<span class="tooltip" role="tooltip" id="tooltip-groq-2">Fast LLM Inference API</span></span> [15] for <span class="tooltip-trigger" aria-describedby="tooltip-llm-3">LLM<span class="tooltip" role="tooltip" id="tooltip-llm-3">Large Language Model</span></span>.</p>
-                   <div class="grid-container grid-cols-3">
-                      <!-- Make sure asset paths are correct -->
-                      <!-- Added tabindex="0" -->
-                      <figure id="fig10"><img src="assets/fig10_gridoracle.png" alt="Figure 10: Screenshot of the GridOracle Prediction Tool interface" onclick="openModal(this)" tabindex="0"><figcaption>Fig 10: GridOracle Tool</figcaption></figure>
-                      <figure id="fig11"><img src="assets/fig11_dashboard.png" alt="Figure 11: Screenshot of the Visualization Dashboard showing charts and insights" onclick="openModal(this)" tabindex="0"><figcaption>Fig 11: Insights Dashboard</figcaption></figure>
-                      <figure id="fig12"><img src="assets/fig12_chatbot.png" alt="Figure 12: Screenshot of the GridGenius Chatbot interface for explainability" onclick="openModal(this)" tabindex="0"><figcaption>Fig 12: GridGenius Chatbot</figcaption></figure>
+                   <div class="grid-container grid-cols-3"> <!-- Becomes 2 columns then 1 column on mobile -->
+                      <!-- Ensure paths are correct -->
+                      <figure id="fig10"><img src="assets/fig10_gridoracle.png" alt="Figure 10: Screenshot of the GridOracle Prediction Tool interface showing input fields (date, temp, holiday) and predicted demand output" onclick="openModal(this)" tabindex="0"><figcaption>Fig 10: GridOracle Tool</figcaption></figure>
+                      <figure id="fig11"><img src="assets/fig11_dashboard.png" alt="Figure 11: Screenshot of the Visualization Dashboard showing time series charts of demand, generation, and temperature" onclick="openModal(this)" tabindex="0"><figcaption>Fig 11: Insights Dashboard</figcaption></figure>
+                      <figure id="fig12"><img src="assets/fig12_chatbot.png" alt="Figure 12: Screenshot of the GridGenius Chatbot interface showing a user query and an LLM-generated explanation" onclick="openModal(this)" tabindex="0"><figcaption>Fig 12: GridGenius Chatbot</figcaption></figure>
                    </div>
             </div>
         </section>
@@ -791,18 +760,18 @@
             <h2 data-animate><i class="fas fa-chart-pie" aria-hidden="true"></i>Results and Experiments</h2>
               <div class="card" data-animate>
                  <h3><i class="fas fa-vial" aria-hidden="true"></i>A. Experimental Setup & Tools</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                  <p>Hybrid setup (Colab T4 <span class="tooltip-trigger" aria-describedby="tooltip-gpu">GPU<span class="tooltip" role="tooltip" id="tooltip-gpu">Graphics Processing Unit</span></span>, RTX 3060, M1 Mac). Libs: Sklearn [18], TF [19]/Keras [21], PyTorch [20], NumPy [22], Pandas [23], Matplotlib [24]/Seaborn [25], <span class="tooltip-trigger" aria-describedby="tooltip-fastapi-2">FastAPI<span class="tooltip" role="tooltip" id="tooltip-fastapi-2">Python Backend Framework</span></span> [16], <span class="tooltip-trigger" aria-describedby="tooltip-chromadb-3">Chroma<span class="tooltip" role="tooltip" id="tooltip-chromadb-3">Vector Database</span></span> [13], etc.</p>
              </div>
               <div class="card" data-animate>
                  <h3><i class="fas fa-ruler-combined" aria-hidden="true"></i>B. Evaluation Metrics</h3>
-                 <!-- **** Add unique tooltip IDs **** -->
                  <p>Measured by <span class="tooltip-trigger" aria-describedby="tooltip-r2-2">R²<span class="tooltip" role="tooltip" id="tooltip-r2-2">Coefficient of Determination</span></span>, <span class="tooltip-trigger" aria-describedby="tooltip-mae">MAE<span class="tooltip" role="tooltip" id="tooltip-mae">Mean Absolute Error</span></span>, <span class="tooltip-trigger" aria-describedby="tooltip-mse-2">MSE<span class="tooltip" role="tooltip" id="tooltip-mse-2">Mean Squared Error</span></span>, <span class="tooltip-trigger" aria-describedby="tooltip-rmse">RMSE<span class="tooltip" role="tooltip" id="tooltip-rmse">Root Mean Squared Error</span></span>.</p>
              </div>
              <div class="card" data-animate>
                  <h3><i class="fas fa-trophy" aria-hidden="true"></i>C. Overall Model Performance</h3>
                  <p>Random Forest & XGBoost excelled among classical models (R² ≈ 0.90).</p>
-                 <div class="chart-container" style="height: 350px;"> <canvas id="modelPerformanceChart" role="img" aria-label="Bar chart comparing R² scores: Random Forest (0.898), XGBoost (0.895), Transformer (0.82), Linear Regression (0.85)"></canvas> </div>
+                 <div class="chart-container" style="min-height: 300px; height: 350px;"> <!-- Adjusted height -->
+                    <canvas id="modelPerformanceChart" role="img" aria-label="Bar chart comparing R² scores: Random Forest (0.898), XGBoost (0.895), Transformer (0.82), Linear Regression (0.85)"></canvas>
+                 </div>
                  <div class="table-container">
                      <table>
                           <caption>Table III: Detailed Evaluation (Best Model Per Variant)</caption>
@@ -815,11 +784,10 @@
                             </tbody>
                      </table>
                  </div>
-                  <div class="grid-container grid-cols-2">
-                      <!-- Make sure asset paths are correct -->
-                      <!-- Added tabindex="0" -->
-                      <figure id="fig13"><img src="assets/fig13_rf_results.png" alt="Figure 13: Plot showing Random Forest predictions vs actual demand" onclick="openModal(this)" tabindex="0"><figcaption>Fig 13: Random Forest Perf.</figcaption></figure>
-                      <figure id="fig14"><img src="assets/fig14_xgb_results.png" alt="Figure 14: Plot showing XGBoost predictions vs actual demand" onclick="openModal(this)" tabindex="0"><figcaption>Fig 14: XGBoost Perf.</figcaption></figure>
+                  <div class="grid-container grid-cols-2"> <!-- Becomes 1 column on mobile -->
+                      <!-- Ensure paths are correct -->
+                      <figure id="fig13"><img src="assets/fig13_rf_results.png" alt="Figure 13: Plot showing Random Forest predicted demand (Y-axis) vs actual demand (X-axis), points cluster closely around the diagonal line indicating good fit" onclick="openModal(this)" tabindex="0"><figcaption>Fig 13: Random Forest Perf.</figcaption></figure>
+                      <figure id="fig14"><img src="assets/fig14_xgb_results.png" alt="Figure 14: Plot showing XGBoost predicted demand (Y-axis) vs actual demand (X-axis), similar good fit to Random Forest" onclick="openModal(this)" tabindex="0"><figcaption>Fig 14: XGBoost Perf.</figcaption></figure>
                   </div>
              </div>
               <div class="card" data-animate>
@@ -829,27 +797,24 @@
              <div class="card" data-animate>
                  <h3><i class="fas fa-brain" aria-hidden="true"></i>E. Transformer Model Results</h3>
                   <p>Strong generalization (R² ≈ 0.82).</p>
-                  <div class="metrics-grid">
+                  <div class="metrics-grid"> <!-- Becomes 2 columns then 1 column on mobile -->
                       <div class="metric-card"><div class="metric-name">R² Score</div><div class="metric-value">≈ 0.82</div></div>
                       <div class="metric-card"><div class="metric-name">MAE</div><div class="metric-value">≈ 0.06*</div></div>
                       <div class="metric-card"><div class="metric-name">RMSE</div><div class="metric-value">≈ 0.08*</div></div>
                   </div>
-                   <div class="grid-container grid-cols-2">
-                     <!-- Make sure asset paths are correct -->
-                     <!-- Added tabindex="0" -->
-                     <figure id="fig15"><img src="assets/fig15_transformer_results.png" alt="Figure 15: Plot showing Transformer predictions vs actual demand" onclick="openModal(this)" tabindex="0"><figcaption>Fig 15: Transformer Perf.</figcaption></figure>
-                     <figure id="fig16"><img src="assets/fig16_transformer_loss.png" alt="Figure 16: Plot showing Transformer training and validation loss over epochs" onclick="openModal(this)" tabindex="0"><figcaption>Fig 16: Transformer Loss</figcaption></figure>
+                   <div class="grid-container grid-cols-2"> <!-- Becomes 1 column on mobile -->
+                     <!-- Ensure paths are correct -->
+                     <figure id="fig15"><img src="assets/fig15_transformer_results.png" alt="Figure 15: Plot showing Transformer predicted demand (Y-axis) vs actual demand (X-axis), points show good correlation but slightly more scatter than RF/XGBoost" onclick="openModal(this)" tabindex="0"><figcaption>Fig 15: Transformer Perf.</figcaption></figure>
+                     <figure id="fig16"><img src="assets/fig16_transformer_loss.png" alt="Figure 16: Plot showing Transformer training and validation loss curves decreasing over epochs, indicating learning" onclick="openModal(this)" tabindex="0"><figcaption>Fig 16: Transformer Loss</figcaption></figure>
                  </div>
                   <p style="font-size: 0.85rem; color: var(--text-secondary);">*MAE/RMSE likely reported on scaled data.</p>
              </div>
               <div class="card" data-animate>
                  <h3><i class="fas fa-adjust" aria-hidden="true"></i>F. Ablation Study: Scaling</h3>
-                  <!-- **** Add unique tooltip IDs **** -->
                   <p>MinMaxScaler slightly better for classical models; Transformer less sensitive. Z-score impact minimal vs <span class="tooltip-trigger" aria-describedby="tooltip-iqr-2">IQR<span class="tooltip" role="tooltip" id="tooltip-iqr-2">Interquartile Range</span></span> for outlier handling.</p>
              </div>
              <div class="card" data-animate>
                  <h3><i class="fas fa-comment-dots" aria-hidden="true"></i>G. XAI Chatbot Results</h3>
-                  <!-- **** Add unique tooltip IDs **** -->
                   <p><span class="tooltip-trigger" aria-describedby="tooltip-rag-6">RAG<span class="tooltip" role="tooltip" id="tooltip-rag-6">Retrieval-Augmented Generation</span></span> chatbot effectively answered complex queries in real-time (<1s latency via <span class="tooltip-trigger" aria-describedby="tooltip-groq-3">Groq<span class="tooltip" role="tooltip" id="tooltip-groq-3">Fast LLM Inference API</span></span>), enhancing transparency.</p>
              </div>
         </section>
@@ -859,19 +824,17 @@
         <!-- Conclusion Section -->
         <section id="conclusion">
             <h2 data-animate><i class="fas fa-flag-checkered" aria-hidden="true"></i>Conclusion and Future Work</h2>
-            <!-- **** Add unique tooltip IDs **** -->
             <p data-animate>GridGenius presents a significant advancement in energy demand forecasting for Bangladesh. By integrating a novel dataset, hybrid modeling, and an interactive <span class="tooltip-trigger" aria-describedby="tooltip-rag-7">RAG<span class="tooltip" role="tooltip" id="tooltip-rag-7">Retrieval-Augmented Generation</span></span>-based <span class="tooltip-trigger" aria-describedby="tooltip-xai-4">XAI<span class="tooltip" role="tooltip" id="tooltip-xai-4">Explainable Artificial Intelligence</span></span> system, it addresses key limitations. The platform achieves high accuracy (R² ≈ 0.89) and offers unprecedented transparency.</p>
              <p data-animate>The deployed system provides a practical, scalable tool for grid planners, offering a blueprint for intelligent energy management in developing economies.</p>
 
              <div class="accordion-item" data-animate>
                  <div class="accordion-header" id="accordion-header-2">
                     <button class="accordion-button" aria-expanded="false" aria-controls="accordion-content-2">
-                        <h4><i class="fas fa-arrow-alt-circle-right" aria-hidden="true" style="margin-right: 8px;"></i> Future Work Directions <small>(Click to Expand)</small></h4>
+                        <h4><i class="fas fa-arrow-alt-circle-right" aria-hidden="true"></i> Future Work Directions<small>(Click to Expand)</small></h4>
                          <i class="fas fa-chevron-down accordion-icon" aria-hidden="true"></i>
                      </button>
                  </div>
                  <div class="accordion-content" id="accordion-content-2" role="region" aria-labelledby="accordion-header-2">
-                     <!-- **** Add unique tooltip IDs **** -->
                      <ul>
                           <li><strong>Data Expansion:</strong> Seek pre-2020 BPDB data.</li>
                           <li><strong>Model Refinement:</strong> Optimize Transformer (tuning, TCNs [30], Informer [31], multivariate attention [32]).</li>
@@ -890,6 +853,7 @@
             <h2 data-animate><i class="fas fa-book" aria-hidden="true"></i>References</h2>
             <div class="card" data-animate>
                 <ol>
+                    <!-- References remain the same -->
                     <li>Bangladesh Power Development Board, "Bangladesh Power Development Board," [Online]. Available: <a href="https://www.bpdb.gov.bd/" target="_blank" rel="noopener noreferrer">https://www.bpdb.gov.bd/</a>.</li>
                     <li>A. Vaswani, et al., "Attention Is All You Need," arXiv:1706.03762, 2017. [Online]. Available: <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/1706.03762</a>.</li>
                     <li>G. P. Reddy and Y. V. P. Kumar, "Explainable AI (XAI): Explained," 2023 IEEE eStream, pp. 1-6, doi: 10.1109/eStream59056.2023.10134984.</li>
@@ -900,11 +864,11 @@
                     <li>H. Haque, et al., "Long-term Energy Demand Analysis using Machine Learning Algorithms," 2024 6th Int. Conf. SGRE, pp. 1-6. doi: 10.1109/SGRE60102.2024.10815643.</li>
                     <li>Q. Wen, et al., "Transformers in Time Series: A Survey," arXiv:2202.07125, 2022. [Online]. Available: <a href="https://arxiv.org/abs/2202.07125" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2202.07125</a>.</li>
                     <li>H. Wu, et al., "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting," arXiv:2106.13008, 2021. [Online]. Available: <a href="https://arxiv.org/abs/2106.13008" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2106.13008</a>.</li>
-                    <li>IBM, "Using the watsonx.ai Time Series Forecasting API to predict energy demand," IBM Developer, 2025. [Online]. Available: <a href="https://developer.ibm.com/tutorials/time-series-api-watsonx-ai/" target="_blank" rel="noopener noreferrer">Link</a> (Note: URL adjusted for likely correct link).</li>
+                    <li>IBM, "Using the watsonx.ai Time Series Forecasting API to predict energy demand," IBM Developer, 2025. [Online]. Available: <a href="https://developer.ibm.com/tutorials/time-series-api-watsonx-ai/" target="_blank" rel="noopener noreferrer">Link</a>.</li>
                     <li>D. P. Kingma and J. Ba, "Adam: A Method for Stochastic Optimization," arXiv:1412.6980, 2014. [Online]. Available: <a href="https://arxiv.org/abs/1412.6980" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/1412.6980</a>.</li>
                     <li>Chroma, "Chroma: The AI-native open-source embedding database," GitHub, 2023. [Online]. Available: <a href="https://github.com/chroma-core/chroma" target="_blank" rel="noopener noreferrer">https://github.com/chroma-core/chroma</a>.</li>
                     <li>Meta AI, "Introducing Llama 3.1," Meta AI Blog, 2024. [Online]. Available: <a href="https://ai.meta.com/blog/meta-llama-3-1/" target="_blank" rel="noopener noreferrer">https://ai.meta.com/blog/meta-llama-3-1/</a>.</li>
-                    <li>Groq, "GroqCloud: Fast AI Inference," 2024. [Online]. Available: <a href="https://groq.com/" target="_blank" rel="noopener noreferrer">https://groq.com/</a> (Adjusted URL).</li>
+                    <li>Groq, "GroqCloud: Fast AI Inference," 2024. [Online]. Available: <a href="https://groq.com/" target="_blank" rel="noopener noreferrer">https://groq.com/</a>.</li>
                     <li>S. Ramírez, "FastAPI," 2023. [Online]. Available: <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener noreferrer">https://fastapi.tiangolo.com/</a>.</li>
                     <li>Vercel, "Vercel Documentation," 2024. [Online]. Available: <a href="https://vercel.com/docs" target="_blank" rel="noopener noreferrer">https://vercel.com/docs</a>.</li>
                     <li>F. Pedregosa, et al., "Scikit-learn: Machine Learning in Python," JMLR, vol. 12, pp. 2825-2830, 2011.</li>
@@ -919,7 +883,7 @@
                     <li>Hugging Face, "Hugging Face Transformers," 2024. [Online]. Available: <a href="https://huggingface.co/transformers/" target="_blank" rel="noopener noreferrer">https://huggingface.co/transformers/</a>.</li>
                     <li>Railway, "Railway: Infrastructure for Developers," 2024. [Online]. Available: <a href="https://railway.app/" target="_blank" rel="noopener noreferrer">https://railway.app/</a>.</li>
                     <li>E. Hu, et al., "LoRA: Low-Rank Adaptation of Large Language Models," arXiv:2106.09685, 2021. [Online]. Available: <a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2106.09685</a>.</li>
-                    <li>S. Bai, et al., "An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling," arXiv:1803.01271, 2018. [Online]. Available: <a href="https://arxiv.org/abs/1803.01271" target="_blank" rel="noopener noreferrer">Link</a> (Note: ArXiv ID corrected based on common TCN paper).</li>
+                    <li>S. Bai, et al., "An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling," arXiv:1803.01271, 2018. [Online]. Available: <a href="https://arxiv.org/abs/1803.01271" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/1803.01271</a>.</li>
                     <li>H. Zhou, et al., "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting," AAAI, 2021. [Online]. Available: <a href="https://arxiv.org/abs/2012.07436" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2012.07436</a>.</li>
                     <li>H. Wu, "Revisiting Attention for Multivariate Time Series Forecasting," arXiv:2407.13806, 2024. [Online]. Available: <a href="https://arxiv.org/abs/2407.13806" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2407.13806</a>.</li>
                 </ol>
@@ -938,12 +902,17 @@
      <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalCaption" onclick="closeModal(event)">
          <button class="modal-close" onclick="closeModal(event)" aria-label="Close image modal">×</button>
          <div class="modal-image-wrapper">
-            <img class="modal-content" id="modalImageContent" alt="">
+            <img class="modal-content" id="modalImageContent" alt=""> <!-- Alt populated by JS -->
          </div>
-         <div class="modal-caption" id="modalCaption"></div>
+         <div class="modal-caption" id="modalCaption"></div> <!-- Caption populated by JS -->
      </div>
 
     <script>
+        // Javascript remains largely the same as provided in the initial prompt,
+        // as it correctly handles toggles, scrolls, animations (with observer),
+        // modal opening/closing, accordions, and chart initialization.
+        // The responsiveness fixes are primarily CSS-driven.
+
         document.addEventListener('DOMContentLoaded', () => {
 
             const isMobile = () => window.innerWidth <= 768;
@@ -961,17 +930,31 @@
                     menuButton.setAttribute('aria-expanded', String(!isExpanded)); // Set ARIA explicitly
                     menuIcon.classList.toggle('fa-bars');
                     menuIcon.classList.toggle('fa-times');
+
+                    // Optional: Trap focus within the mobile menu when open
+                    // This is more complex, involving finding first/last focusable items
+                    // For simplicity, basic toggle is kept here.
                 });
 
+                // Close menu when a link is clicked (important for SPA-like behavior)
                 navLinksList.querySelectorAll('a').forEach(link => {
                      link.addEventListener('click', () => {
-                         if (isMobile()) { // Only close on mobile
+                         if (navLinksList.classList.contains('mobile-nav-open')) { // Only if menu is open
                               navLinksList.classList.remove('mobile-nav-open');
                               menuButton.setAttribute('aria-expanded', 'false');
                               menuIcon.classList.remove('fa-times');
                               menuIcon.classList.add('fa-bars');
                          }
                      });
+                 });
+                 // Close menu if user clicks outside of it (optional)
+                 document.addEventListener('click', (event) => {
+                    if (!menuButton.contains(event.target) && !navLinksList.contains(event.target) && navLinksList.classList.contains('mobile-nav-open')) {
+                         navLinksList.classList.remove('mobile-nav-open');
+                         menuButton.setAttribute('aria-expanded', 'false');
+                         menuIcon.classList.remove('fa-times');
+                         menuIcon.classList.add('fa-bars');
+                    }
                  });
             }
 
@@ -992,32 +975,44 @@
             // --- Navbar Highlighting ---
             const sections = document.querySelectorAll("section[id]");
             const navLinkAnchors = document.querySelectorAll(".nav-links a");
-            const navHeight = document.querySelector('.navbar')?.offsetHeight || 60;
+            const navHeight = document.querySelector('.navbar')?.offsetHeight || 65; // Use defined var or fallback
 
             function updateActiveNav() {
-                let current = "abstract"; // Default to abstract
-                const scrollPosition = window.pageYOffset + navHeight + 50; // Add generous offset
+                if (!navLinkAnchors.length) return; // Don't run if no nav links found
+
+                let current = "";
+                const scrollPosition = window.pageYOffset + navHeight * 1.5; // Adjusted offset for earlier detection
 
                  sections.forEach((section) => {
                      const sectionTop = section.offsetTop;
-                     // Make detection zone slightly larger to catch section earlier/later
-                     const sectionBottom = sectionTop + section.offsetHeight;
-                     if (scrollPosition >= sectionTop - navHeight && scrollPosition < sectionBottom) {
-                          current = section.getAttribute("id");
+                     if (scrollPosition >= sectionTop) { // If we've passed the top of this section
+                          current = section.getAttribute("id") || "";
                      }
                  });
 
-                 // Adjust if scrolled very near the bottom
+                 // If scrolled to the very bottom, ensure the last section is active
                  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
                     const lastSection = sections[sections.length - 1];
-                    if (lastSection) current = lastSection.getAttribute("id");
+                    if (lastSection) current = lastSection.getAttribute("id") || "";
                  }
 
+                 // Default to first link's target if no section is matched (e.g., at the top)
+                 if (!current && navLinkAnchors.length > 0) {
+                     const firstLinkHref = navLinkAnchors[0].getAttribute("href");
+                     if (firstLinkHref && firstLinkHref.startsWith("#")) {
+                         current = firstLinkHref.substring(1);
+                     }
+                 }
+
+
                 navLinkAnchors.forEach((link) => {
-                    const isActive = link.getAttribute("href") === `#${current}`;
+                    const linkHref = link.getAttribute("href");
+                    // Robust check: handles full URLs ending with #hash vs just #hash
+                    const linkTargetId = linkHref ? (linkHref.includes('#') ? linkHref.substring(linkHref.lastIndexOf('#') + 1) : null) : null;
+
+                    const isActive = linkTargetId === current;
                     link.classList.toggle("active", isActive);
-                    // Optional: Set aria-current for the active link
-                    // link.setAttribute('aria-current', isActive ? 'page' : 'false');
+                    link.setAttribute('aria-current', isActive ? 'page' : 'false');
                 });
             }
 
@@ -1028,19 +1023,23 @@
                  if (!scrollProgress) return;
                  const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                  const scrolled = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-                 scrollProgress.style.width = `${scrolled}%`;
+                 // Ensure value is between 0 and 100
+                 const progressWidth = Math.max(0, Math.min(100, scrolled));
+                 scrollProgress.style.width = `${progressWidth}%`;
             }
 
-            // Combined Scroll Listener
-            let scrollTimeout;
+            // Combined Scroll Listener (Throttled using requestAnimationFrame)
+            let isScrolling = false;
             window.addEventListener("scroll", () => {
-                // Use requestAnimationFrame for smoother updates tied to rendering
-                if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
-                scrollTimeout = requestAnimationFrame(() => {
-                    updateActiveNav();
-                    updateScrollProgress();
-                });
-            }, { passive: true }); // Passive is good
+                if (!isScrolling) {
+                    window.requestAnimationFrame(() => {
+                        updateActiveNav();
+                        updateScrollProgress();
+                        isScrolling = false;
+                    });
+                    isScrolling = true;
+                }
+            }, { passive: true });
 
             // Initial calls
             updateActiveNav();
@@ -1049,77 +1048,69 @@
 
             // --- Animated Counters ---
             const counters = document.querySelectorAll('.counter-value');
-            const counterSpeed = 120;
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             const animateCounter = (counter) => {
                 const target = +counter.getAttribute('data-target');
-                if (isNaN(target)) {
-                    console.warn("Invalid data-target for counter:", counter);
+                if (isNaN(target)) return;
+
+                if (prefersReducedMotion) {
+                    counter.innerText = target.toLocaleString(); // Set final value directly
                     return;
                 }
+
                 let count = 0;
                 counter.innerText = '0';
-                counter.startTime = null; // Use null to check if started
+                const duration = 1500; // Fixed duration for simplicity
+                let startTime = null;
 
-                const updateCount = (timestamp) => {
-                     if (counter.startTime === null) counter.startTime = timestamp;
-                     const progress = timestamp - counter.startTime;
-                     const duration = Math.max(500, Math.min(2500, target * (16 / counterSpeed) * 10)); // Estimate duration
-
-                     let currentCount = Math.min(target, Math.ceil((progress / duration) * target));
-                     if (currentCount < count) currentCount = count; // Prevent decreasing on rapid frames
-
-                     counter.innerText = currentCount.toLocaleString();
-
-                     if (currentCount < target) {
-                         requestAnimationFrame(updateCount);
-                     } else {
-                         counter.innerText = target.toLocaleString(); // Ensure final value is exact
-                         counter.startTime = null; // Reset for potential re-trigger
-                     }
-                 };
-                 requestAnimationFrame(updateCount);
+                const step = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    count = Math.floor(progress * target);
+                    counter.innerText = count.toLocaleString();
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        counter.innerText = target.toLocaleString(); // Ensure final exact value
+                    }
+                };
+                requestAnimationFrame(step);
              };
 
 
             // --- Scroll Animations (Intersection Observer) ---
              const animatedElements = document.querySelectorAll('[data-animate]');
              const animateObserverOptions = { root: null, threshold: 0.1, rootMargin: "0px 0px -40px 0px" };
-             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
              if ("IntersectionObserver" in window) {
                  const animateObserver = new IntersectionObserver((entries, observer) => {
                      entries.forEach(entry => {
                          if (entry.isIntersecting) {
-                             entry.target.classList.add('visible'); // Make visible regardless of motion preference
+                             entry.target.classList.add('visible');
 
-                             const counterElement = entry.target.querySelector('.counter-value');
-                             if (counterElement && !counterElement.hasAttribute('data-animated')) {
-                                 const target = +counterElement.getAttribute('data-target');
-                                 if (!isNaN(target)) {
-                                     if (!prefersReducedMotion) {
-                                         animateCounter(counterElement); // Animate only if motion is not reduced
-                                     } else {
-                                         counterElement.innerText = target.toLocaleString(); // Set final value directly
-                                     }
-                                 }
-                                 counterElement.setAttribute('data-animated', 'true'); // Mark as processed
+                             // Check if the element contains a counter that hasn't been animated
+                             const counterElement = entry.target.querySelector('.counter-value:not([data-animated="true"])');
+                             if (counterElement) {
+                                 animateCounter(counterElement);
+                                 counterElement.setAttribute('data-animated', 'true'); // Mark as animated
                              }
-                             // Unobserve only if it's NOT the counter parent (counters might re-enter view)
-                             // Or simply unobserve all for performance if re-animation isn't desired
-                             observer.unobserve(entry.target);
+                             observer.unobserve(entry.target); // Stop observing once visible
                          }
                      });
                  }, animateObserverOptions);
 
                   animatedElements.forEach(el => animateObserver.observe(el));
              } else {
-                 // Fallback for older browsers (no smooth animation)
+                 // Fallback for older browsers
                  console.warn("IntersectionObserver not supported, scroll animations disabled.");
                  animatedElements.forEach(el => el.classList.add('visible'));
-                 counters.forEach(counter => {
-                     const target = +counter.getAttribute('data-target');
-                     counter.innerText = isNaN(target) ? '0' : target.toLocaleString();
+                 counters.forEach(counter => { // Directly set counter values in fallback
+                    const target = +counter.getAttribute('data-target');
+                    if (!isNaN(target) && !counter.hasAttribute('data-animated')) {
+                         counter.innerText = target.toLocaleString();
+                         counter.setAttribute('data-animated', 'true');
+                    }
                  });
              }
 
@@ -1132,258 +1123,232 @@
 
             function trapFocus(e) {
                 if (!modal || !modal.classList.contains('visible')) return;
-
                 let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
                 if (!isTabPressed) return;
 
-                // Find all focusable children within the modal
-                 const focusableModalElements = modal.querySelectorAll(
+                const focusableModalElements = modal.querySelectorAll(
                      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), img[tabindex="0"]'
                  );
-                  if (focusableModalElements.length === 0) return; // No focusable elements
-
-                 const firstFocusableElement = focusableModalElements[0];
-                 const lastFocusableElement = focusableModalElements[focusableModalElements.length - 1];
-
+                if (focusableModalElements.length === 0) return;
+                const firstFocusableElement = focusableModalElements[0];
+                const lastFocusableElement = focusableModalElements[focusableModalElements.length - 1];
 
                 if (e.shiftKey) { // Shift + Tab
                      if (document.activeElement === firstFocusableElement) {
-                         lastFocusableElement?.focus();
-                         e.preventDefault();
+                         lastFocusableElement?.focus(); e.preventDefault();
                      }
                  } else { // Tab
                      if (document.activeElement === lastFocusableElement) {
-                         firstFocusableElement?.focus();
-                         e.preventDefault();
+                         firstFocusableElement?.focus(); e.preventDefault();
                      }
                  }
             }
 
             if (modal && modalImg && captionText && modalCloseButton) {
                  window.openModal = function(imgElement) {
-                    if (!imgElement || !imgElement.src) {
-                        console.error("Invalid image element passed to openModal");
-                        return;
-                    };
+                    if (!imgElement || !imgElement.src) return;
+                    focusedElementBeforeModal = document.activeElement;
 
-                    focusedElementBeforeModal = document.activeElement; // Store focus
-
-                    modal.style.display = "flex"; // Make it visible first
+                    modal.style.display = "flex"; // Make container visible
                     modalImg.src = imgElement.src;
                     const altText = imgElement.getAttribute('alt') || "Enlarged image";
-                    captionText.innerHTML = altText; // Set caption from alt text
-                    modalImg.setAttribute('alt', altText); // Ensure modal image has alt
+                    captionText.innerHTML = altText;
+                    modalImg.setAttribute('alt', altText);
 
-                    // Use class for fade-in trigger after display is set
-                    requestAnimationFrame(() => {
-                        modal.classList.add('visible');
-                    });
+                    requestAnimationFrame(() => { modal.classList.add('visible'); }); // Add class for fade-in
 
-                    document.body.style.overflow = 'hidden'; // Prevent background scroll
-                    modalCloseButton.focus(); // Set initial focus to close button
-                    document.addEventListener('keydown', trapFocus); // Add focus trap listener
+                    document.body.style.overflow = 'hidden';
+                    modalCloseButton.focus();
+                    document.addEventListener('keydown', trapFocus);
+                    document.addEventListener('keydown', handleEscKey); // Add ESC listener
                 }
 
-                window.closeModal = function(event) {
-                     // Check if the modal is actually visible before trying to close
+                 window.closeModal = function(event) {
                      if (!modal.classList.contains('visible')) return;
-
-                     // Close if backdrop (modal itself), close button, or Escape key triggered it
-                     const isCloseTrigger = !event || event.target === modal || event.target === modalCloseButton || (event.key && event.key === "Escape");
-
-
-                     if (isCloseTrigger) {
-                         modal.classList.remove('visible'); // Trigger fade-out via CSS class
-                         // Wait for transition to finish before hiding and restoring scroll/focus
-                          // Debounce or use a flag to prevent multiple triggers
-                         let closing = false;
-                         const handleTransitionEnd = () => {
-                              if (closing) return;
-                              closing = true;
-                              modal.style.display = "none";
-                              document.body.style.overflow = 'auto'; // Restore scroll
-                              document.removeEventListener('keydown', trapFocus); // Remove focus trap
-                              focusedElementBeforeModal?.focus(); // Restore focus
-                              focusedElementBeforeModal = null;
-                              modal.removeEventListener('transitionend', handleTransitionEnd);
-                         };
-                         modal.addEventListener('transitionend', handleTransitionEnd, { once: true });
-
-                         // Fallback timeout if transitionend doesn't fire (e.g., display:none cancels it)
-                         setTimeout(() => {
-                             if (!closing) {
-                                 handleTransitionEnd();
-                             }
-                         }, 350); // Match CSS transition duration + buffer
-                    }
-                }
-
-                // Modal event listeners
-                // modal.addEventListener('click', closeModal); // Backdrop click is handled by the wrapper onclick now
-                modalCloseButton.addEventListener('click', closeModal); // Button click
-                // Stop propagation on the image wrapper to prevent clicks inside closing the modal
-                modal.querySelector('.modal-image-wrapper')?.addEventListener('click', (e) => e.stopPropagation());
-                document.addEventListener('keydown', (e) => { // Escape key listener
-                     if (e.key === "Escape" && modal.classList.contains('visible')) {
-                         closeModal(e);
+                     // Close only if backdrop (modal itself) or close button is clicked directly
+                     if (event && event.target !== modal && event.target !== modalCloseButton) {
+                         // If the click was inside the modal but not on the close button, do nothing
+                         // This check prevents clicks on the image/caption from closing the modal
+                         if (modal.querySelector('.modal-image-wrapper')?.contains(event.target) || captionText.contains(event.target)) {
+                              return;
+                         }
                      }
-                 });
+
+                     modal.classList.remove('visible');
+                     document.body.style.overflow = 'auto';
+                     document.removeEventListener('keydown', trapFocus);
+                     document.removeEventListener('keydown', handleEscKey); // Remove ESC listener
+
+                     // Wait for fade out transition before hiding and restoring focus
+                     modal.addEventListener('transitionend', () => {
+                         modal.style.display = "none";
+                         focusedElementBeforeModal?.focus();
+                         focusedElementBeforeModal = null;
+                     }, { once: true });
+                 }
+
+                 // Separate ESC key handler
+                 const handleEscKey = (e) => {
+                     if (e.key === "Escape") {
+                         closeModal(null); // Pass null event
+                     }
+                 };
+
+                 // Direct click listener for close button
+                 modalCloseButton.addEventListener('click', () => closeModal(null));
+
+                 // Backdrop click is handled by the onclick attribute on the modal div itself
+
 
             } else {
-                 console.error("Modal elements (#imageModal, #modalImageContent, #modalCaption, .modal-close) not found!");
+                 console.error("Modal elements not found!");
                  window.openModal = function() { console.error("Modal cannot open, elements missing."); };
                  window.closeModal = function() {};
             }
 
 
             // --- Accordion ---
-            const accordionButtons = document.querySelectorAll('.accordion-button'); // Target the button
-
+            const accordionButtons = document.querySelectorAll('.accordion-button');
              accordionButtons.forEach(button => {
                  const content = document.getElementById(button.getAttribute('aria-controls'));
-                 const header = button.closest('.accordion-header');
-                 const item = button.closest('.accordion-item');
-
-                 if (!content || !header || !item) {
-                      console.warn("Accordion structure incomplete for button:", button);
-                      return;
-                 }
-
-                 // Initial state setup
-                 content.style.maxHeight = null;
-                 content.classList.remove('active');
-                 button.setAttribute('aria-expanded', 'false');
-                 header.classList.remove('active'); // Ensure header isn't active initially
+                 if (!content) return;
 
                  button.addEventListener('click', () => {
                      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-                     // Toggle the current item
                      button.setAttribute('aria-expanded', String(!isExpanded));
-                     header.classList.toggle('active', !isExpanded);
 
-                     if (!isExpanded) { // If opening
-                         content.classList.add('active'); // Add styles/padding class first
-                         // Set max-height after a tick to allow CSS to apply potentially needed styles
+                     if (!isExpanded) { // Opening
+                         content.classList.add('active');
+                         content.style.maxHeight = content.scrollHeight + "px";
+                         // Recalculate after potential style changes settle
                          requestAnimationFrame(() => {
-                              // Ensure scrollHeight is calculated *after* 'active' class might affect it
-                              // Use offsetHeight for potentially better calculation with borders/padding
-                              content.style.maxHeight = content.scrollHeight + "px";
+                            content.style.maxHeight = content.scrollHeight + "px";
                          });
-                     } else { // If closing
-                         content.style.maxHeight = content.scrollHeight + "px"; // Ensure it's set before collapsing
-                         requestAnimationFrame(() => { // Allow repaint
-                            content.style.maxHeight = "0px"; // Start collapsing
+                     } else { // Closing
+                         // Set max-height explicitly before transitioning to 0
+                         content.style.maxHeight = content.scrollHeight + "px";
+                         requestAnimationFrame(() => { // Needed for transition to trigger correctly
+                            content.style.maxHeight = "0px";
                          });
-                         // Remove 'active' class after the transition ends for smoother visuals
+                         // Remove active class after transition
                          content.addEventListener('transitionend', () => {
-                             if (button.getAttribute('aria-expanded') === 'false') { // Check state again before removing
-                                 content.classList.remove('active');
-                             }
+                             content.classList.remove('active');
                          }, { once: true });
                      }
                  });
+
+                 // Ensure content is collapsed initially if button starts as collapsed
+                 if (button.getAttribute('aria-expanded') === 'false') {
+                      content.style.maxHeight = "0px";
+                      content.classList.remove('active');
+                 } else {
+                      content.classList.add('active');
+                      content.style.maxHeight = content.scrollHeight + "px"; // Set initial height if open
+                 }
              });
 
 
-            // --- Tooltip Accessibility (Focus Handling - Optional) ---
-            // The CSS :hover handles most cases. This adds focus support if needed.
+            // --- Tooltip Accessibility (Focus Handling) ---
             document.querySelectorAll('.tooltip-trigger').forEach(trigger => {
                  const tooltip = document.getElementById(trigger.getAttribute('aria-describedby'));
                  if (tooltip) {
-                     const showTooltip = () => tooltip.classList.add('visible-focus'); // Use a specific class for focus
+                     const showTooltip = () => tooltip.classList.add('visible-focus');
                      const hideTooltip = () => tooltip.classList.remove('visible-focus');
-
                      trigger.addEventListener('focus', showTooltip);
                      trigger.addEventListener('blur', hideTooltip);
-
-                     // Optional: Keep tooltip visible when tooltip itself is focused (if it contained links)
-                     // tooltip.addEventListener('focusin', showTooltip);
-                     // tooltip.addEventListener('focusout', hideTooltip);
                  }
             });
-            // Add CSS for .tooltip.visible-focus if you use the above JS:
-            // .tooltip.visible-focus { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-8px); }
 
+            // --- Chart.js Initialization ---
+             try {
+                const styles = getComputedStyle(document.documentElement);
+                const chartYellow = styles.getPropertyValue('--accent-yellow').trim() || '#fde047';
+                const chartYellowDark = styles.getPropertyValue('--accent-yellow-dark').trim() || '#facc15';
+                const chartBlue = styles.getPropertyValue('--accent-blue').trim() || '#60a5fa';
+                const chartBorder = styles.getPropertyValue('--border-color').trim() || '#3a3a3c';
+                const chartTextPrimary = styles.getPropertyValue('--text-primary').trim() || '#f0f0f0';
+                const chartTextSecondary = styles.getPropertyValue('--text-secondary').trim() || '#b0b0b5';
+                const chartGridColor = 'rgba(255, 255, 255, 0.1)';
+                const chartBgNeutral = 'rgba(60, 60, 62, 0.7)';
+                const chartAnimation = prefersReducedMotion ? false : { duration: 800 }; // Use shared animation setting
 
-            // --- Chart.js ---
-            try {
-               const styles = getComputedStyle(document.documentElement);
-               const chartYellow = styles.getPropertyValue('--accent-yellow').trim() || '#fde047';
-               const chartYellowDark = styles.getPropertyValue('--accent-yellow-dark').trim() || '#facc15';
-               const chartBlue = styles.getPropertyValue('--accent-blue').trim() || '#60a5fa';
-               const chartBorder = styles.getPropertyValue('--border-color').trim() || '#3a3a3c';
-               const chartTextPrimary = styles.getPropertyValue('--text-primary').trim() || '#f0f0f0';
-               const chartTextSecondary = styles.getPropertyValue('--text-secondary').trim() || '#b0b0b5';
-               const chartGridColor = 'rgba(255, 255, 255, 0.1)';
-               const chartBgNeutral = 'rgba(60, 60, 62, 0.7)';
-               // Prefers reduced motion check already done above (prefersReducedMotion)
+                // R2 Score Chart (Inside Counter Card)
+                const r2Canvas = document.getElementById('r2ScoreChart');
+                if (r2Canvas && Chart) {
+                    const r2Ctx = r2Canvas.getContext('2d');
+                    if (r2Ctx) {
+                         // Define gradient background for doughnut chart
+                         const gradientBg = r2Ctx.createLinearGradient(0, 0, 0, r2Canvas.height);
+                         gradientBg.addColorStop(0, `rgba(${parseInt(chartYellowDark.slice(1,3),16)}, ${parseInt(chartYellowDark.slice(3,5),16)}, ${parseInt(chartYellowDark.slice(5,7),16)}, 0.9)`);
+                         gradientBg.addColorStop(1, `rgba(${parseInt(chartYellow.slice(1,3),16)}, ${parseInt(chartYellow.slice(3,5),16)}, ${parseInt(chartYellow.slice(5,7),16)}, 0.75)`);
 
-               // R2 Score Chart
-               const r2Canvas = document.getElementById('r2ScoreChart');
-               if (r2Canvas) {
-                   const r2Ctx = r2Canvas.getContext('2d');
-                   if (r2Ctx) {
-                       new Chart(r2Ctx, {
-                           type: 'doughnut',
-                           data: {
-                               labels: ['Achieved R²', 'Remaining'],
-                               datasets: [{
-                                   data: [89, 11],
-                                   backgroundColor: [ `rgba(${parseInt(chartYellowDark.slice(1,3),16)}, ${parseInt(chartYellowDark.slice(3,5),16)}, ${parseInt(chartYellowDark.slice(5,7),16)}, 0.85)`, chartBgNeutral ],
-                                   borderColor: [chartYellowDark, chartBorder],
-                                   borderWidth: 1,
-                                   circumference: 180, rotation: 270
-                               }]
-                           },
-                           options: {
-                               responsive: true, maintainAspectRatio: false, cutout: '65%',
-                               plugins: { legend: { display: false }, tooltip: { enabled: true } },
-                               animation: prefersReducedMotion ? false : { duration: 1000 } // Control animation
-                           }
-                       });
-                   } else { console.error("Chart.js Error: Failed to get 2D context for #r2ScoreChart"); }
-               } else { console.warn("Chart.js Warning: Canvas #r2ScoreChart not found."); }
+                        new Chart(r2Ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Achieved R²', 'Remaining'],
+                                datasets: [{
+                                    data: [89, 11], // Example: 89% achieved
+                                    backgroundColor: [gradientBg, chartBgNeutral],
+                                    borderColor: [chartYellowDark, chartBorder],
+                                    borderWidth: 1,
+                                    circumference: 180, // Semi-circle
+                                    rotation: 270      // Start from bottom
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false, // Important for small containers
+                                cutout: '70%', // Adjust thickness
+                                plugins: { legend: { display: false }, tooltip: { enabled: false } }, // Simpler tooltip for counter
+                                animation: chartAnimation
+                            }
+                        });
+                    } else { console.error("Chart.js: Failed to get 2D context for #r2ScoreChart"); }
+                } else if (!Chart) { console.error("Chart.js library not loaded."); }
 
-               // Model Performance Chart
-               const perfCanvas = document.getElementById('modelPerformanceChart');
-               if (perfCanvas) {
-                   const perfCtx = perfCanvas.getContext('2d');
-                   if (perfCtx) {
-                       new Chart(perfCtx, {
-                           type: 'bar',
-                           data: {
-                               labels: ['Random Forest', 'XGBoost', 'Transformer', 'Linear Reg.'],
-                               datasets: [{
-                                   label: 'R² Score', data: [0.898, 0.895, 0.82, 0.85], // Example data
-                                   backgroundColor: [
-                                       `rgba(${parseInt(chartYellowDark.slice(1,3),16)}, ${parseInt(chartYellowDark.slice(3,5),16)}, ${parseInt(chartYellowDark.slice(5,7),16)}, 0.8)`,
-                                       `rgba(${parseInt(chartYellow.slice(1,3),16)}, ${parseInt(chartYellow.slice(3,5),16)}, ${parseInt(chartYellow.slice(5,7),16)}, 0.75)`,
-                                       `rgba(${parseInt(chartBlue.slice(1,3),16)}, ${parseInt(chartBlue.slice(3,5),16)}, ${parseInt(chartBlue.slice(5,7),16)}, 0.75)`,
-                                       'rgba(180, 180, 185, 0.7)'
-                                   ],
-                                   borderColor: [ chartYellowDark, chartYellow, chartBlue, chartTextSecondary ],
-                                   borderWidth: 1, borderRadius: 5
-                               }]
-                           },
-                           options: {
-                               responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-                               scales: {
-                                   x: { beginAtZero: true, max: 1, grid: { color: chartGridColor, borderColor: chartBorder }, ticks: { color: chartTextSecondary, font: { size: 11 } } },
-                                   y: { grid: { display: false, borderColor: chartBorder }, ticks: { color: chartTextPrimary, font: { size: 12 } } }
-                               },
-                               plugins: {
-                                   legend: { display: false },
-                                   title: { display: true, text: 'Model R² Score Comparison', color: chartTextPrimary, padding: { bottom: 20 }, font: { size: 16, weight: '500' } },
-                                   tooltip: { enabled: true }
-                               },
-                               animation: prefersReducedMotion ? false : { duration: 1000 } // Control animation
-                           }
-                       });
-                   } else { console.error("Chart.js Error: Failed to get 2D context for #modelPerformanceChart"); }
-               } else { console.warn("Chart.js Warning: Canvas #modelPerformanceChart not found."); }
+                // Model Performance Chart
+                const perfCanvas = document.getElementById('modelPerformanceChart');
+                if (perfCanvas && Chart) {
+                    const perfCtx = perfCanvas.getContext('2d');
+                    if (perfCtx) {
+                        new Chart(perfCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Random Forest', 'XGBoost', 'Transformer', 'Linear Reg.'],
+                                datasets: [{
+                                    label: 'R² Score', data: [0.898, 0.895, 0.82, 0.85], // Example data
+                                    backgroundColor: [
+                                        `rgba(${parseInt(chartYellowDark.slice(1,3),16)}, ${parseInt(chartYellowDark.slice(3,5),16)}, ${parseInt(chartYellowDark.slice(5,7),16)}, 0.8)`,
+                                        `rgba(${parseInt(chartYellow.slice(1,3),16)}, ${parseInt(chartYellow.slice(3,5),16)}, ${parseInt(chartYellow.slice(5,7),16)}, 0.75)`,
+                                        `rgba(${parseInt(chartBlue.slice(1,3),16)}, ${parseInt(chartBlue.slice(3,5),16)}, ${parseInt(chartBlue.slice(5,7),16)}, 0.75)`,
+                                        'rgba(180, 180, 185, 0.7)'
+                                    ],
+                                    borderColor: [ chartYellowDark, chartYellow, chartBlue, chartTextSecondary ],
+                                    borderWidth: 1, borderRadius: 4
+                                }]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false, indexAxis: 'y', // Horizontal bars often better on mobile
+                                scales: {
+                                    x: { beginAtZero: true, max: 1, grid: { color: chartGridColor, borderColor: chartBorder }, ticks: { color: chartTextSecondary, font: { size: 11 } } },
+                                    y: { grid: { display: false, borderColor: chartBorder }, ticks: { color: chartTextPrimary, font: { size: 12 } } }
+                                },
+                                plugins: {
+                                    legend: { display: false },
+                                    title: { display: true, text: 'Model R² Score Comparison', color: chartTextPrimary, padding: { bottom: 15 }, font: { size: 14, weight: '500' } }, // Slightly smaller title
+                                    tooltip: {
+                                        enabled: true,
+                                        backgroundColor: 'rgba(0,0,0,0.8)', titleFont: { size: 13 }, bodyFont: { size: 12 }
+                                    }
+                                },
+                                animation: chartAnimation
+                            }
+                        });
+                    } else { console.error("Chart.js: Failed to get 2D context for #modelPerformanceChart"); }
+                } else if (!Chart) { console.error("Chart.js library not loaded."); }
 
-            }   catch (error) { console.error("Chart.js Initialization Error:", error); }
+             } catch (error) { console.error("Chart.js Initialization Error:", error); }
+
 
         }); // --- END DOMContentLoaded ---
     </script>
